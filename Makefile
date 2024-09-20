@@ -6,7 +6,7 @@
 #    By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/29 10:36:34 by fjalowie          #+#    #+#              #
-#    Updated: 2024/09/19 12:26:59 by fjalowie         ###   ########.fr        #
+#    Updated: 2024/09/20 12:42:46 by fjalowie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,21 +14,27 @@ NAME	= minishell
 
 SRCS	= src/main.c
 
-OBJS	= $(SRCS:.c=.o)
+OBJDIR	= .obj
+OBJS	= $(SRCS:src/%.c=$(OBJDIR)/%.o)
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -I includes/
+CFLAGS	= -I includes/
+# -Wall -Wextra -Werror 
+LDFLAGS = -lreadline
 
 all:	$(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) --no-print-directory -C ./libft
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) libft/libft.a
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) libft/libft.a $(LDFLAGS)
 	@echo "Build of $(NAME) completed."
 
-%.o: %.c
+$(OBJDIR)/%.o: src/%.c | $(OBJDIR)
 	@echo "Compiling $<..."
 	@$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
 
 clean:
 	@$(MAKE) --no-print-directory clean -C ./libft
@@ -38,6 +44,7 @@ clean:
 fclean: clean
 	@$(MAKE) --no-print-directory fclean -C ./libft
 	@rm -f $(NAME)
+	@rm -rf $(OBJDIR)
 	@echo "Full clean of ${NAME} completed."
 
 re: fclean all
