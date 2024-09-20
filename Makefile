@@ -6,13 +6,14 @@
 #    By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/29 10:36:34 by fjalowie          #+#    #+#              #
-#    Updated: 2024/09/20 12:42:46 by fjalowie         ###   ########.fr        #
+#    Updated: 2024/09/20 13:54:46 by fjalowie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 
-SRCS	= src/main.c
+SRCS	= src/main.c \
+			src/envp.c \
 
 OBJDIR	= .obj
 OBJS	= $(SRCS:src/%.c=$(OBJDIR)/%.o)
