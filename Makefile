@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+         #
+#    By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/29 10:36:34 by fjalowie          #+#    #+#              #
-#    Updated: 2024/09/25 09:58:31 by fjalowie         ###   ########.fr        #
+#    Updated: 2024/09/25 16:47:21 by fgrabows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,11 @@ SRCS	= src/main.c \
 			src/syntax_check.c \
 			src/sanitation.c \
 			src/utils.c \
+			src/tokens00.c \
+			src/tokens01.c \
+			src/error.c \
+			src/tokenizer.c \
+			src/helpers.c \
 
 OBJDIR	= .obj
 OBJS	= $(SRCS:src/%.c=$(OBJDIR)/%.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/25 09:58:37 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:01:20 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@ typedef struct s_data
 	char	*line;
 }	t_data;
 
+typedef struct s_token
+{
+	int				type;
+	char			*text;
+	struct s_token	*next;
+}	t_token;
+
+/*tokens*/
+# define T_O_BRACKET	1
+# define T_C_BRACKET	2
+# define T_REDIR		3
+# define T_PIPE			4
+# define T_S_QUOTE		5
+# define T_D_QUOTE		6
+# define T_WORD			7
+# define T_APPEND		8
 
 # define NO_ENVP_ERR "No environment found"
 # define EMPTY_LINE_ERR "Syntax error: empty or whitespace-only line"
@@ -59,3 +75,26 @@ char	*sanitaze_line(char *line);
 
 /* utils.c */
 void	go_to_next_quote(char *line, int *i, bool go_back);
+
+/*error.c*/
+int		ft_error_message(char *str, int num);
+int		ft_perror_message();
+
+/*tokenizer.c*/
+t_token	*ft_tokenizer(char *input);
+void	ft_free_tokens(t_token **tokens);
+int 	create_token(char *str, int type, t_token **tokens);
+
+
+/*tokens00/01.c*/
+int		ft_is_bracket(char *input, int *i, t_token **tokens);
+int		ft_is_redir(char *input, int *i, t_token **tokens);
+int		ft_is_quote(char *input, int *i, t_token **tokens);
+int		ft_is_pipe(char *input, int *i, t_token **tokens);
+int		ft_is_word(char *input, int *i, t_token **tokens);
+char*	ft_worddup(char *str, int *i);
+char* 	ft_quote_dup(char *str, int *i);
+
+
+/*helpers.c - TO DELETE*/
+void ft_print_token_types(t_token *tokens);

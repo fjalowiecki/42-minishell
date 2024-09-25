@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/25 09:39:59 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:54:38 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	char *san_line;
+	t_token *tokens;
 
 	if (argc != 1 || envp == NULL || *envp == NULL)
 	{
@@ -57,7 +58,9 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(data.line);
 		printf("input: %s\n", san_line);
-		free(san_line);
+		tokens = ft_tokenizer(san_line);
+		if (tokens == NULL)
+			continue;
 	}
 	free_resources(&data);
 }
