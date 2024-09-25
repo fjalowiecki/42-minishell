@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/23 10:51:51 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/09/25 09:39:59 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void free_resources(t_data *data)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	char	*line;
+	char *san_line;
 
 	if (argc != 1 || envp == NULL || *envp == NULL)
 	{
@@ -37,9 +37,27 @@ int	main(int argc, char **argv, char **envp)
 	init(&data, envp);
 	while (1)
 	{
-		line = readline("minishell> ");
-		printf("your input: %s", line);
-		free(line);
+		data.line = readline("minishell> ");
+		if (!data.line)
+		{
+			perror("readline");
+			break;
+		}
+		if (check_syntax(data.line))
+		{
+			free(data.line);
+			continue;
+		}
+		san_line = sanitaze_line(data.line);
+		if (!san_line)
+		{
+			free(data.line);
+			free_resources(&data);
+			return (-1);
+		}
+		free(data.line);
+		printf("input: %s\n", san_line);
+		free(san_line);
 	}
 	free_resources(&data);
 }

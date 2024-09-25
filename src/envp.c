@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:37:12 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/23 10:50:37 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/09/24 10:15:58 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	append_envp_node(t_envp *head, char *str)
 	new_node = malloc(sizeof(t_envp));
 	if (!new_node)
 	{
-		perror(MLLC_ERR);
+		perror("append_envp_node");
 		return ;
 	}
 	new_node->next = NULL;
