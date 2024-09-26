@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:06:05 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/09/25 17:02:43 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:14:38 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_token *ft_tokenizer(char *input)
 	i = 0;
 	while(input && input[i])
 	{
-		if (ft_is_bracket(input, &i, &tokens) == -1)
-			break;
+		//if (ft_is_bracket(input, &i, &tokens) == -1)
+			//break;
 		if (ft_is_redir(input, &i, &tokens) == -1)
 			break;
 		if (ft_is_quote(input, &i, &tokens) == -1)

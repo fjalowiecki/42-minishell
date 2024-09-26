@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/25 19:01:20 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:37:08 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ typedef struct s_token
 	char			*text;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct s_cmd
+{
+	char			**cmd;
+	struct s_cmd	*next;
+}	t_cmd;
+
+typedef struct s_redirs
+{
+	char	*infile;
+	char	*outfile;
+	bool	append;
+}	t_redirs;
 
 /*tokens*/
 # define T_O_BRACKET	1
