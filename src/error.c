@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:45 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/09/25 12:28:51 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/09/29 19:51:25 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,12 @@ int ft_perror_message()
 {
 	perror(NULL);
 	return(-1);
+}
+
+void file_error_msg(char *filename, char *msg)
+{
+	write(2, filename, ft_strlen(filename));
+	write(2, ": ", 2);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
 }

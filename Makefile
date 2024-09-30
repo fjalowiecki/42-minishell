@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+         #
+#    By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/29 10:36:34 by fjalowie          #+#    #+#              #
-#    Updated: 2024/09/25 16:47:21 by fgrabows         ###   ########.fr        #
+#    Updated: 2024/09/30 13:40:51 by fjalowie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,15 @@ SRCS	= src/main.c \
 			src/error.c \
 			src/tokenizer.c \
 			src/helpers.c \
+			src/execution.c \
+			src/fd_handlers.c \
+			src/get_next_line.c \
 
 OBJDIR	= .obj
 OBJS	= $(SRCS:src/%.c=$(OBJDIR)/%.o)
 
 CC		= cc
-CFLAGS	= -I includes/
+CFLAGS	= -I includes/ -g
 # -Wall -Wextra -Werror 
 LDFLAGS = -lreadline
 

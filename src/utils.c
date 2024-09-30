@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:54:38 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/25 09:57:02 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/09/27 11:50:31 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,17 @@ void go_to_next_quote(char *line, int *i, bool go_back)
 			j--;
 	}
 	*i = j; 
+}
+
+void	free_ft_split(char **split)
+{
+	char	**orig_split;
+
+	orig_split = split;
+	while (*split != NULL)
+	{
+		free(*split);
+		split++;
+	}
+	free(orig_split);
 }

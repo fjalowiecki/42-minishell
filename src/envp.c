@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:37:12 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/24 10:15:58 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/09/27 08:42:01 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,4 +125,33 @@ void	free_shlvl_value(t_envp *head)
 	node = fetch_envp_node(head, "SHLVL");
 	free(node->value);
 	node->value = NULL;
+}
+
+char **convert_envp_llist_to_array(t_envp *head)
+{
+	t_envp *node;
+	size_t nodes_cnt;
+	size_t i;
+	char **arr;
+
+	nodes_cnt = 0;
+	node = head;
+	while (node)
+	{
+		nodes_cnt++;
+		node = node->next;
+	}
+	arr = malloc(sizeof(char *) * (nodes_cnt + 1));
+	if (!arr)
+		return (NULL);
+	node = head;
+	i = 0;
+	while (node)
+	{
+		arr[i] = node->value;
+		i++;
+		node = node->next;
+	}
+	arr[i] = NULL;
+	return (arr);
 }
