@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:13:47 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/01 17:42:21 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/01 20:12:46 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int ft_command(t_token **tokens, t_token *head_tok, t_cmd *cmd, t_cmd *head_cmd)
 		return (0);
 	if ((*tokens)->type == T_D_QUOTE || (*tokens)->type == T_S_QUOTE || (*tokens)->type == T_WORD)
 	{
-		i = ft_count_args(*tokens);
+		i = ft_count_tok(*tokens);
 		if (ft_create_cmds(tokens, cmd, i) == -1)
 		{
 			ft_free_tokens(&head_tok);

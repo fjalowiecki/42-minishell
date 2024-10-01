@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/01 17:44:46 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/01 20:04:38 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ typedef struct s_data
 # define MISS_QUOTE_ERR "Syntax error: missing quote"
 # define MISS_CMD_ERR "Syntax error: missing command"
 # define HEREDOC_ERR "Error: heredoc malfunction"
+# define REDIR_TO_OPR " Syntax error: redirection followed by unexpected token"
+
 
 # define BUFFER_SIZE 10
 
