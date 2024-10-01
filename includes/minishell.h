@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/30 13:40:34 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:44:46 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,14 @@ typedef struct s_data
 /*tokens*/
 # define T_O_BRACKET	1
 # define T_C_BRACKET	2
-# define T_REDIR		3
+# define T_OUT_REDIR	3
 # define T_PIPE			4
 # define T_S_QUOTE		5
 # define T_D_QUOTE		6
 # define T_WORD			7
 # define T_APPEND		8
+# define T_IN_REDIR		9
+# define T_FILE			10
 
 # define NO_ENVP_ERR "Error: no environment found"
 # define EMPTY_LINE_ERR "Syntax error: empty or whitespace-only line"

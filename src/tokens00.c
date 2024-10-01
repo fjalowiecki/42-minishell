@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:28:55 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/09/25 19:54:59 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:51:34 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,13 @@ char* ft_quote_dup(char *str, int *i)
 	while (str[++n] && str[n] != delimiter);
 	if (n == 1 && str[n] == '\0') 
 		return (NULL);
-	new = malloc(sizeof(char) * (n + 2));
+	new = malloc(sizeof(char) * n);
 	if (!new)
 	{
 		perror(NULL);
 		return (NULL);
 	}
-	ft_strlcpy(new, str, n + 2);
+	ft_strlcpy(new, (str + 1), n);
 	*i += (n + 1);
 	return(new);
 }

@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:06:05 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/09/26 11:14:38 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:51:42 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,9 @@ void  ft_free_tokens(t_token **tokens)
 	{
 		temp = *tokens;
 		*tokens = (*tokens)->next;
-		free(temp->text);
+		if (temp->text)
+			free(temp->text);
 		free(temp); 
 	}
+	*tokens = NULL;
 }
