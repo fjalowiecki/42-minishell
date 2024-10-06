@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/01 20:04:38 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/06 16:06:45 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,17 @@ typedef struct s_token
 typedef struct s_cmd
 {
 	char			**cmd;
+	char			*infile;
+	char			*outfile;
+	bool			append;
+	bool			here_doc;
+	int				redir_error;
 	struct s_cmd	*next;
 }	t_cmd;
-
-typedef struct s_redirs
-{
-	char	*infile;
-	char	*outfile;
-	bool	append;
-}	t_redirs;
 
 typedef struct s_data
 {
 	t_cmd		*cmd;
-	t_redirs	*redirs;
 	t_envp		*envp;
 	char		**envp_arr;
 	char		*line;
@@ -56,16 +53,17 @@ typedef struct s_data
 }	t_data;
 
 /*tokens*/
-# define T_O_BRACKET	1
-# define T_C_BRACKET	2
-# define T_OUT_REDIR	3
-# define T_PIPE			4
-# define T_S_QUOTE		5
-# define T_D_QUOTE		6
-# define T_WORD			7
-# define T_APPEND		8
-# define T_IN_REDIR		9
-# define T_FILE			10
+# define T_OUT_REDIR	1 
+# define T_IN_REDIR		2
+# define T_APPEND		3
+# define T_HEREDOC		4
+# define T_PIPE			5
+# define T_WORD			6 
+// # define T_O_BRACKET		1 // usless
+// # define T_C_BRACKET		2 // usless
+// # define T_S_QUOTE		5 // useless
+// # define T_D_QUOTE		6 // useless
+// # define T_FILE			10 // useless
 
 # define NO_ENVP_ERR "Error: no environment found"
 # define EMPTY_LINE_ERR "Syntax error: empty or whitespace-only line"
@@ -127,6 +125,9 @@ char* 	ft_quote_dup(char *str, int *i);
 
 /*helpers.c - TO DELETE*/
 void ft_print_token_types(t_token *tokens);
+void ft_print_split(char **str);
+void ft_print_commands(t_cmd *cmds);
+
 
 /* execution.c */
 void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node);
@@ -134,9 +135,19 @@ void	execute_cmds(t_data *data);
 
 /* fd_handlers.c */
 void	duplicate_fds(t_data *data, int input_fd, int output_fd);
-int		get_input_fd(t_redirs *redirs);
-int		get_output_fd(t_redirs *redirs);
+//int		get_input_fd(t_redirs *redirs);
+//int		get_output_fd(t_redirs *redirs);
 int		get_heredoc(t_data *data);
 
 /** get_next_line.c **/
 char	*get_next_line(int fd);
+
+/* cmds.c */
+t_cmd *ft_commands(t_token *tokens);
+int ft_pipe(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd);
+int ft_redir(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd);
+int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd);
+int ft_command(t_token **cur_token, t_token *tokens, t_cmd **cur_command, t_cmd *cmds);
+int ft_set_command(t_cmd **commands);
+void ft_free_commands(t_cmd **commands);
+

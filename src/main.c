@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/01 17:57:07 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/06 19:26:09 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void init(t_data *data, char **envp)
 	increment_shlvl(data->envp);
 	data->envp_arr = NULL;
 	data->cmd_exit_status = 0;
-	data->redirs = NULL;
+	//data->redirs = NULL;
 	data->cmd = NULL;
 	
 	// QUICK TEST (TEMP)
@@ -61,7 +61,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 	char *san_line;
-	t_token *tokens;
+	t_token *tokens;//to zmienie w nastepnym pushu -FG
+	t_cmd *cmds;
 
 	if (argc != 1 || envp == NULL || *envp == NULL)
 	{
@@ -93,8 +94,11 @@ int	main(int argc, char **argv, char **envp)
 		tokens = ft_tokenizer(san_line);
 		if (tokens == NULL)
 			continue;
-		execute_cmds(&data);
-		free(data.line);
+		ft_print_token_types(tokens);
+		cmds = ft_commands(tokens);
+		ft_print_commands(cmds);
+		//execute_cmds(&data);
+		//free(data.line);
 	}
 	free_resources(&data);
 }

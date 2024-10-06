@@ -6,39 +6,12 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:28:55 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/01 17:51:34 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/04 21:04:05 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
-
-int	ft_is_bracket(char *input, int *i, t_token **tokens)
-{
-	int		error;
-	char	*str;
-	
-	if (ft_strchr("()", input[*i]))
-	{
-		if (input[*i] == '(')
-			str = ft_strdup("(");
-		else
-			str = ft_strdup(")");
-		if (!str)
-			return (ft_perror_message());
-		if (input[*i] == '(')
-			error = create_token(str, T_O_BRACKET, tokens);
-		else
-			error = create_token(str, T_C_BRACKET, tokens);
-		if (error == -1)
-		{	
-			free(str);
-			return(-1);
-		}
-		(*i)++;
-	}
-	return (0);
-}
 
 int ft_is_quote(char *input, int *i, t_token **tokens)
 {
@@ -51,9 +24,9 @@ int ft_is_quote(char *input, int *i, t_token **tokens)
 		if (!str)
 			return (ft_perror_message());
 		if (str[0] == '\'')
-			error = create_token(str, T_S_QUOTE, tokens);
+			error = create_token(str, T_WORD, tokens);
 		else
-			error = create_token(str, T_D_QUOTE, tokens);
+			error = create_token(str, T_WORD, tokens);
 		if (error == -1)
 		{
 			free(str);
@@ -78,6 +51,7 @@ int ft_is_pipe(char *input, int *i, t_token **tokens)
 			free(str);
 			return(-1);
 		}
+		(*i)++;
 	}
 	return (0);
 }

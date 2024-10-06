@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:13:47 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/01 20:12:46 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/06 19:19:46 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 //if error ocures everything is freed
 //if calling some additional function end with error all memory is going to be freed
 //if all called functions ends with succes all memory but *commands is going to be freed
+static int ft_count_tok(t_token *tokens);
+static int ft_create_cmds(t_token **tokens, t_cmd *commands, int i);
+static void ft_free_args(int i, char **cmds);
+
 t_cmd *ft_commands(t_token *tokens)
 {
 	t_cmd *commands;
@@ -31,11 +35,11 @@ t_cmd *ft_commands(t_token *tokens)
 	current_cmd = commands;
 	while (current_tok)
 	{
-		if(ft_redir(&current_tok, tokens, current_cmd, commands) == -1)
+		if(ft_redir(&current_tok, tokens, &current_cmd, commands) == -1)
 			return NULL;
-		if(ft_command(&current_tok, tokens, current_cmd, commands) == -1)
+		if(ft_command(&current_tok, tokens, &current_cmd, commands) == -1)
 			return NULL;
-		if(ft_pipe(&current_tok, tokens, current_cmd, commands) == -1)
+		if(ft_pipe(&current_tok, tokens, &current_cmd, commands) == -1)
 			return NULL;
 	}
 	if(!tokens)
@@ -43,6 +47,7 @@ t_cmd *ft_commands(t_token *tokens)
 	ft_free_tokens(&tokens);
 	return (commands);
 }
+
 int ft_pipe(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd)
 {
 	if (!*current_tok)
@@ -55,6 +60,8 @@ int ft_pipe(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd
 			ft_free_commands(&head_cmd);
 			return(-1);
 		}
+		(*current_tok) = (*current_tok)->next;
+		(*current_cmd) = (*current_cmd)->next;
 	}
 	return (0);
 }
@@ -62,10 +69,9 @@ int ft_redir(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cm
 {
 	if (!*current_tok)
 		return (0);
-	if((*current_tok)->type == T_IN_REDIR || (*current_tok)->type == T_APPEND || (*current_tok)->type == T_OUT_REDIR)
+	if((*current_tok)->type != T_WORD && (*current_tok)->type != T_PIPE)
 	{
-		if((*current_tok)->next && ((*current_tok)->next->type == T_D_QUOTE  
-			|| (*current_tok)->next->type == T_WORD || (*current_tok)->next->type == T_S_QUOTE))
+		if((*current_tok)->next && (*current_tok)->next->type == T_WORD)
 		{
 			if (ft_set_redir(current_tok, *current_cmd) == -1)
 			{
@@ -75,7 +81,7 @@ int ft_redir(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cm
 			}
 			(*current_tok) = (*current_tok)->next->next;
 		}
-		else
+		else//MOZNA SIE ZASTANOWIC CZY MAM WYSWIETLAC TO I CZY WGL JEST TO MOZLIWE
 		{
 			ft_free_tokens(&head_tok);
 			ft_free_commands(&head_cmd);
@@ -84,7 +90,10 @@ int ft_redir(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cm
 	}
 	return(0);
 }
-
+//sprawdzic access
+//stworzyc plik jesli juz istnieje outfile 
+//wprowadzic error jezeli nie ma odpowiedniego dostepu
+//zwolnic poprzedniego stringa jesli jest nowy zeby zapobiec leakom
 int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd)
 {
 	char *str;
@@ -93,39 +102,48 @@ int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd)
 	if (!str)
 		return (ft_perror_message());
 	if ((*current_tok)->type == T_IN_REDIR)
-		current_cmd->infile = str;
-	if ((*current_tok)->type == T_OUT_REDIR)
 	{
 		current_cmd->infile = str;
+		current_cmd->here_doc = false;
+	}	
+	if ((*current_tok)->type == T_OUT_REDIR)
+	{
+		current_cmd->outfile = str;
 		current_cmd->append = false;
 	}
 	if ((*current_tok)->type ==  T_APPEND)
 	{
-		current_cmd->infile = str;
+		current_cmd->outfile = str;
 		current_cmd->append = true;
 	}
-	(*current_tok) = (*current_tok)->next->next;
+	if ((*current_tok)->type == T_HEREDOC)
+	{
+		current_cmd->infile = str;
+		current_cmd->here_doc = true;
+	}
 	return(0);
 }
-
-int ft_command(t_token **tokens, t_token *head_tok, t_cmd *cmd, t_cmd *head_cmd)
+//potencjalnie do zmiana na warunek (przechodz po tokeanach dopokie nie 
+//napotkasz pipa a jezeli wystepuje przekierowani to nastepny word nie jest ani komenda ani jej argumentem)
+int ft_command(t_token **cur_token, t_token *tokens, t_cmd **cur_command, t_cmd *cmds)
 {
 	int i;
 	
-	if (!(*tokens))
+	if (!(*cur_token))
 		return (0);
-	if ((*tokens)->type == T_D_QUOTE || (*tokens)->type == T_S_QUOTE || (*tokens)->type == T_WORD)
+	if ((*cur_token)->type == T_WORD)
 	{
-		i = ft_count_tok(*tokens);
-		if (ft_create_cmds(tokens, cmd, i) == -1)
+		i = ft_count_tok(*cur_token);
+		if (ft_create_cmds(cur_token, *cur_command, i) == -1)
 		{
-			ft_free_tokens(&head_tok);
-			ft_free_commands(&head_cmd);
+			ft_free_tokens(&tokens);
+			ft_free_commands(&cmds);
 			return (-1);
 		}
 	}
 	return (0);
 }
+
 static int ft_create_cmds(t_token **tokens, t_cmd *commands, int i)
 {
 	char **cmds;
@@ -136,7 +154,7 @@ static int ft_create_cmds(t_token **tokens, t_cmd *commands, int i)
 	cmds = malloc(sizeof(char *) * (i + 1));
 	if (!cmds)
 		return(ft_perror_message());
-	while(*tokens && ((*tokens)->type == T_D_QUOTE || (*tokens)->type == T_S_QUOTE || (*tokens)-> type == T_WORD))
+	while (*tokens && (*tokens)->type == T_WORD)
 	{
 		arg = ft_strdup((*tokens)->text);
 		if(!arg)
@@ -148,14 +166,16 @@ static int ft_create_cmds(t_token **tokens, t_cmd *commands, int i)
 		*tokens = (*tokens)->next;
 	}
 	cmds[n] = NULL;
+	commands->cmd = cmds;
 	return(0);
 }
+
 static void ft_free_args(int i, char **cmds)
 {
 	int x;
 	
 	x = 0;
-	while(x < i)
+	while (x < i)
 		free(cmds[x++]);
 	free(cmds);
 }
@@ -165,14 +185,13 @@ static int ft_count_tok(t_token *tokens)
 	int i;
 	
 	i = 0;
-	while(tokens && (tokens->type == T_D_QUOTE || tokens->type == T_S_QUOTE || tokens-> type == T_WORD))
+	while (tokens && tokens-> type == T_WORD)
 	{
 		i++;
 		tokens = tokens->next;
 	}
-	return(i);
+	return (i);
 }
-// dodanie srodowiska do cmd - do dodania
 int ft_set_command(t_cmd **commands)
 {
 	t_cmd *new;
@@ -181,12 +200,13 @@ int ft_set_command(t_cmd **commands)
 	new = malloc(sizeof(t_cmd));
 	if (!new)
 		return(ft_perror_message());
+	new->next = NULL;
 	new->append = false;
 	new->infile = NULL;
 	new->outfile = NULL;
-	new->next = NULL;
-	new->envp = NULL;
 	new->cmd = NULL;
+	new->redir_error = 1;
+	new->here_doc = false;
 	if(!(*commands))
 		*commands = new;
 	else
