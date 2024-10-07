@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/07 09:01:52 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:22:44 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct s_data
 # define HEREDOC_ERR "Error: heredoc malfunction"
 # define REDIR_TO_OPR " Syntax error: redirection followed by unexpected token"
 
-
 # define BUFFER_SIZE 10
 
 /* main.c */
@@ -134,10 +133,10 @@ void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node);
 void	execute_cmds(t_data *data);
 
 /* fd_handlers.c */
-void	duplicate_fds(t_data *data, int input_fd, int output_fd);
-//int		get_input_fd(t_redirs *redirs);
-//int		get_output_fd(t_redirs *redirs);
-int		get_heredoc(t_data *data);
+void	duplicate_fds(int input_fd, int output_fd);
+int		update_input_fd(t_cmd *cmd, int input_fd);
+int		get_output_fd(t_cmd *cmd, int *fd_pipe);
+int		get_heredoc(t_cmd *cmd);
 
 /** get_next_line.c **/
 char	*get_next_line(int fd);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+         #
+#    By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/29 10:36:34 by fjalowie          #+#    #+#              #
-#    Updated: 2024/10/06 15:56:33 by fgrabows         ###   ########.fr        #
+#    Updated: 2024/10/07 13:23:52 by fjalowie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ SRCS	= src/main.c \
 			src/helpers.c \
 			src/get_next_line.c \
 			src/cmds.c \
-			#src/execution.c \
-			#src/fd_handlers.c \
+			src/execution.c \
+			src/fd_handlers.c \
 
 OBJDIR	= .obj
 OBJS	= $(SRCS:src/%.c=$(OBJDIR)/%.o)

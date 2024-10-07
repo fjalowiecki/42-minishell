@@ -6,13 +6,13 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:56:00 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/30 13:39:22 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/07 12:15:02 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	duplicate_fds(t_data *data, int input_fd, int output_fd)
+void	duplicate_fds(int input_fd, int output_fd)
 {
 	if (input_fd > 0)
 	{
@@ -26,34 +26,47 @@ void	duplicate_fds(t_data *data, int input_fd, int output_fd)
 	}
 }
 
-int	get_input_fd(t_redirs *redirs)
+int	update_input_fd(t_cmd *cmd, int input_fd)
 {
-	int	input_fd;
-
-	if (!redirs->infile)
-		return (0);
-	input_fd = open(redirs->infile, O_RDONLY);
-	if (input_fd < 0)
-		perror(redirs->infile);
+	if (cmd->here_doc)
+	{
+		input_fd = get_heredoc(cmd);
+		if (input_fd < 0)
+			ft_error_message(HEREDOC_ERR, -1);
+		return (input_fd);
+	}
+	else if (cmd->infile)
+	{
+		input_fd = open(cmd->infile, O_RDONLY);
+		if (input_fd < 0)
+			perror(cmd->infile);
+		return (input_fd);
+	}
 	return (input_fd);
 }
 
-int	get_output_fd(t_redirs *redirs)
+int	get_output_fd(t_cmd *cmd, int *fd_pipe)
 {
 	int	output_fd;
 
-	if (redirs->append == false)
-		output_fd = open(redirs->outfile,
+	if (cmd->outfile && cmd->append == false)
+		output_fd = open(cmd->outfile,
 				O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	else
-		output_fd = open(redirs->outfile,
+	else if (cmd->outfile && cmd->append == true)
+		output_fd = open(cmd->outfile,
 				O_WRONLY | O_CREAT | O_APPEND, 0664);
-	if (output_fd < 0)
-		perror(redirs->outfile);
+	else if (cmd->next == NULL)
+		output_fd = STDOUT_FILENO;
+	else 
+		output_fd = fd_pipe[1];
+	if (output_fd < 0 && cmd->outfile)
+		perror(cmd->outfile);
+	else if (output_fd < 0 && !cmd->outfile)
+		perror("output_fd");
 	return (output_fd);
 }
 
-static char *get_eof(char *line)
+/* static char *get_eof(char *line)
 {
 	char *eof_start;
 	char *eof_end;
@@ -73,15 +86,15 @@ static char *get_eof(char *line)
 		return (NULL);
 	ft_strlcpy(eof, eof_start, eof_len + 1);
 	return (eof);
-}
+} */
 
-int	get_heredoc(t_data *data)
+int	get_heredoc(t_cmd *cmd)
 {
 	int		fd_pipe[2];
 	char	*input;
 	char	*eof;
 
-	eof = get_eof(data->line);
+	eof = cmd->infile;
 	if (!eof)
 		return (-1);
 	pipe(fd_pipe);
@@ -92,7 +105,6 @@ int	get_heredoc(t_data *data)
 			break ;
 		write(fd_pipe[1], input, ft_strlen(input));
 	}
-	free(eof);
 	close(fd_pipe[1]);
 	return (fd_pipe[0]);
 }
