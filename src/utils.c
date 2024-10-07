@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:54:38 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/27 11:50:31 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:12:58 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,23 @@ void	free_ft_split(char **split)
 		split++;
 	}
 	free(orig_split);
+}
+
+int ft_check_access(char *file, int type)
+{
+	int value;
+	
+	if(type == READ)
+	{
+		value = access(file, F_OK | R_OK);
+		if (value < 0)
+			return(ft_perror_message());
+	}
+	else if(type == WRITE)	
+	{
+		value = access(file, F_OK | W_OK);
+		if (value < 0)
+			return(ft_perror_message());
+	}
+	return (0);
 }

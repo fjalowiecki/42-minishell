@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/07 13:22:44 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:58:02 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ typedef struct s_data
 # define T_HEREDOC		4
 # define T_PIPE			5
 # define T_WORD			6 
+# define T_ARG			7
+
+/*permissions to file*/
+# define READ			1
+# define WRITE			2
+# define EXECUTE		3
 // # define T_O_BRACKET		1 // usless
 // # define T_C_BRACKET		2 // usless
 // # define T_S_QUOTE		5 // useless
@@ -100,6 +106,8 @@ char	*sanitaze_line(char *line);
 /* utils.c */
 void	go_to_next_quote(char *line, int *i, bool go_back);
 void	free_ft_split(char **split);
+int		ft_check_access(char *file, int type);
+
 
 /*error.c*/
 int		ft_error_message(char *str, int num);
@@ -145,8 +153,9 @@ char	*get_next_line(int fd);
 t_cmd *ft_commands(t_token *tokens);
 int ft_pipe(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd);
 int ft_redir(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd);
-int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd);
 int ft_command(t_token **cur_token, t_token *tokens, t_cmd **cur_command, t_cmd *cmds);
 int ft_set_command(t_cmd **commands);
 void ft_free_commands(t_cmd **commands);
 
+/* cmds_redirs.c */
+int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd);

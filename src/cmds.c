@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:13:47 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/07 09:02:21 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/07 19:13:53 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 //if calling some additional function end with error all memory is going to be freed
 //if all called functions ends with succes all memory but *commands is going to be freed
 static int ft_count_tok(t_token *tokens);
-static int ft_create_cmds(t_token **tokens, t_cmd *commands, int i);
-static void ft_free_args(int i, char **cmds);
+static int ft_create_cmds(t_token *tokens, t_cmd *commands, int i);
+static int ft_free_args(int i, char **cmds);
 
 t_cmd *ft_commands(t_token *tokens)
 {
@@ -90,41 +90,10 @@ int ft_redir(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cm
 	}
 	return(0);
 }
-//sprawdzic access
-//stworzyc plik jesli juz istnieje outfile 
-//wprowadzic error jezeli nie ma odpowiedniego dostepu
-//zwolnic poprzedniego stringa jesli jest nowy zeby zapobiec leakom
-int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd)
-{
-	char *str;
 
-	str = ft_strdup((*current_tok)->next->text);
-	if (!str)
-		return (ft_perror_message());
-	if ((*current_tok)->type == T_IN_REDIR)
-	{
-		current_cmd->infile = str;
-		current_cmd->here_doc = false;
-	}	
-	if ((*current_tok)->type == T_OUT_REDIR)
-	{
-		current_cmd->outfile = str;
-		current_cmd->append = false;
-	}
-	if ((*current_tok)->type ==  T_APPEND)
-	{
-		current_cmd->outfile = str;
-		current_cmd->append = true;
-	}
-	if ((*current_tok)->type == T_HEREDOC)
-	{
-		current_cmd->infile = str;
-		current_cmd->here_doc = true;
-	}
-	return(0);
-}
 //potencjalnie do zmiana na warunek (przechodz po tokeanach dopokie nie 
 //napotkasz pipa a jezeli wystepuje przekierowani to nastepny word nie jest ani komenda ani jej argumentem)
+//gdy napotkam T_ARG oznavcza to że dany token zostal juz obslużony
 int ft_command(t_token **cur_token, t_token *tokens, t_cmd **cur_command, t_cmd *cmds)
 {
 	int i;
@@ -134,17 +103,22 @@ int ft_command(t_token **cur_token, t_token *tokens, t_cmd **cur_command, t_cmd 
 	if ((*cur_token)->type == T_WORD)
 	{
 		i = ft_count_tok(*cur_token);
-		if (ft_create_cmds(cur_token, *cur_command, i) == -1)
+		if (ft_create_cmds(*cur_token, *cur_command, i) == -1)
 		{
 			ft_free_tokens(&tokens);
 			ft_free_commands(&cmds);
 			return (-1);
 		}
 	}
+	if ((*cur_token)->type == T_ARG)
+	{
+		while(*cur_token && (*cur_token)->type == T_ARG)
+			*cur_token = (*cur_token)->next;
+	}
 	return (0);
 }
 
-static int ft_create_cmds(t_token **tokens, t_cmd *commands, int i)
+static int ft_create_cmds(t_token *tokens, t_cmd *commands, int i)
 {
 	char **cmds;
 	char *arg;
@@ -154,30 +128,34 @@ static int ft_create_cmds(t_token **tokens, t_cmd *commands, int i)
 	cmds = malloc(sizeof(char *) * (i + 1));
 	if (!cmds)
 		return(ft_perror_message());
-	while (*tokens && (*tokens)->type == T_WORD)
+	while (tokens && tokens->type != T_PIPE)
 	{
-		arg = ft_strdup((*tokens)->text);
-		if(!arg)
+		if (tokens->type != T_ARG)
 		{
-			ft_free_args(n, cmds);
-			return (ft_perror_message());
+			tokens = tokens->next;
+			continue;
 		}
+		arg = ft_strdup(tokens->text);
+		if(!arg)
+			return (ft_free_args(n, cmds));
 		cmds[n++] = arg;
-		*tokens = (*tokens)->next;
+		tokens = tokens->next;
 	}
 	cmds[n] = NULL;
 	commands->cmd = cmds;
 	return(0);
 }
 
-static void ft_free_args(int i, char **cmds)
+static int ft_free_args(int i, char **cmds)
 {
 	int x;
 	
+	ft_perror_message();
 	x = 0;
 	while (x < i)
 		free(cmds[x++]);
 	free(cmds);
+	return (-1);
 }
 
 static int ft_count_tok(t_token *tokens)
@@ -185,9 +163,15 @@ static int ft_count_tok(t_token *tokens)
 	int i;
 	
 	i = 0;
-	while (tokens && tokens-> type == T_WORD)
+	while (tokens && tokens->type != T_PIPE)
 	{
+		if (tokens->type != T_WORD)
+		{
+			tokens = tokens->next->next;
+			continue ;
+		}
 		i++;
+		tokens->type = T_ARG;
 		tokens = tokens->next;
 	}
 	return (i);
