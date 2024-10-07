@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:13:47 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/06 19:19:46 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/07 09:02:21 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ int ft_set_command(t_cmd **commands)
 	new->infile = NULL;
 	new->outfile = NULL;
 	new->cmd = NULL;
-	new->redir_error = 1;
+	new->redir_error = false;
 	new->here_doc = false;
 	if(!(*commands))
 		*commands = new;

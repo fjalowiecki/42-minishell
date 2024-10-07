@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/06 16:06:45 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/07 09:01:52 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_cmd
 	char			*outfile;
 	bool			append;
 	bool			here_doc;
-	int				redir_error;
+	bool			redir_error;
 	struct s_cmd	*next;
 }	t_cmd;
 
