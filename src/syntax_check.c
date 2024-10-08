@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:33:58 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/30 14:23:40 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/08 09:15:13 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,21 @@ int	check_for_unclosed_quotes(char *line)
 
 	i = 0;
 	in_quote = false;
-	while (line[i] != '\0')
-	{
-		if ((line[i] == '\'' || line[i] == '"') && in_quote == false)
-		{
-			quote = line[i];
-			in_quote = true;
-		}
-		else if (line[i] == quote && in_quote == true)
-			in_quote = false;
-		i++;
-	}
+	quote = '\0';
+    while (line[i] != '\0')
+    {
+        if ((line[i] == '\'' || line[i] == '"'))
+        {
+            if (!in_quote)
+            {
+                quote = line[i];
+                in_quote = true;
+            }
+            else if (line[i] == quote)
+                in_quote = false;
+        }
+        i++;
+    }
 	if (in_quote == true)
 		return (-1);
 	return (0);
@@ -81,7 +85,7 @@ int	check_for_following_command(char *line, int i)
 	{
 		if (ft_isspace(line[i]))
 			i++;
-		else if (ft_isalpha(line[i]))
+		else if (ft_isalnum(line[i]))
 			return (0);
 		else
 			break ;
@@ -105,7 +109,7 @@ int	check_for_preceding_command(char *line, int i)
 			continue ;
 		else if (i && (line[i] == '"' || line[i] == '\''))
 			go_to_next_quote(line, &i, true);
-		else if (ft_isalpha(line[i]))
+		else if (ft_isalnum(line[i]))
 			return (0);
 		else
 			break ;
