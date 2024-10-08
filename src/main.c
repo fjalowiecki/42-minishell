@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/07 14:26:38 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/08 09:04:01 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,13 @@ int	main(int argc, char **argv, char **envp)
 			continue;
 		// ft_print_token_types(tokens);
 		cmds = ft_commands(tokens);
+		if (cmds == NULL)
+			continue;
 		// ft_print_commands(cmds);
 		data.cmd = cmds;
 		free(data.line);
 		execute_cmds(&data);
+		ft_free_commands(&(data.cmd));
 	}
 	free_resources(&data);
 }

@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 18:09:57 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/07 18:35:40 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/07 19:38:04 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void ft_append_cmd(t_token *current_tok, t_cmd *current_cmd, char* str);
 static void ft_redir_out_cmd(t_token *current_tok, t_cmd *current_cmd, char* str);
 static void ft_redir_in_cmd(t_token *current_tok, t_cmd *current_cmd, char* str);
 
-//sprawdzic access
-//stworzyc plik jesli juz istnieje outfile 
+//sprawdzic access X
+//stworzyc plik X 
 //wprowadzic error jezeli nie ma odpowiedniego dostepu X
 //zwolnic poprzedniego stringa jesli jest nowy zeby zapobiec leakom
 int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd)
