@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:55:24 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/25 09:59:54 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:02:38 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ char *sanitaze_line(char *line)
 	}
 	final[j] = '\0';
 	free(trim);
+	// printf("final: %s\n", final);
 	return (final);
 }

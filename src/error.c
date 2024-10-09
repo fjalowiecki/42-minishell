@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:45 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/09/29 19:51:25 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:43:09 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	ft_error_message(char *str, int num)
 {
 	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
 	return (num);
 }
 

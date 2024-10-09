@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/09 14:01:57 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:05:19 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int argc, char **argv, char **envp)
 		data.line = readline("minishell> ");
 		if (!data.line)
 		{
-			perror("readline failed");
+			perror("Readline failed");
 			break;
 		}
 		if (check_syntax(data.line))

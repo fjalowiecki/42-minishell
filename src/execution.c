@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/07 13:51:05 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:16:03 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static char	*find_cmd_path(t_envp *envp, char *cmd)
 	}
 	free_ft_split(envp_paths);
 	free(envp_path_part);
+	if (final_envp_path == NULL)
+		ft_error_message(NO_CMD_ERR, -1);
 	return (final_envp_path);
 }
 
@@ -51,7 +53,7 @@ static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
 		close(output_fd);
 	if (access(cmd_node->cmd[0], X_OK) != 0)
 		cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0]);
-	if (cmd_node->cmd[0] != NULL && output_fd > 0)
+	if (cmd_node->cmd[0] != NULL && output_fd > 0 && cmd_node->redir_error == false)
 	{
 		if (execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr) < 0)
 			perror("execve failed");
@@ -63,19 +65,26 @@ static void	process_cmd(t_data *data, t_cmd *cmd_node, int input_fd, int *fd_pip
 	int output_fd;
 
 	input_fd = update_input_fd(cmd_node, input_fd);
+	if (input_fd < 0)
+	{
+		close(fd_pipe[0]);
+		close(fd_pipe[1]);
+		exit(1);
+	}
 	output_fd = get_output_fd(cmd_node, fd_pipe);
 	duplicate_fds(input_fd, output_fd);
-	if (input_fd > 0)
-		close(input_fd);
 	close(fd_pipe[0]);
 	close(fd_pipe[1]);
+	if (input_fd > 0)
+		close(input_fd);
 	if (access(cmd_node->cmd[0], X_OK) != 0)
 		cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0]);
-	if (cmd_node->cmd[0] != NULL && input_fd >= 0)
+	if (cmd_node->cmd[0] != NULL && input_fd >= 0 && cmd_node->redir_error == false)
 	{
 		if (execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr) < 0)
 			perror("execve failed");
 	}
+	exit(1);
 }
 
 void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node)
@@ -119,7 +128,7 @@ void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node)
 void	execute_cmds(t_data *data)
 {
 	// if (data->envp_arr)
-		// free_ft_split(data->envp_arr);
+	// 	free_ft_split(data->envp_arr);
 	data->envp_arr = convert_envp_llist_to_array(data->envp);
 	recursive_pipeline(0, data, data->cmd);
 }
