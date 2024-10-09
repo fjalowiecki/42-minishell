@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:33:58 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/08 09:15:13 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:24:06 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,11 @@
 int	check_syntax(char *line)
 {
 	if (check_line_if_empty(line))
-	{
-		perror(EMPTY_LINE_ERR);
 		return (-1);
-	}
 	if (check_for_unclosed_quotes(line))
-	{
-		perror(MISS_QUOTE_ERR);
-		return (-1);
-	}
+		return (ft_error_message(MISS_QUOTE_ERR, -1));
 	if (check_for_missing_command(line))
-	{
-		perror(MISS_CMD_ERR);
-		return (-1);
-	}
+		return (ft_error_message(MISS_CMD_ERR, -1));
 	return (0);
 }
 
@@ -80,17 +71,31 @@ int	check_for_unclosed_quotes(char *line)
 
 int	check_for_following_command(char *line, int i)
 {
+	char	org_char;
+
+	org_char = line[i];
 	i++;
 	while (line[i] != '\0')
 	{
 		if (ft_isspace(line[i]))
 			i++;
-		else if (ft_isalnum(line[i]))
+		else if (ft_isalnum(line[i]) 
+			|| (line[i] == '>' && org_char != '>')
+			|| (line[i] == '<' && org_char != '<')
+			|| (line[i] == '/' && (org_char == '<' || org_char == '>')))
 			return (0);
 		else
 			break ;
 	}
 	return (-1);
+}
+static int is_accepted_char(char ch)
+{
+	if (ch == 33 || ch == 61 || ch == 63
+			|| (ch >= 35 && ch <= 47))
+		return (1);
+	else
+		return (0);
 }
 
 int	check_for_preceding_command(char *line, int i)
@@ -109,7 +114,7 @@ int	check_for_preceding_command(char *line, int i)
 			continue ;
 		else if (i && (line[i] == '"' || line[i] == '\''))
 			go_to_next_quote(line, &i, true);
-		else if (ft_isalnum(line[i]))
+		else if (ft_isalnum(line[i]) || is_accepted_char(line[i]))
 			return (0);
 		else
 			break ;
@@ -126,14 +131,15 @@ int	check_for_missing_command(char *line)
 	{
 		if ((line[i] == '"' || line[i] == '\''))
 			go_to_next_quote(line, &i, false);
-		if (line[i] == '>' && line[i + 1] != '>' || line[i] == '|')
+		if (line[i] == '|')
 		{
 			if (check_for_following_command(line, i))
 				return (-1);
 			if (check_for_preceding_command(line, i))
 				return (-1);
 		}
-		else if (line[i] == '<' && line[i + 1] != '<')
+		else if (line[i] == '>' && line[i + 1] != '>'
+				|| line[i] == '<' && line[i + 1] != '<')
 			if (check_for_following_command(line, i))
 				return (-1);
 		i++;

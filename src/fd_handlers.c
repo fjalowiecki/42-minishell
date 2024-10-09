@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:56:00 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/07 12:15:02 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:01:52 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int	update_input_fd(t_cmd *cmd, int input_fd)
 			ft_error_message(HEREDOC_ERR, -1);
 		return (input_fd);
 	}
-	else if (cmd->infile)
+	else if (cmd->redir_error == true)
+		return (-1);
+	else if (cmd->infile && cmd->redir_error == false)
 	{
 		input_fd = open(cmd->infile, O_RDONLY);
 		if (input_fd < 0)
@@ -66,28 +68,6 @@ int	get_output_fd(t_cmd *cmd, int *fd_pipe)
 	return (output_fd);
 }
 
-/* static char *get_eof(char *line)
-{
-	char *eof_start;
-	char *eof_end;
-	char *eof;
-	size_t eof_len;
-	
-	eof_start = ft_strchr(line, ' ');
-	if (!eof_start)
-		return (NULL);
-	eof_start++;
-	eof_end = ft_strchr(eof_start, ' ');
-	if (!eof_end)
-		return (NULL);
-	eof_len = eof_end - eof_start;
-	eof = malloc(sizeof(char) * (eof_len + 1));
-	if (!eof)
-		return (NULL);
-	ft_strlcpy(eof, eof_start, eof_len + 1);
-	return (eof);
-} */
-
 int	get_heredoc(t_cmd *cmd)
 {
 	int		fd_pipe[2];
@@ -101,7 +81,8 @@ int	get_heredoc(t_cmd *cmd)
 	while (1)
 	{
 		input = get_next_line(STDIN_FILENO);
-		if (ft_strncmp(input, eof, ft_strlen(eof)) == 0)
+		if (ft_strncmp(input, eof, ft_strlen(eof)) == 0
+				&& input[ft_strlen(eof)] == '\n')
 			break ;
 		write(fd_pipe[1], input, ft_strlen(input));
 	}

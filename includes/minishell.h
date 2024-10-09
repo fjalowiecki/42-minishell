@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/07 18:58:02 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/08 12:22:43 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ typedef struct s_data
 // # define T_FILE			10 // useless
 
 # define NO_ENVP_ERR "Error: no environment found"
-# define EMPTY_LINE_ERR "Syntax error: empty or whitespace-only line"
+# define NO_CMD_ERR "Error: command not found"
+// # define EMPTY_LINE_ERR "Syntax error: empty or whitespace-only line"
 # define MISS_QUOTE_ERR "Syntax error: missing quote"
 # define MISS_CMD_ERR "Syntax error: missing command"
 # define HEREDOC_ERR "Error: heredoc malfunction"
