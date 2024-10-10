@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/09 11:16:03 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:21:51 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node)
 		else
 		{
 			close(fd_pipe[1]);
-			waitpid(pid, NULL, 0);
+			// waitpid(pid, NULL, 0);
 			if (input_fd > 0)
 				close(input_fd);
 			recursive_pipeline(fd_pipe[0], data, cmd_node->next);
