@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:37:12 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/09/27 08:42:01 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:53:18 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ char **convert_envp_llist_to_array(t_envp *head)
 	i = 0;
 	while (node)
 	{
-		arr[i] = node->value;
+		arr[i] = ft_strdup(node->value);
 		i++;
 		node = node->next;
 	}
