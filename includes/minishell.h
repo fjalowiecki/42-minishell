@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/08 12:22:43 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/11 09:50:01 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,3 +160,6 @@ void ft_free_commands(t_cmd **commands);
 
 /* cmds_redirs.c */
 int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd);
+
+/* builtins.c */
+void	check_for_builtin_and_execute(char **cmd, t_data *data);

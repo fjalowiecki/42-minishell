@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/10 11:57:06 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/11 09:52:19 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
 		close(input_fd);
 	if (output_fd > 2)
 		close(output_fd);
+	check_for_builtin_and_execute(cmd_node->cmd, data);
 	if (access(cmd_node->cmd[0], X_OK) != 0)
 		cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0]);
 	if (cmd_node->cmd[0] != NULL && output_fd > 0 && cmd_node->redir_error == false)
@@ -78,6 +79,7 @@ static void	process_cmd(t_data *data, t_cmd *cmd_node, int input_fd, int *fd_pip
 	close(fd_pipe[1]);
 	if (input_fd > 0)
 		close(input_fd);
+	check_for_builtin_and_execute(cmd_node->cmd, data);
 	if (access(cmd_node->cmd[0], X_OK) != 0)
 		cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0]);
 	if (cmd_node->cmd[0] != NULL && input_fd >= 0 && cmd_node->redir_error == false)
@@ -116,9 +118,7 @@ void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node)
 		if (pid < 0)
 			perror("fork failed");
 		else if (pid == 0)
-		{
 			process_cmd(data, cmd_node, input_fd, fd_pipe);
-		}
 		else
 		{
 			close(fd_pipe[1]);
