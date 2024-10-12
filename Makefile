@@ -6,7 +6,7 @@
 #    By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/29 10:36:34 by fjalowie          #+#    #+#              #
-#    Updated: 2024/10/11 15:07:33 by fgrabows         ###   ########.fr        #
+#    Updated: 2024/10/12 20:24:37 by fgrabows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS	= src/main.c \
 			src/fd_handlers.c \
 			src/cmds_redirs.c \
 			src/dollar_sign.c \
+			src/builtins.c \
 
 OBJDIR	= .obj
 OBJS	= $(SRCS:src/%.c=$(OBJDIR)/%.o)

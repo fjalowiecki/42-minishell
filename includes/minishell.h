@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/11 18:02:46 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/12 20:25:05 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,3 +170,6 @@ void ft_free_commands(t_cmd **commands);
 
 /* cmds_redirs.c */
 int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd);
+
+/* builtins.c */
+void	check_for_builtin_and_execute(char **cmd, t_data *data);
