@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/09 14:05:19 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/10 20:34:14 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ int	main(int argc, char **argv, char **envp)
 			free_resources(&data);
 			return (-1);
 		}
-		// printf("input: %s\n", san_line);
-		tokens = ft_tokenizer(san_line);
+		//printf("input: %s\n", san_line);
+		tokens = ft_tokenizer(san_line, data.envp);
 		if (tokens == NULL)
 			continue;
-		// ft_print_token_types(tokens);
+		ft_print_token_types(tokens);
 		cmds = ft_commands(tokens);
 		if (cmds == NULL)
 			continue;

@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:13:47 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/08 08:58:37 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/11 21:52:52 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int ft_command(t_token **cur_token, t_token *tokens, t_cmd **cur_command, t_cmd 
 	if ((*cur_token)->type == T_WORD)
 	{
 		i = ft_count_tok(*cur_token);
+		printf("TOKENS: %d\n", i);
 		if (ft_create_cmds(*cur_token, *cur_command, i) == -1)
 		{
 			ft_free_tokens(&tokens);

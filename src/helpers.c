@@ -8,7 +8,7 @@ void ft_print_token_types(t_token *tokens)
 
     while (current)
     {
-        printf("%d ", current->type);
+        printf("%d , %s", current->type, current->text);
         current = current->next;    
 	}
     printf("\n");

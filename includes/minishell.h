@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/08 12:22:43 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/11 18:02:46 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,19 +116,29 @@ int		ft_perror_message();
 void	file_error_msg(char *filename, char *msg);
 
 /*tokenizer.c*/
-t_token	*ft_tokenizer(char *input);
+t_token *ft_tokenizer(char *input, t_envp *env );
 void	ft_free_tokens(t_token **tokens);
 int 	create_token(char *str, int type, t_token **tokens);
 
 
 /*tokens00/01.c*/
-int		ft_is_bracket(char *input, int *i, t_token **tokens);
 int		ft_is_redir(char *input, int *i, t_token **tokens);
-int		ft_is_quote(char *input, int *i, t_token **tokens);
 int		ft_is_pipe(char *input, int *i, t_token **tokens);
-int		ft_is_word(char *input, int *i, t_token **tokens);
-char*	ft_worddup(char *str, int *i);
-char* 	ft_quote_dup(char *str, int *i);
+int		ft_is_word(char *input, int *i, t_token **tokens, t_envp *env);
+int		ft_create_word_tok(char *str, int *i, t_token **tokens, t_envp *env);
+int		ft_check_for_dollar(char **word, t_token **tokens, t_envp *env);
+int		ft_extract_word(char *str, int *n, t_token **tokens, t_envp *env);
+int		ft_create_word_tok(char *str, int *i, t_token **tokens, t_envp *env);
+int		ft_cross_word(char **word, t_token **tokens);
+int		ft_cut_token(int *i, char **word, t_token **tokens);
+int		ft_clear_quote (int *i, char **word, char del);
+void	ft_skip_sq(int *n, char *str);
+
+/* dollar_sign.c */
+int ft_dollar(int *i, char **word, t_envp *env);
+int ft_valid_dollar(int *i, char *word, char **var);
+int ft_expand_var(char *var, t_envp *env, char **word, int *i);
+int ft_change_word(char* var, char **word, int *i);
 
 
 /*helpers.c - TO DELETE*/

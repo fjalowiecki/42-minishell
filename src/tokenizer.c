@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:06:05 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/04 15:26:23 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/10 19:46:01 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // if error here i am going to return *token with value NULL
 // every accessible resource should be freed on error
 // at succes returning *tokens and the input gets freed
-t_token *ft_tokenizer(char *input)
+t_token *ft_tokenizer(char *input, t_envp *env )
 {
 	int i;
 	t_token *tokens;
@@ -32,11 +32,9 @@ t_token *ft_tokenizer(char *input)
 	{
 		if (ft_is_redir(input, &i, &tokens) == -1)
 			break;
-		if (ft_is_quote(input, &i, &tokens) == -1)
-			break;
 		if (ft_is_pipe(input, &i, &tokens) == -1)
 			break;
-		if (ft_is_word(input, &i, &tokens) == -1)
+		if (ft_is_word(input, &i, &tokens, env) == -1)
 			break;
 		if (input[i] == ' ')
 			i++;
