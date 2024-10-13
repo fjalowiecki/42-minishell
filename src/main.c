@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/10/13 18:55:17 by fgrabows         ###   ########.fr       */
-=======
-/*   Updated: 2024/10/13 09:18:06 by fjalowie         ###   ########.fr       */
->>>>>>> a558ca160f63496b6de216d66b66e1fa523d9f48
+/*   Updated: 2024/10/13 20:01:51 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +67,7 @@ int	main(int argc, char **argv, char **envp)
 		tokens = ft_tokenizer(san_line, data.envp);
 		if (tokens == NULL)
 			continue;
-<<<<<<< HEAD
 		//ft_print_token_types(tokens);
-=======
-		// ft_print_token_types(tokens);
->>>>>>> a558ca160f63496b6de216d66b66e1fa523d9f48
 		cmds = ft_commands(tokens);
 		if (cmds == NULL)
 			continue;

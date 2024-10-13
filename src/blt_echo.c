@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 18:48:05 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/13 19:54:58 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:07:18 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void ft_echo_args(char **cmd, int fd);
 
 //return error if a write error occurs - need to implement
 //write to pipe or write to file or std???
-void echo_bltin(char **cmd, t_data *data)
+void echo_bltin1(char **cmd, t_data *data)
 {
 	int i;
 	int j;
