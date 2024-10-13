@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/12 20:25:43 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/13 18:55:17 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 		tokens = ft_tokenizer(san_line, data.envp);
 		if (tokens == NULL)
 			continue;
-		ft_print_token_types(tokens);
+		//ft_print_token_types(tokens);
 		cmds = ft_commands(tokens);
 		if (cmds == NULL)
 			continue;
