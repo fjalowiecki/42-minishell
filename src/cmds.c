@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:13:47 by fgrabows          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/10/13 18:55:33 by fgrabows         ###   ########.fr       */
+=======
+/*   Updated: 2024/10/13 09:20:10 by fjalowie         ###   ########.fr       */
+>>>>>>> a558ca160f63496b6de216d66b66e1fa523d9f48
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +107,11 @@ int ft_command(t_token **cur_token, t_token *tokens, t_cmd **cur_command, t_cmd 
 	if ((*cur_token)->type == T_WORD)
 	{
 		i = ft_count_tok(*cur_token);
+<<<<<<< HEAD
 		//printf("TOKENS: %d\n", i);
+=======
+		// printf("TOKENS: %d\n", i);
+>>>>>>> a558ca160f63496b6de216d66b66e1fa523d9f48
 		if (ft_create_cmds(*cur_token, *cur_command, i) == -1)
 		{
 			ft_free_tokens(&tokens);
