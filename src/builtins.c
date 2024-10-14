@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 09:12:05 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/14 19:14:59 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:46:36 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,13 @@ void check_for_builtin_and_execute(char **cmd, t_data *data)
 	else if (ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])) == 0)
 		env_bltin(data);
 	else if (ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
-		echo_bltin1(cmd, data);
-	else if (ft_strncmp(cmd[0], "cd", 2) == 0)
+		echo_bltin(cmd, data);
+	else if (ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
 		;
-	else if (ft_strncmp(cmd[0], "pwd", 3) == 0)
+	else if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
 		;
-	else if (ft_strncmp(cmd[0], "env", 3) == 0)
+	else if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
+		;
+	else if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
 		;
 }

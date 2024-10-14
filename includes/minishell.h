@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/14 12:47:40 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:46:07 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,4 +175,4 @@ int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd);
 void	check_for_builtin_and_execute(char **cmd, t_data *data);
 
 /* blt_echo */
-void	echo_bltin1(char **cmd, t_data *data);
+void	echo_bltin(char **cmd, t_data *data);
