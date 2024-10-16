@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:55:24 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/14 12:37:22 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:04:34 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	handle_quotes(char *str, char *str_final, int *i, int *j)
 	(*i)++;
 	ft_strlcpy(&str_final[*j], &str[i_cp], *i - i_cp + 1);
 	*j += *i - i_cp;
-	if (str[*(i + 1)] != ' ')
+	if (str[*i] == '|' || str[*i] == '<' || str[*i] == '>')
 	{
 		str_final[*j] = ' ';
 		(*j)++;

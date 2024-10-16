@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:37:12 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/10 11:53:18 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:40:53 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,12 @@ t_envp	*fetch_envp(char **envp)
 			free_envp(envp_head);
 			return (NULL);
 		}
-		envp_node->value = *envp;
+		envp_node->value = strdup(*envp);
+		if (!envp_node->value)
+		{			
+			free_envp(envp_head);
+			return (NULL);
+		}
 		envp_node->next = NULL;
 		if (envp_node_prev != NULL)
 			envp_node_prev->next = envp_node;
@@ -68,7 +73,7 @@ void	append_envp_node(t_envp *head, char *str)
 		return ;
 	}
 	new_node->next = NULL;
-	new_node->value = str; //TODO: check if str stays in memory. If not, need to use strdup
+	new_node->value = str;
 	node->next = new_node;
 }
 
@@ -81,6 +86,7 @@ void	remove_envp_node(t_envp *prev_node)
 		prev_node->next = node->next;
 	else
 		prev_node->next = NULL;
+	free (node->value);
 	free (node);
 }
 
@@ -149,6 +155,8 @@ char **convert_envp_llist_to_array(t_envp *head)
 	while (node)
 	{
 		arr[i] = ft_strdup(node->value);
+		if (!arr[i])
+			return (NULL);
 		i++;
 		node = node->next;
 	}
