@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blt_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:18:15 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/16 11:56:05 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:26:41 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int ft_change_value(char *var, char *res, t_data *data)
 	{
 		return (0);
 	}
-	printf("%s\n",node->value);
+	//printf("%s\n",node->value);
 	free(node->value);
 	//printf("why u bully me\n");
 	str = malloc(sizeof(char) * (var_len + res_len + 1));
@@ -86,7 +86,9 @@ static int ft_change_value(char *var, char *res, t_data *data)
 	ft_strlcpy(str, var, var_len + 1);
 	str[var_len] = '=';
 	ft_strlcpy(&str[var_len + 1], res, res_len + 1);
-	return(0);
+	node->value = str;
+	printf("MY line:%s\n", str);
+	return (0);
 }
 
 static int cd_handler(char *str, t_data *data)
@@ -99,9 +101,9 @@ static int cd_handler(char *str, t_data *data)
 		ft_perror_message();
 		return(-1);
 	}
-	if(ft_change_value("OLDPWD", getenv("PWD"), data) == -1)
-		return(-1);
-	if(ft_change_value("PWD", str, data) == -1)
-		return(-1);
+	if (ft_change_value("OLDPWD", getenv("PWD"), data) == -1)
+		return (-1);
+	if (ft_change_value("PWD", str, data) == -1)
+		return (-1);
 	return(0);
 }
