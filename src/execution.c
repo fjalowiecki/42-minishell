@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/13 10:34:41 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:15:08 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
 	if (output_fd > 2)
 		close(output_fd);
 	check_for_builtin_and_execute(cmd_node->cmd, data);
+	if (cmd_node->cmd && ft_strncmp(cmd_node->cmd[0], "cd", 3) == 0)
+		cd_bltin(cmd_node->cmd, data);
 	if (access(cmd_node->cmd[0], X_OK) != 0)
 		cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0]);
 	if (cmd_node->cmd[0] != NULL && output_fd > 0 && cmd_node->redir_error == false)

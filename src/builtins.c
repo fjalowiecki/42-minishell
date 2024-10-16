@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 09:12:05 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/14 20:46:36 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:17:30 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void env_bltin(t_data *data)
 // 	exit(0);
 // }
 
-void check_for_builtin_and_execute(char **cmd, t_data *data)
+int check_for_builtin_and_execute(char **cmd, t_data *data)
 {
 	// char **cmd2 = cmd;
 
@@ -72,11 +72,12 @@ void check_for_builtin_and_execute(char **cmd, t_data *data)
 	else if (ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
 		echo_bltin(cmd, data);
 	else if (ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
-		;
+		pwd_bltin(cmd, data);
 	else if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
-		;
+		return (0);
 	else if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
 		;
 	else if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
 		;
+	return(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/14 20:46:07 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:19:45 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <unistd.h>
 #include "../libft/libft.h"
 
 typedef struct s_envp
@@ -172,7 +173,12 @@ void ft_free_commands(t_cmd **commands);
 int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd);
 
 /* builtins.c */
-void	check_for_builtin_and_execute(char **cmd, t_data *data);
+int	check_for_builtin_and_execute(char **cmd, t_data *data);
 
 /* blt_echo */
 void	echo_bltin(char **cmd, t_data *data);
+/* blt_cd */
+int	cd_bltin(char **cmd, t_data *data);
+/* blt_pwd*/
+void	pwd_bltin();
+
