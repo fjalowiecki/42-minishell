@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/16 14:39:55 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/17 08:29:20 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
 	if (output_fd > 2)
 		close(output_fd);
 	check_for_builtin_and_execute(cmd_node->cmd, data);
-	// if (cmd_node->cmd && ft_strncmp(cmd_node->cmd[0], "cd", 3) == 0)
-	// 	cd_bltin(cmd_node->cmd, data); ZAMIAST TUUUUUUUUUUUU
 	if (access(cmd_node->cmd[0], X_OK) != 0)
 		cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0]);
 	if (cmd_node->cmd[0] != NULL && output_fd > 0 && cmd_node->redir_error == false)
@@ -107,8 +105,8 @@ void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node)
 			process_last_cmd(data, cmd_node, input_fd);
 		else
 		{
-			if (cmd_node->cmd && ft_strncmp(cmd_node->cmd[0], "cd", 3) == 0)
-				cd_bltin(cmd_node->cmd, data);// TUUUUUUUUUUUUUUUUUUUUUUU
+			// if (cmd_node->cmd && ft_strncmp(cmd_node->cmd[0], "cd", 3) == 0)
+			// 	cd_bltin(cmd_node->cmd, data);
 			if (input_fd > 0)
 				close(input_fd);
 			waitpid(pid, &status, 0);
