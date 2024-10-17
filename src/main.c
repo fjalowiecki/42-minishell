@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/13 20:01:51 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:28:57 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,32 @@ void init(t_data *data, char **envp)
 	data->envp = fetch_envp(envp);
 	increment_shlvl(data->envp);
 	data->envp_arr = NULL;
+	data->line = NULL;
 	data->cmd_exit_status = 0;
 }
 
 void free_resources(t_data *data)
 {
-	free_shlvl_value(data->envp);
-	free_envp(data->envp);
+	if (data->cmd != NULL)
+	{
+		ft_free_commands(&(data->cmd));
+		data->cmd = NULL;
+	}
 	if (data->envp_arr)
-		free(data->envp_arr);
-	if (data->envp_arr)
+	{
 		free_ft_split(data->envp_arr);
+		data->envp_arr = NULL;
+	}
+	free_envp(data->envp);
+	data->envp = NULL;
+}
+
+void check_for_builtins(t_data *data)
+{
+	if (data->cmd->next != NULL)
+		return ;
+	if (ft_strncmp(data->cmd->cmd[0], "exit", 5) == 0)
+		exit_bltin(data);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -45,7 +60,7 @@ int	main(int argc, char **argv, char **envp)
 	init(&data, envp);
 	while (1)
 	{
-		data.line = readline("minishell> ");
+		data.line = readline("\033[1;36mminishell> \033[0m");
 		if (!data.line)
 		{
 			perror("Readline failed");
@@ -68,12 +83,14 @@ int	main(int argc, char **argv, char **envp)
 		if (tokens == NULL)
 			continue;
 		//ft_print_token_types(tokens);
-		cmds = ft_commands(tokens);
-		if (cmds == NULL)
+		data.cmd = ft_commands(tokens);
+		if (data.cmd == NULL)
 			continue;
 		// ft_print_commands(cmds);
-		data.cmd = cmds;
 		free(data.line);
+		data.line = NULL;
+		// printf("cmd: %s\n", data.cmd->cmd[0]);
+		check_for_builtins(&data);
 		execute_cmds(&data);
 		ft_free_commands(&(data.cmd));
 	}

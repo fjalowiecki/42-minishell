@@ -5,18 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 09:12:05 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/16 19:26:13 by fgrabows         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/10/17 14:39:05 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
 void exit_bltin(t_data *data)
 {
+	int exit_status;
+
+	if (data->cmd->cmd[1] != NULL)
+		exit_status = ft_atoi(data->cmd->cmd[1]);
+	else
+		exit_status = 0;
 	free_resources(data);
-	//needs signals implented to work
-	exit(0);
+	exit(exit_status);
 }
 
 void env_bltin(t_data *data)
@@ -71,7 +77,7 @@ int check_for_builtin_and_execute(char **cmd, t_data *data)
 	// }
 
 	if (ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)
-		exit_bltin(data);
+		exit(0);
 	else if (ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])) == 0)
 		env_bltin(data);
 	else if (ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
