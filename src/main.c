@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/17 10:28:57 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:40:10 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void check_for_builtins(t_data *data)
 		return ;
 	if (ft_strncmp(data->cmd->cmd[0], "exit", 5) == 0)
 		exit_bltin(data);
+	else if (ft_strncmp(data->cmd->cmd[0], "export", ft_strlen(data->cmd->cmd[0])) == 0)
+		export_bltin(data->cmd->cmd, data);
 }
 
 int	main(int argc, char **argv, char **envp)

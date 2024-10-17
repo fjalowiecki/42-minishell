@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/17 14:39:05 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:38:08 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,6 @@ int check_for_builtin_and_execute(char **cmd, t_data *data)
 	else if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
 		;
 	else if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
-		;
+		;//export_bltin(cmd, data);
 	return(0);
 }
