@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/17 15:38:08 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:53:27 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ int check_for_builtin_and_execute(char **cmd, t_data *data)
 	else if (ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
 		pwd_bltin(cmd, data);
 	else if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
-		exit (0);
+		exit (data->cmd_exit_status);
 	else if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
-		;
+		exit(data->cmd_exit_status);
 	else if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
-		;//export_bltin(cmd, data);
+		exit(ft_print_env_var(data));
 	return(0);
 }

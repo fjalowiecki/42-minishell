@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/17 15:11:42 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:48:08 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ t_envp	*fetch_envp_node(t_envp *head, char *key);
 void	increment_shlvl(t_envp *head);
 void	free_shlvl_value(t_envp *head);
 char	**convert_envp_llist_to_array(t_envp *head);
+t_envp	*fetch_node_before(t_envp **head, char *key);
+
 
 /* syntax_check.c */
 int		check_syntax(char *line);
@@ -115,6 +117,7 @@ int		ft_check_access(char *file, int type);
 int		ft_error_message(char *str, int num);
 int		ft_perror_message();
 void	file_error_msg(char *filename, char *msg);
+int ft_perror_free(char *first, char *second, char *third);
 
 /*tokenizer.c*/
 t_token *ft_tokenizer(char *input, t_envp *env );
@@ -136,10 +139,11 @@ int		ft_clear_quote (int *i, char **word, char del);
 void	ft_skip_sq(int *n, char *str);
 
 /* dollar_sign.c */
-int ft_dollar(int *i, char **word, t_envp *env);
+int ft_dollar(int *i, char **word, t_data *data);
 int ft_valid_dollar(int *i, char *word, char **var);
 int ft_expand_var(char *var, t_envp *env, char **word, int *i);
-int ft_change_word(char* var, char **word, int *i);
+int ft_change_word(char* var, char **word, int *i, t_data *data);
+int ft_exit_extension(char *var, char **word, int *i, t_data *data);
 
 
 /*helpers.c - TO DELETE*/
@@ -176,7 +180,6 @@ int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd);
 int	check_for_builtin_and_execute(char **cmd, t_data *data);
 void env_bltin(t_data *data);
 void exit_bltin(t_data *data);
-void export_bltin(char **cmd, t_data *data);
 
 /* blt_echo */
 void	echo_bltin(char **cmd, t_data *data);
@@ -184,4 +187,11 @@ void	echo_bltin(char **cmd, t_data *data);
 int	cd_bltin(char **cmd, t_data *data);
 /* blt_pwd*/
 void	pwd_bltin();
+
+/* blt_export*/
+int export_bltin(char **cmd, t_data *data);
+int ft_print_env_var(t_data *data);
+
+/* blt_unset */
+int unset_bltin(char **cmd, t_data *data);
 

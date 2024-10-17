@@ -6,7 +6,7 @@
 #    By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/29 10:36:34 by fjalowie          #+#    #+#              #
-#    Updated: 2024/10/17 15:30:04 by fgrabows         ###   ########.fr        #
+#    Updated: 2024/10/17 20:19:29 by fgrabows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS	= src/main.c \
 			src/blt_cd.c \
 			src/blt_pwd.c \
 			src/blt_export.c \
+			src/blt_unset.c \
 
 OBJDIR	= .obj
 OBJS	= $(SRCS:src/%.c=$(OBJDIR)/%.o)
