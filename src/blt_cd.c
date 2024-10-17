@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:18:15 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/16 14:26:41 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:19:58 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int ft_change_value(char *var, char *res, t_data *data);
 //jesli cos nie tak to sie nie przesuwamy 
 //cd musi zmienic w rodzicu
 //trzeba sie zajac jeszcze wyjsciem z programu
-//bład -1
+//bład 1
 //wszystko ok 0
 int cd_bltin(char **cmd, t_data *data)
 {
@@ -33,24 +33,21 @@ int cd_bltin(char **cmd, t_data *data)
 	if (cmd[1] && cmd[2])
 	{
 		printf("%s: Too many arguments", cmd[0]);
-		return(-1);
+		return(1);
 	}
 	else if(!cmd[1])
 	{
-		//getcwd(curr, 4096);
-		//printf("%s\n", curr);
 		path = getenv("HOME");
 		if (!path)
-			ft_perror_message();
+		{
+			printf("HOME not set\n");
+			return(1);
+		}
 		if(chdir(path))
 		{
 			ft_perror_message();
-			return (-1);
+			return (1);
 		}
-		//getcwd(curr, 4096);
-		//printf("%s\n", curr);
-		//ft_putstr_fd(path, 2);
-		//ft_putstr_fd("-path\n", 2);
 		if(ft_change_value("OLDPWD", getenv("PWD"), data) == -1)
 			return(-1);
 		if(ft_change_value("PWD", path, data) == -1)
@@ -75,7 +72,7 @@ static int ft_change_value(char *var, char *res, t_data *data)
 	node = fetch_envp_node(data->envp, var);
 	if(!node)
 	{
-		return (0);
+		return (1);
 	}
 	//printf("%s\n",node->value);
 	free(node->value);
@@ -87,15 +84,15 @@ static int ft_change_value(char *var, char *res, t_data *data)
 	str[var_len] = '=';
 	ft_strlcpy(&str[var_len + 1], res, res_len + 1);
 	node->value = str;
-	printf("MY line:%s\n", str);
+	//printf("MY line:%s\n", str);
 	return (0);
 }
 
 static int cd_handler(char *str, t_data *data)
 {
-	int i;
+	int value;
+	char cur[4096];
 
-	i = 0;
 	if (chdir(str) == -1)
 	{
 		ft_perror_message();
@@ -103,7 +100,8 @@ static int cd_handler(char *str, t_data *data)
 	}
 	if (ft_change_value("OLDPWD", getenv("PWD"), data) == -1)
 		return (-1);
-	if (ft_change_value("PWD", str, data) == -1)
+	getcwd(cur, 4096);
+	if (ft_change_value("PWD", cur, data) == -1)
 		return (-1);
 	return(0);
 }

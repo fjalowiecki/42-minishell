@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   blt_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:51:43 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/16 09:00:50 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:21:03 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-void unset_blt()
+//
+int unset_blt(char **cmd, t_data *data)
 {
-	
+	if (!cmd[1])
+		return (1);
+	else
+	{
+		
+	}
 }
