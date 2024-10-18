@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:29:34 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/12 20:20:10 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:50:15 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //check if the dollar is valid and get its value
 //recreate the word with the value and without dollar variable
-int ft_dollar(int *i, char **word, t_envp *env)
+int ft_dollar(int *i, char **word, t_data *data)
 {
 	char *var;
 	int value;
@@ -29,10 +29,10 @@ int ft_dollar(int *i, char **word, t_envp *env)
 			*i = *i + value;
 	else 
 	{
-		value = ft_expand_var(var, env, word, i);//mem done
+		value = ft_expand_var(var, data->envp, word, i);//mem done
 		if (value == 0)
 		{
-			value = ft_change_word(var, word, i);//mem done
+			value = ft_change_word(var, word, i, data);//mem done
 			if (value == -1)
 				return(-1);
 		}
@@ -42,8 +42,9 @@ int ft_dollar(int *i, char **word, t_envp *env)
 	return(0);
 }
 
-//dolar sie nie rozszerza jezeli po sobie ma bialyznak null lub na koncu cudzyslowia 
-int ft_valid_dollar(int *i, char *word, char **var)//word git
+//dolar sie nie rozszerza jezeli po sobie ma bialyznak null lub na koncu cudzyslowia
+
+int ft_valid_dollar(int *i, char *word, char **var)
 {
 	int n;
 
@@ -52,11 +53,16 @@ int ft_valid_dollar(int *i, char *word, char **var)//word git
 	{	
 		while (word[*i + n] && word[*i + n++] == '$');
 		return (n);
-	}		
-	if(!(word[*i + n]) || (!ft_isalpha(word[*i + n]) && word[*i + n] != '_' ))
-		return(1);
-	while(word[*i + n] && (ft_isalnum(word[*i + n]) || word[*i + n] == '_'))
+	}
+	if (word[*i + n] == '?')
 		n++;
+	else if(!(word[*i + n]) || (!ft_isalpha(word[*i + n]) && word[*i + n] != '_' ))
+		return(1);
+	else 
+	{
+		while(word[*i + n] && (ft_isalnum(word[*i + n]) || word[*i + n] == '_'))
+			n++;
+	}
 	*var = malloc(sizeof(char) * n);
 	if(!(*var))
 		return(ft_perror_message());
@@ -92,12 +98,18 @@ int ft_expand_var(char *var, t_envp *env, char **word, int *i)
 	return(1);
 }
 
-int ft_change_word(char* var, char **word, int *i)
+int ft_change_word(char* var, char **word, int *i, t_data *data)
 {
 	char *new_word;
 	int word_len;
 	int var_len;
 
+	if(var[0] == '?')
+	{
+		if(ft_exit_extension(var, word, i, data) == -1)
+			return (-1);
+		return (0);
+	}
 	var_len = ft_strlen(var);
 	word_len = ft_strlen(*word);
 	new_word = malloc(sizeof(char) * (word_len - var_len + 1));
@@ -113,4 +125,28 @@ int ft_change_word(char* var, char **word, int *i)
 	free(*word);
 	*word = new_word;
 	return (0);
+}
+
+int ft_exit_extension(char *var, char **word, int *i, t_data *data)
+{
+	char	*new_word;
+	char	*exit_code;
+	int		exit_len;
+	int		word_len;
+
+	
+	free(var);
+	exit_code = ft_itoa(data->cmd_exit_status);
+	if (!exit_code)
+		return(ft_perror_free(NULL, *word, NULL));
+	exit_len = ft_strlen(exit_code);
+	word_len = ft_strlen(*word);
+	new_word = malloc(sizeof(char) * (word_len + exit_len - 1));
+	if (!new_word)
+		return(ft_perror_free(NULL, *word, exit_code));
+	ft_strlcpy(new_word, *word, *i);
+	ft_strlcpy(&new_word[*i], exit_code, exit_len + 1);
+	ft_strlcpy(&new_word[*i + exit_len], &(*word)[*i + 2], word_len - *i - 1);
+	free(*word);
+	*word = new_word;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:37:12 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/16 13:11:16 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/17 20:38:45 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,28 @@ void	free_envp(t_envp *head)
 		head = head->next;
 		free(tmp);
 	}
+}
+t_envp	*fetch_node_before(t_envp **head, char *key)
+{
+	t_envp	*p_node;
+	int		key_len; 
+
+	key_len = ft_strlen(key);
+	p_node = *head;
+	while(p_node)
+	{
+		if(!p_node->next)
+			return(NULL);
+		else if (!p_node->next->value)
+			p_node=p_node->next;
+		else if (!(ft_strncmp(key, p_node->next->value, key_len))
+			&& p_node->next->value[key_len] == '=')
+			return(p_node);
+		else 
+			p_node = p_node->next;
+	}
+	printf("here i am\n");
+	return(NULL);
 }
 
 t_envp	*fetch_envp(char **envp)

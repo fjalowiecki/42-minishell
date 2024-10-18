@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 09:12:05 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/17 10:22:17 by fjalowie         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/10/17 16:53:27 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -28,6 +29,11 @@ void env_bltin(t_data *data)
 {
 	t_envp *envp;
 
+	if(data->cmd->cmd[1])
+	{
+		printf("env: Too many arguments");
+		exit(1);
+	}
 	envp = data->envp;
 	while(envp)
 	{
@@ -79,10 +85,10 @@ int check_for_builtin_and_execute(char **cmd, t_data *data)
 	else if (ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
 		pwd_bltin(cmd, data);
 	else if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
-		return (0);
+		exit (data->cmd_exit_status);
 	else if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
-		;
+		exit(data->cmd_exit_status);
 	else if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
-		;
+		exit(ft_print_env_var(data));
 	return(0);
 }

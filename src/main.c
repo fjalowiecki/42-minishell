@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/18 11:36:44 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:55:11 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,15 @@ void free_resources(t_data *data)
 
 void check_for_builtins(t_data *data)
 {
-	if (data->cmd->next != NULL)
+	if (data->cmd->next != NULL || !data->cmd->cmd)
 		return ;
 	if (data->cmd->cmd && ft_strncmp(data->cmd->cmd[0], "exit", 5) == 0)
 		exit_bltin(data);
+	else if (ft_strncmp(data->cmd->cmd[0], "export", ft_strlen(data->cmd->cmd[0])) == 0)
+		export_bltin(data->cmd->cmd, data);
+	else if (ft_strncmp(data->cmd->cmd[0], "unset", ft_strlen(data->cmd->cmd[0])) == 0)
+		unset_bltin(data->cmd->cmd, data);
+		
 }
 
 int	main(int argc, char **argv, char **envp)

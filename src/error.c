@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:45 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/16 11:48:03 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/17 21:25:13 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,16 @@ void file_error_msg(char *filename, char *msg)
 	write(2, ": ", 2);
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
+}
+
+int ft_perror_free(char *first, char *second, char *third)
+{
+	ft_perror_message();
+	if(first)
+		free(first);
+	if(second)
+		free(second);
+	if(third)
+		free(third);
+	return (-1);
 }

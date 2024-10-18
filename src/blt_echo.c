@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blt_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 18:48:05 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/15 13:04:52 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:22:17 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void echo_bltin(char **cmd, t_data *data)
 	}
 	ft_echo_args(&cmd[i], 1);
 	if (flag == false)
-		printf("\n");//just to be sure
+		printf("\n");
 	exit(0);
 }
 static void ft_echo_args(char **cmd, int fd)
