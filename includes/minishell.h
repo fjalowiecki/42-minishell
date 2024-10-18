@@ -6,18 +6,20 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/17 09:24:37 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:29:16 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <signal.h>
 #include <fcntl.h>
+#include <errno.h>
 #include <sys/wait.h>
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <unistd.h>
 #include "../libft/libft.h"
 
 typedef struct s_envp
@@ -74,6 +76,7 @@ typedef struct s_data
 
 # define NO_ENVP_ERR "Error: no environment found"
 # define NO_CMD_ERR "Error: command not found"
+# define READLINE_ERR "Error: readline malfunction"
 // # define EMPTY_LINE_ERR "Syntax error: empty or whitespace-only line"
 # define MISS_QUOTE_ERR "Syntax error: missing quote"
 # define MISS_CMD_ERR "Syntax error: missing command"
@@ -178,8 +181,14 @@ void exit_bltin(t_data *data);
 
 /* blt_echo */
 void	echo_bltin(char **cmd, t_data *data);
+
 /* blt_cd */
 int	cd_bltin(char **cmd, t_data *data);
+
 /* blt_pwd*/
 void	pwd_bltin();
 
+/* signals.c */
+void handle_signals();
+void set_signals_to_default();
+void handle_sigint(int sig);

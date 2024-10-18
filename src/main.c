@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/17 10:28:57 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:36:44 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void check_for_builtins(t_data *data)
 {
 	if (data->cmd->next != NULL)
 		return ;
-	if (ft_strncmp(data->cmd->cmd[0], "exit", 5) == 0)
+	if (data->cmd->cmd && ft_strncmp(data->cmd->cmd[0], "exit", 5) == 0)
 		exit_bltin(data);
 }
 
@@ -60,11 +60,21 @@ int	main(int argc, char **argv, char **envp)
 	init(&data, envp);
 	while (1)
 	{
+		handle_signals();
+		errno = 0;
 		data.line = readline("\033[1;36mminishell> \033[0m");
 		if (!data.line)
 		{
-			perror("Readline failed");
-			break;
+			if (errno == 0)
+			{
+				printf("exit\n");
+				break ;
+			}
+			else
+			{
+				perror(READLINE_ERR);
+				continue;
+			}
 		}
 		if (check_syntax(data.line))
 		{
@@ -92,6 +102,7 @@ int	main(int argc, char **argv, char **envp)
 		// printf("cmd: %s\n", data.cmd->cmd[0]);
 		check_for_builtins(&data);
 		execute_cmds(&data);
+		// setup_signal_handlers();
 		ft_free_commands(&(data.cmd));
 	}
 	free_resources(&data);

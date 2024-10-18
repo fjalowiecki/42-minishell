@@ -3,35 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+         #
+#    By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/29 10:36:34 by fjalowie          #+#    #+#              #
-#    Updated: 2024/10/15 10:25:49 by fgrabows         ###   ########.fr        #
+#    Updated: 2024/10/17 11:51:42 by fjalowie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 
-SRCS	= src/main.c \
-			src/envp.c \
-			src/syntax_check.c \
-			src/sanitation.c \
-			src/utils.c \
-			src/tokens00.c \
-			src/tokens01.c \
-			src/error.c \
-			src/tokenizer.c \
-			src/helpers.c \
-			src/get_next_line.c \
-			src/cmds.c \
-			src/execution.c \
-			src/fd_handlers.c \
-			src/cmds_redirs.c \
-			src/dollar_sign.c \
-			src/builtins.c \
-			src/blt_echo.c \
-			src/blt_cd.c \
-			src/blt_pwd.c \
+SRCS	= $(wildcard src/*.c)
 
 OBJDIR	= .obj
 OBJS	= $(SRCS:src/%.c=$(OBJDIR)/%.o)

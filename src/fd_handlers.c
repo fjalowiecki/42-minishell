@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:56:00 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/09 13:01:52 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:31:45 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	get_heredoc(t_cmd *cmd)
 	pipe(fd_pipe);
 	while (1)
 	{
+		write(1, "> ", 2);
 		input = get_next_line(STDIN_FILENO);
 		if (ft_strncmp(input, eof, ft_strlen(eof)) == 0
 				&& input[ft_strlen(eof)] == '\n')

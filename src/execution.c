@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/17 08:29:20 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:28:04 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
 {
 	int output_fd;
 
+	set_signals_to_default();
 	input_fd = update_input_fd(cmd_node, input_fd);
 	output_fd = get_output_fd(cmd_node, NULL);
 	duplicate_fds(input_fd, output_fd);
@@ -66,6 +67,7 @@ static void	process_cmd(t_data *data, t_cmd *cmd_node, int input_fd, int *fd_pip
 {
 	int output_fd;
 
+	set_signals_to_default();
 	input_fd = update_input_fd(cmd_node, input_fd);
 	if (input_fd < 0)
 	{
@@ -105,8 +107,7 @@ void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node)
 			process_last_cmd(data, cmd_node, input_fd);
 		else
 		{
-			// if (cmd_node->cmd && ft_strncmp(cmd_node->cmd[0], "cd", 3) == 0)
-			// 	cd_bltin(cmd_node->cmd, data);
+			signal(SIGINT, SIG_IGN);
 			if (input_fd > 0)
 				close(input_fd);
 			waitpid(pid, &status, 0);
@@ -123,6 +124,7 @@ void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node)
 			process_cmd(data, cmd_node, input_fd, fd_pipe);
 		else
 		{
+			signal(SIGINT, SIG_IGN);
 			close(fd_pipe[1]);
 			if (input_fd > 0)
 				close(input_fd);
