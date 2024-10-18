@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/18 11:55:11 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:58:39 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void init(t_data *data, char **envp)
 {
 	data->envp = fetch_envp(envp);
 	increment_shlvl(data->envp);
+	data->cmd = NULL;
 	data->envp_arr = NULL;
 	data->line = NULL;
 	data->cmd_exit_status = 0;
@@ -93,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 			free_resources(&data);
 			return (-1);
 		}
-		//printf("input: %s\n", san_line);
+		// printf("input: %s\n", san_line);
 		tokens = ft_tokenizer(san_line, data.envp);
 		if (tokens == NULL)
 			continue;

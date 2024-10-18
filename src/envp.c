@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:37:12 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/18 12:08:12 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:39:23 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_envp(t_envp *head)
 	{
 		tmp = head;
 		head = head->next;
+		free(tmp->value);
 		free(tmp);
 	}
 }
@@ -141,6 +142,7 @@ void	increment_shlvl(t_envp *head)
 	shlvl = ft_itoa(shlvl_nb);
 	if (!shlvl)
 		perror("ft_itoa");
+	free(node->value);
 	node->value = ft_strjoin("SHLVL=", shlvl);
 	if (!node->value)
 		perror("ft_strjoin");
