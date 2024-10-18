@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/18 12:58:39 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:45:14 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void init(t_data *data, char **envp)
 
 void free_resources(t_data *data)
 {
+	rl_clear_history();
 	if (data->cmd != NULL)
 	{
 		ft_free_commands(&(data->cmd));
@@ -82,6 +83,8 @@ int	main(int argc, char **argv, char **envp)
 				continue;
 			}
 		}
+		if (data.line && *data.line)
+			add_history(data.line);
 		if (check_syntax(data.line))
 		{
 			free(data.line);
@@ -94,6 +97,7 @@ int	main(int argc, char **argv, char **envp)
 			free_resources(&data);
 			return (-1);
 		}
+		// free(san_line);
 		// printf("input: %s\n", san_line);
 		tokens = ft_tokenizer(san_line, data.envp);
 		if (tokens == NULL)

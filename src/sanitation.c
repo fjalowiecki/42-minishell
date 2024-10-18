@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:55:24 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/16 13:04:34 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:34:03 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static char	*optimize_str_final(char *str_final)
 	char	*new_str;
 
 	new_str = ft_strdup(str_final);
+	free(str_final);
 	if (!new_str)
 		return (NULL);
-	free(str_final);
 	return (new_str);
 }
 
