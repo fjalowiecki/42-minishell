@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:37:12 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/17 20:38:45 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:08:12 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ t_envp	*fetch_envp_node(t_envp *head, char *key)
 
 	key_len = ft_strlen(key);
 	node = head;
-	while (node->next != NULL)
+	while (node != NULL)
 	{
 		if (ft_strncmp(key, node->value, key_len) == 0)
 			return (node);

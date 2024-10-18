@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/18 11:54:44 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:56:38 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,10 +193,6 @@ int	cd_bltin(char **cmd, t_data *data);
 /* blt_pwd*/
 void	pwd_bltin();
 
-/* signals.c */
-void handle_signals();
-void set_signals_to_default();
-void handle_sigint(int sig);
 /* blt_export*/
 int export_bltin(char **cmd, t_data *data);
 int ft_print_env_var(t_data *data);
