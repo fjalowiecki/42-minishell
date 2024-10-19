@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:28:55 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/12 20:21:20 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/19 16:48:34 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int ft_is_pipe(char *input, int *i, t_token **tokens)
 	return (0);
 }
 
-int ft_is_word(char *input, int *i, t_token **tokens, t_envp *env)
+int ft_is_word(char *input, int *i, t_token **tokens, t_data *data)
 {	
 	if(!(ft_strchr("| <>", input[*i])))
 	{
-		if (ft_create_word_tok(input, i,tokens, env) == -1)
+		if (ft_create_word_tok(input, i,tokens, data) == -1)
 		{
 			free(input);		
 			return (-1);
@@ -46,7 +46,7 @@ int ft_is_word(char *input, int *i, t_token **tokens, t_envp *env)
 	}
 	return (0);
 }
-int ft_create_word_tok(char *str, int *i, t_token **tokens, t_envp *env)
+int ft_create_word_tok(char *str, int *i, t_token **tokens, t_data *data)
 {
 	int n;
 	char *dol;
@@ -66,7 +66,7 @@ int ft_create_word_tok(char *str, int *i, t_token **tokens, t_envp *env)
 		while(str[*i + n] && !ft_strchr("\"\' ", str[*i + n]))
 			n++;
 	}
-	if (ft_extract_word(&str[*i], &n, tokens, env) == -1)
+	if (ft_extract_word(&str[*i], &n, tokens, data) == -1)
 		return (-1);
 	*i = *i + n;
 	return (0);
@@ -75,7 +75,7 @@ int ft_create_word_tok(char *str, int *i, t_token **tokens, t_envp *env)
 //allocate memory for the whole potencial token string 
 //and check if there are any dollars to expand 
 //if error or end of function free word mem
-int ft_extract_word(char *str, int *n, t_token **tokens, t_envp *env)
+int ft_extract_word(char *str, int *n, t_token **tokens, t_data *data)
 {
 	char *word;
 	int value;
@@ -84,7 +84,7 @@ int ft_extract_word(char *str, int *n, t_token **tokens, t_envp *env)
 	if (!word)
 		return(ft_perror_message());
 	ft_strlcpy(word, str, (*n) + 1);
-	if(ft_check_for_dollar(&word, tokens, env) == -1)
+	if(ft_check_for_dollar(&word, tokens, data) == -1)
 		return(-1);
 	value = ft_cross_word(&word, tokens);
 	if (value == -1)
@@ -104,7 +104,7 @@ int ft_extract_word(char *str, int *n, t_token **tokens, t_envp *env)
 //serch for dollars outside of single quotes and extend them to value
 //then cross the word to delete the quotes
 //create token
-int ft_check_for_dollar(char **word, t_token **tokens, t_envp *env)
+int ft_check_for_dollar(char **word, t_token **tokens, t_data *data)
 {
 	int i;
 	int value;
@@ -116,7 +116,7 @@ int ft_check_for_dollar(char **word, t_token **tokens, t_envp *env)
 			ft_skip_sq(&i, *word);
 		else if ((*word)[i] == '$')
 		{
-			value = ft_dollar(&i, word, env);//extending variables
+			value = ft_dollar(&i, word, data);//extending variables
 
 			if (value == -1)
 				return(-1);

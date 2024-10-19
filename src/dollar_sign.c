@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:29:34 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/17 21:50:15 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/19 15:38:38 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int ft_dollar(int *i, char **word, t_data *data)
 	}
 	return(0);
 }
-
-//dolar sie nie rozszerza jezeli po sobie ma bialyznak null lub na koncu cudzyslowia
 
 int ft_valid_dollar(int *i, char *word, char **var)
 {

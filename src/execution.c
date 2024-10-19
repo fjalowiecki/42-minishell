@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/18 11:28:04 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/19 18:23:05 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static char	*find_cmd_path(t_envp *envp, char *cmd)
 	free(envp_path_part);
 	if (final_envp_path == NULL)
 		ft_error_message(NO_CMD_ERR, -1);
+	free(cmd);//zwracasz char* wiec musisz zwolnic poprzedni pointer
 	return (final_envp_path);
 }
 

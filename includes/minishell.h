@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/18 11:56:38 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/20 00:25:26 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	free_resources(t_data *data);
 /* envp.c */
 t_envp	*fetch_envp(char **envp);
 void	free_envp(t_envp *head);
-void	append_envp_node(t_envp *head, char *str);
-void	remove_envp_node(t_envp *prev_node);
+int		append_envp_node(t_envp **head, char *str);
+void	remove_envp_node(t_envp **head, t_envp *prev_node);
 t_envp	*fetch_envp_node(t_envp *head, char *key);
 void	increment_shlvl(t_envp *head);
 void	free_shlvl_value(t_envp *head);
@@ -123,7 +123,7 @@ void	file_error_msg(char *filename, char *msg);
 int ft_perror_free(char *first, char *second, char *third);
 
 /*tokenizer.c*/
-t_token *ft_tokenizer(char *input, t_envp *env );
+t_token *ft_tokenizer(char *input, t_data *data);
 void	ft_free_tokens(t_token **tokens);
 int 	create_token(char *str, int type, t_token **tokens);
 
@@ -131,15 +131,14 @@ int 	create_token(char *str, int type, t_token **tokens);
 /*tokens00/01.c*/
 int		ft_is_redir(char *input, int *i, t_token **tokens);
 int		ft_is_pipe(char *input, int *i, t_token **tokens);
-int		ft_is_word(char *input, int *i, t_token **tokens, t_envp *env);
-int		ft_create_word_tok(char *str, int *i, t_token **tokens, t_envp *env);
-int		ft_check_for_dollar(char **word, t_token **tokens, t_envp *env);
-int		ft_extract_word(char *str, int *n, t_token **tokens, t_envp *env);
-int		ft_create_word_tok(char *str, int *i, t_token **tokens, t_envp *env);
+int		ft_is_word(char *input, int *i, t_token **tokens, t_data *data);
+int		ft_create_word_tok(char *str, int *i, t_token **tokens, t_data *data);
+int 	ft_extract_word(char *str, int *n, t_token **tokens, t_data *data);
 int		ft_cross_word(char **word, t_token **tokens);
 int		ft_cut_token(int *i, char **word, t_token **tokens);
 int		ft_clear_quote (int *i, char **word, char del);
 void	ft_skip_sq(int *n, char *str);
+int		ft_check_for_dollar(char **word, t_token **tokens, t_data *data);
 
 /* dollar_sign.c */
 int ft_dollar(int *i, char **word, t_data *data);
@@ -153,6 +152,7 @@ int ft_exit_extension(char *var, char **word, int *i, t_data *data);
 void ft_print_token_types(t_token *tokens);
 void ft_print_split(char **str);
 void ft_print_commands(t_cmd *cmds);
+void print_string_with_nulls(const char *str);
 
 
 /* execution.c */
@@ -199,6 +199,7 @@ int ft_print_env_var(t_data *data);
 
 /* blt_unset */
 int unset_bltin(char **cmd, t_data *data);
+void ft_remove_head_node(t_envp **head);
 
 /* signals.c */
 void handle_signals();

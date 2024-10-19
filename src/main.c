@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/18 13:45:14 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/19 18:40:00 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void check_for_builtins(t_data *data)
 		export_bltin(data->cmd->cmd, data);
 	else if (ft_strncmp(data->cmd->cmd[0], "unset", ft_strlen(data->cmd->cmd[0])) == 0)
 		unset_bltin(data->cmd->cmd, data);
+	else if (ft_strncmp(data->cmd->cmd[0], "cd", ft_strlen(data->cmd->cmd[0])) == 0)
+		cd_bltin(data->cmd->cmd, data);
 		
 }
 
@@ -98,17 +100,17 @@ int	main(int argc, char **argv, char **envp)
 			return (-1);
 		}
 		// free(san_line);
-		// printf("input: %s\n", san_line);
-		tokens = ft_tokenizer(san_line, data.envp);
+		//printf("input: %s\n", san_line);
+		tokens = ft_tokenizer(san_line, &data);
 		if (tokens == NULL)
 			continue;
 		//ft_print_token_types(tokens);
 		data.cmd = ft_commands(tokens);
 		if (data.cmd == NULL)
 			continue;
-		// ft_print_commands(cmds);
 		free(data.line);
 		data.line = NULL;
+		//ft_print_commands(data.cmd);
 		// printf("cmd: %s\n", data.cmd->cmd[0]);
 		check_for_builtins(&data);
 		execute_cmds(&data);

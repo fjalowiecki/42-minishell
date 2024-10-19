@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:53:27 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/17 18:44:17 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/19 15:19:26 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int ft_change_env(char *var, int j, t_data *data)
 	free(var_name);
 	if(!node)
 	{
-		append_envp_node(data->envp, dup_var);//DOPISAC ERROR
+		append_envp_node(&data->envp, dup_var);//DOPISAC ERROR
 		return(0);
 	}
 	free(node->value);

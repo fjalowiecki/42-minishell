@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:37:12 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/18 12:39:23 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/20 00:26:15 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ t_envp	*fetch_node_before(t_envp **head, char *key)
 	int		key_len; 
 
 	key_len = ft_strlen(key);
+	if(!(ft_strncmp(key, (*head)->value, key_len))
+		&& (*head)->value[key_len] == '=')
+		return(*head);
 	p_node = *head;
 	while(p_node)
 	{
@@ -43,7 +46,6 @@ t_envp	*fetch_node_before(t_envp **head, char *key)
 		else 
 			p_node = p_node->next;
 	}
-	printf("here i am\n");
 	return(NULL);
 }
 
@@ -81,26 +83,30 @@ t_envp	*fetch_envp(char **envp)
 	return (envp_head);
 }
 
-void	append_envp_node(t_envp *head, char *str)
+int	append_envp_node(t_envp **head, char *str)
 {
 	t_envp	*node;
 	t_envp	*new_node;
 
-	node = head;
-	while (node->next != NULL)
+	node = *head;
+	while (*head && node->next != NULL)
 		node = node->next;
 	new_node = malloc(sizeof(t_envp));
 	if (!new_node)
 	{
 		perror("append_envp_node");
-		return ;
+		return (-1) ;
 	}
 	new_node->next = NULL;
 	new_node->value = str;
-	node->next = new_node;
+	if (node)
+		node->next = new_node;
+	else
+		node = new_node;
+	return (0);
 }
 
-void	remove_envp_node(t_envp *prev_node)
+void	remove_envp_node(t_envp **head, t_envp *prev_node)
 {
 	t_envp	*node;
 
@@ -122,7 +128,7 @@ t_envp	*fetch_envp_node(t_envp *head, char *key)
 	node = head;
 	while (node != NULL)
 	{
-		if (ft_strncmp(key, node->value, key_len) == 0)
+		if (ft_strncmp(key, node->value, key_len) == 0 && node->value[key_len] == '=')
 			return (node);
 		node = node->next;
 	}

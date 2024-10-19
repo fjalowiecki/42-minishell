@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:51:43 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/17 20:20:21 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/19 18:26:15 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,22 @@ int unset_bltin(char **cmd, t_data *data)
 		if(!name)
 			return(ft_perror_message());
 		node = fetch_envp_node(data->envp, name);
-		if (node)
-			remove_envp_node(fetch_node_before(&data->envp, name));
+		if (!ft_strncmp(name, data->envp->value, j) && data->envp->value[j] == '=')
+			ft_remove_head_node(&(data->envp));
+		else if (node)
+			remove_envp_node(&data->envp,fetch_node_before(&data->envp, name));
 		i++;
 		j = 0;
 		free(name);
 	}
+}
+
+void ft_remove_head_node(t_envp **head)
+{
+	t_envp *new_head;
+
+	new_head = (*head)->next;
+	free((*head)->value);
+	free(*head);
+	*head = new_head;
 }
