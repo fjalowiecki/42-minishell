@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/21 18:55:06 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/21 21:06:57 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ typedef struct s_data
 # define MISS_QUOTE_ERR "Syntax error: missing quote"
 # define MISS_CMD_ERR "Syntax error: missing command"
 # define HEREDOC_ERR "Error: heredoc malfunction"
+# define SANITATION_ERR "Error: line sanitation error"
 # define REDIR_TO_OPR "Syntax error: redirection followed by unexpected token"
+
 # define NULL_REDIR "Error: ambiguous redirect"
 
 # define BUFFER_SIZE 10
@@ -101,15 +103,19 @@ void	free_shlvl_value(t_envp *head);
 char	**convert_envp_llist_to_array(t_envp *head);
 t_envp	*fetch_node_before(t_envp **head, char *key);
 
-
-/* syntax_check.c */
+/* syntax_check00.c */
 int		check_syntax(char *line);
 int		check_line_if_empty(char *line);
 int		check_for_unclosed_quotes(char *line);
+
+/* syntax_check01.c */
 int		check_for_missing_command(char *line);
 
-/* sanitation.c */
+/* sanitation00.c */
 char	*sanitaze_line(char *line);
+
+/* sanitation01.c */
+char	*process_str(char *str, char *str_final, int str_final_len);
 
 /* utils.c */
 void	go_to_next_quote(char *line, int *i, bool go_back);
@@ -118,6 +124,7 @@ int		ft_check_access(char *file, int type);
 
 
 /*error.c*/
+void	msg_error(char *err);
 int		ft_error_message(char *str, int num);
 int		ft_perror_message();
 void	file_error_msg(char *filename, char *msg);

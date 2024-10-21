@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/21 21:03:45 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/21 21:06:15 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,27 @@ void check_for_builtins(t_data *data)
 		
 }
 
+int read_line(t_data *data)
+{
+	errno = 0;
+	data->line = readline("\033[1;36mminishell> \033[0m");
+	if (!data->line)
+	{
+		if (errno == 0)
+		{
+			printf("exit\n");
+			free_resources(data);
+			exit(0);
+		}
+		else
+		{
+			perror(READLINE_ERR);
+			return (-1);
+		}
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -70,37 +91,22 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		handle_signals();
-		errno = 0;
-		data.line = readline("\033[1;36mminishell> \033[0m");
-		if (!data.line)
-		{
-			if (errno == 0)
-			{
-				printf("exit\n");
-				break ;
-			}
-			else
-			{
-				perror(READLINE_ERR);
-				continue;
-			}
-		}
+		if (read_line(&data))
+			continue ;
 		if (data.line && *data.line)
 			add_history(data.line);
 		if (check_syntax(data.line))
 		{
 			free(data.line);
-			continue;
+			continue ;
 		}
 		san_line = sanitaze_line(data.line);
 		if (!san_line)
 		{
 			free(data.line);
-			free_resources(&data);
-			return (-1);
+			continue ;
 		}
-		// free(san_line);
-		//printf("input: %s\n", san_line);
+		// printf("input: %s\n", san_line);
 		tokens = ft_tokenizer(san_line, &data);
 		if (tokens == NULL)
 			continue;
