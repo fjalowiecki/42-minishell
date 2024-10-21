@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:45 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/17 21:25:13 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:41:30 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	msg_error(char *err)
+{
+	write(2, err, ft_strlen(err));
+	write(2, "\n", 1);
+}
 
 int	ft_error_message(char *str, int num)
 {
