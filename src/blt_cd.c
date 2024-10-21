@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:18:15 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/20 00:25:45 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:47:55 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,40 @@ static int ft_cd_env_change(t_data *data, char *var);
 
 int cd_bltin(char **cmd, t_data *data)
 {
-	char *path;
+	t_envp *node;
+	t_envp *node_2;
 	char curr[4096];
 	
 	if (cmd[1] && cmd[2])
 	{
-		printf("%s: Too many arguments", cmd[0]);
+		printf("%s: Too many arguments", cmd[0]);//ZMIENIC
 		return(1);
 	}
 	else if(!cmd[1])
 	{
-		path = getenv("HOME");
-		if (!path)
+		node = fetch_envp_node(data->envp, "HOME");
+		if (!node)
 		{
 			printf("HOME not set\n");
 			return(1);
 		}
-		if(chdir(path))
+		if(chdir(&node->value[5]))
 		{
 			ft_perror_message();
 			return (1);
 		}
 		getcwd(curr, 4096);
-		if(ft_change_value("OLDPWD", getenv("PWD"), data) == -1)
-			return(-1);
+		node_2=fetch_envp_node(data->envp, "PWD");
+		if(!node)
+		{
+			if(ft_change_value("OLDPWD", NULL, data) == -1)
+				return(-1);
+		}
+		else 
+		{
+			if(ft_change_value("OLDPWD", &node_2->value[4], data) == -1)
+				return(-1);
+		}
 		if(ft_change_value("PWD", curr, data) == -1)
 			return(-1);
 	}
@@ -80,7 +90,7 @@ static int ft_change_value(char *var, char *res, t_data *data)
 	ft_strlcpy(&str[var_len + 1], res, res_len + 1);
 	if(!node)
 	{
-		if(append_envp_node(&data->envp, str) == -1);
+		if(append_envp_node(&data->envp, str) == -1)
 			{
 				free(str);
 				return (-1);
@@ -96,14 +106,19 @@ static int cd_handler(char *str, t_data *data)
 {
 	int value;
 	char cur[4096];
+	t_envp *node;
 
 	if (chdir(str) == -1)
 	{
 		ft_perror_message();
 		return(-1);
 	}
-	if (ft_change_value("OLDPWD", getenv("PWD"), data) == -1)
-		return (-1);
+	node = fetch_envp_node(data->envp, "PWD");
+	if(node)
+	{
+		if (ft_change_value("OLDPWD", &node->value[4] , data) == -1)
+			return (-1);
+	}
 	getcwd(cur, 4096);
 	if (ft_change_value("PWD", cur, data) == -1)
 		return (-1);

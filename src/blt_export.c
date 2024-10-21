@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:53:27 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/19 15:19:26 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:09:35 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,12 @@ static int ft_change_env(char *var, int j, t_data *data)
 	char *var_name;
 	char *dup_var;
 
-	var_name = ft_substr(var, 0, j);
+	if(var[j] != '=')
+		return(0);
+	var_name = ft_substr(var, 0, ++j);
 	if (!var_name)
 		return(ft_perror_message());
-	if(!var[j])
-		dup_var = ft_strjoin(var,"=");
-	else	
-		dup_var = ft_strdup(var);
+	dup_var = ft_strdup(var);
 	if (!dup_var)
 		return(ft_perror_message());
 	node = fetch_envp_node(data->envp, var_name);

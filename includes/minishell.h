@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/20 00:25:26 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/21 18:55:06 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ typedef struct s_data
 # define MISS_QUOTE_ERR "Syntax error: missing quote"
 # define MISS_CMD_ERR "Syntax error: missing command"
 # define HEREDOC_ERR "Error: heredoc malfunction"
-# define REDIR_TO_OPR " Syntax error: redirection followed by unexpected token"
+# define REDIR_TO_OPR "Syntax error: redirection followed by unexpected token"
+# define NULL_REDIR "Error: ambiguous redirect"
 
 # define BUFFER_SIZE 10
 
@@ -205,3 +206,7 @@ void ft_remove_head_node(t_envp **head);
 void handle_signals();
 void set_signals_to_default();
 void handle_sigint(int sig);
+
+/* token_cleaner.c */
+int ft_check_tokens(t_token **tokens);
+

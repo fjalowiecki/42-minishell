@@ -9,7 +9,7 @@ void ft_print_token_types(t_token *tokens)
 	int i = 0;
     while (current)
     {
-		printf("TOKEN NR. %d\n", i++);
+		printf("TOKEN NR. %d \tType:%d \n", i++, current->type);
         print_string_with_nulls(current->text);
         current = current->next;    
 	}

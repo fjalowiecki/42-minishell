@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/19 18:40:00 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/21 21:03:45 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,9 @@ int	main(int argc, char **argv, char **envp)
 		if (tokens == NULL)
 			continue;
 		//ft_print_token_types(tokens);
+		ft_check_tokens(&tokens);
+		if (tokens == NULL)
+			continue;
 		data.cmd = ft_commands(tokens);
 		if (data.cmd == NULL)
 			continue;
@@ -116,6 +119,7 @@ int	main(int argc, char **argv, char **envp)
 		execute_cmds(&data);
 		// setup_signal_handlers();
 		ft_free_commands(&(data.cmd));
+		rl_on_new_line();
 	}
 	free_resources(&data);
 }
