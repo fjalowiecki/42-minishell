@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:53:27 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 09:53:03 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:07:20 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	ft_change_env(char *var, int j, t_data *data)
 
 	if (var[j] != '=')
 		return (0);
-	var_name = ft_substr(var, 0, ++j);
+	var_name = ft_substr(var, 0, j);
 	if (!var_name)
 		return (ft_perror_message());
 	dup_var = ft_strdup(var);

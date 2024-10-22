@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/22 11:25:36 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:11:11 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	file_error_msg(char *filename, char *msg);
 int ft_perror_free(char *first, char *second, char *third);
 
 /*tokenizer.c*/
-t_token *ft_tokenizer(t_data *data);
+t_token *ft_tokenizer(t_data *data, char *input);
 void	ft_free_tokens(t_token **tokens);
 int 	create_token(char *str, int type, t_token **tokens);
 
@@ -175,6 +175,7 @@ int		get_heredoc(t_cmd *cmd);
 char	*get_next_line(int fd);
 
 /* cmds.c */
+int ft_cmds_creation(t_data *data);
 t_cmd *ft_commands(t_token *tokens);
 int ft_pipe(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd);
 int ft_redir(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd);
