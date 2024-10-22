@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/21 21:06:15 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 09:15:38 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void check_for_builtins(t_data *data)
 	if (data->cmd->cmd && ft_strncmp(data->cmd->cmd[0], "exit", 5) == 0)
 		exit_bltin(data);
 	else if (ft_strncmp(data->cmd->cmd[0], "export", ft_strlen(data->cmd->cmd[0])) == 0)
-		export_bltin(data->cmd->cmd, data);
+		data->cmd_exit_status = export_bltin(data->cmd->cmd, data);
 	else if (ft_strncmp(data->cmd->cmd[0], "unset", ft_strlen(data->cmd->cmd[0])) == 0)
-		unset_bltin(data->cmd->cmd, data);
+		data->cmd_exit_status = unset_bltin(data->cmd->cmd, data);
 	else if (ft_strncmp(data->cmd->cmd[0], "cd", ft_strlen(data->cmd->cmd[0])) == 0)
-		cd_bltin(data->cmd->cmd, data);
+		data->cmd_exit_status = cd_bltin(data->cmd->cmd, data);
 		
 }
 
@@ -109,14 +109,26 @@ int	main(int argc, char **argv, char **envp)
 		// printf("input: %s\n", san_line);
 		tokens = ft_tokenizer(san_line, &data);
 		if (tokens == NULL)
+		{
+			data.cmd_exit_status = 1;
 			continue;
-		//ft_print_token_types(tokens);
-		ft_check_tokens(&tokens);
+		}//ft_print_token_types(tokens);
+		if(ft_check_tokens(&tokens) == -1)
+		{
+			data.cmd_exit_status = 1;
+			continue;
+		}
 		if (tokens == NULL)
+		{
+			data.cmd_exit_status = 0;
 			continue;
+		}
 		data.cmd = ft_commands(tokens);
 		if (data.cmd == NULL)
+		{
+			data.cmd_exit_status = 1;
 			continue;
+		}
 		free(data.line);
 		data.line = NULL;
 		//ft_print_commands(data.cmd);
