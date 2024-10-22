@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:56:00 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/18 11:31:45 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:42:00 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	get_output_fd(t_cmd *cmd, int *fd_pipe)
 				O_WRONLY | O_CREAT | O_APPEND, 0664);
 	else if (cmd->next == NULL)
 		output_fd = STDOUT_FILENO;
-	else 
+	else
 		output_fd = fd_pipe[1];
 	if (output_fd < 0 && cmd->outfile)
 		perror(cmd->outfile);
@@ -83,7 +83,7 @@ int	get_heredoc(t_cmd *cmd)
 		write(1, "> ", 2);
 		input = get_next_line(STDIN_FILENO);
 		if (ft_strncmp(input, eof, ft_strlen(eof)) == 0
-				&& input[ft_strlen(eof)] == '\n')
+			&& input[ft_strlen(eof)] == '\n')
 			break ;
 		write(fd_pipe[1], input, ft_strlen(input));
 	}

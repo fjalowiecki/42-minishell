@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/22 10:59:48 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:27:06 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exit_bltin(t_data *data)
 	if (data->cmd->cmd[1] != NULL)
 		exit_status = ft_atoi(data->cmd->cmd[1]);
 	else
-		exit_status = 0;
+		exit_status = data->cmd_exit_status;
 	free_resources(data);
 	exit(exit_status);
 }

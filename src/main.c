@@ -6,14 +6,24 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/22 11:38:51 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:10:48 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void init(t_data *data, char **envp)
+void	init(t_data *data, int argc, char **envp)
 {
+	if (argc != 1)
+	{
+		perror(MANY_ARGS_ERR);
+		exit(-1);
+	}
+	if (envp == NULL || *envp == NULL)
+	{
+		perror(NO_ENVP_ERR);
+		exit(-1);
+	}
 	data->envp = fetch_envp(envp);
 	increment_shlvl(data->envp);
 	data->cmd = NULL;
@@ -78,14 +88,8 @@ int read_line(t_data *data)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	char *san_line;
 
-	if (argc != 1 || envp == NULL || *envp == NULL)
-	{
-		perror(NO_ENVP_ERR);
-		return (1);
-	}
-	init(&data, envp);
+	init(&data, argc, envp);
 	while (1)
 	{
 		handle_signals();
@@ -107,9 +111,7 @@ int	main(int argc, char **argv, char **envp)
 		// printf("cmd: %s\n", data.cmd->cmd[0]);
 		check_for_builtins(&data);
 		execute_cmds(&data);
-		// setup_signal_handlers();
 		ft_free_commands(&(data.cmd));
-		rl_on_new_line();
 	}
 	free_resources(&data);
 }
