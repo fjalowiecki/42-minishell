@@ -6,134 +6,124 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:18:15 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/21 19:47:55 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 09:51:08 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int cd_handler(char *str, t_data *data);
-static int ft_change_value(char *var, char *res, t_data *data);
-static int ft_cd_env_change(t_data *data, char *var);
+static int	cd_handler(char *str, t_data *data);
+static int	ft_change_value(char *var, char *res, t_data *data);
+static int	ft_cd_env_change(t_data *data, char *var, char *res);
+static int	ft_cd_home(char **cmd, t_data *data, t_envp *home);
 
-//implementuje 
-//co jezeli nie ma pwd i oldpwd
-//co jezeli usuniesz plik w ktorym jestes
-//implementacja kropek (. | ..)
-//jesli cos nie tak to sie nie przesuwamy 
-//cd musi zmienic w rodzicu
-//trzeba sie zajac jeszcze wyjsciem z programu
-//bład 1
-//wszystko ok 0
-
-int cd_bltin(char **cmd, t_data *data)
-{
-	t_envp *node;
-	t_envp *node_2;
-	char curr[4096];
+int	cd_bltin(char **cmd, t_data *data)
+{	
+	t_envp	*node;
 	
 	if (cmd[1] && cmd[2])
-	{
-		printf("%s: Too many arguments", cmd[0]);//ZMIENIC
-		return(1);
-	}
-	else if(!cmd[1])
+		return (ft_error_message("Too many arguments", 1));
+	else if (!cmd[1])
 	{
 		node = fetch_envp_node(data->envp, "HOME");
-		if (!node)
-		{
-			printf("HOME not set\n");
-			return(1);
-		}
-		if(chdir(&node->value[5]))
-		{
-			ft_perror_message();
-			return (1);
-		}
-		getcwd(curr, 4096);
-		node_2=fetch_envp_node(data->envp, "PWD");
-		if(!node)
-		{
-			if(ft_change_value("OLDPWD", NULL, data) == -1)
-				return(-1);
-		}
-		else 
-		{
-			if(ft_change_value("OLDPWD", &node_2->value[4], data) == -1)
-				return(-1);
-		}
-		if(ft_change_value("PWD", curr, data) == -1)
-			return(-1);
+		return (ft_cd_home(cmd, data, node));
 	}
 	else if (cd_handler(cmd[1], data) == -1)
-		return(-1);
-	return(0);
+		return (1);
+	return (0);
 }
 
-static int ft_change_value(char *var, char *res, t_data *data)
+static int	ft_change_value(char *var, char *res, t_data *data)
 {
-	t_envp *node;
-	char *str;
-	int var_len;
-	int res_len;
+	t_envp	*node;
+	char	*str;
+	int		var_len;
 	
-	if (!res)
-		return(ft_cd_env_change(data, var));
+	ft_cd_env_change(data, var, res);
 	var_len = ft_strlen(var);
-	res_len = ft_strlen(res);
 	node = fetch_envp_node(data->envp, var);
-	str = malloc(sizeof(char) * (var_len + res_len + 2));
+	str = malloc(sizeof(char) * (var_len + ft_strlen(res) + 2));
 	if (!str)
-		return(ft_perror_message());
+		return (ft_perror_message());
 	ft_strlcpy(str, var, var_len + 1);
 	str[var_len] = '=';
-	ft_strlcpy(&str[var_len + 1], res, res_len + 1);
-	if(!node)
+	ft_strlcpy(&str[var_len + 1], res, ft_strlen(res) + 1);
+	if (!node)
 	{
-		if(append_envp_node(&data->envp, str) == -1)
+		if (append_envp_node(&data->envp, str) == -1)
 			{
 				free(str);
 				return (-1);
 			}
-		return(0);
+		return (0);
 	}
 	free(node->value);
 	node->value = str;
 	return (0);
 }
 
-static int cd_handler(char *str, t_data *data)
+static int	cd_handler(char *str, t_data *data)
 {
-	int value;
-	char cur[4096];
-	t_envp *node;
+	int		value;
+	char	cur[4096];
+	t_envp	*node;
 
 	if (chdir(str) == -1)
 	{
 		ft_perror_message();
-		return(-1);
+		return (-1);
 	}
 	node = fetch_envp_node(data->envp, "PWD");
-	if(node)
+	if (node)
 	{
-		if (ft_change_value("OLDPWD", &node->value[4] , data) == -1)
+		if (ft_change_value("OLDPWD", &node->value[4], data) == -1)
 			return (-1);
 	}
 	getcwd(cur, 4096);
 	if (ft_change_value("PWD", cur, data) == -1)
 		return (-1);
-	return(0);
+	return (0);
 }
-static int ft_cd_env_change(t_data *data, char *var)
+static int	ft_cd_env_change(t_data *data, char *var, char *res)
 {
 	t_envp *node;
 
+	if (res)
+		return (0);
 	node = fetch_envp_node(data->envp, var);
 	if (!node)
 		return (0);
-	if(data->envp == node)
+	if (data->envp == node)
 		ft_remove_head_node(&data->envp);
 	else
 		remove_envp_node(&data->envp, fetch_node_before(&data->envp, var));
 	return (0);
+}
+
+static int	ft_cd_home(char **cmd, t_data *data, t_envp *home)
+{
+	t_envp	*node_PWD;
+	char	curr[4096];
+	
+	if (!home)
+		ft_error_message("HOME not set\n", 1);
+	if (chdir(&home->value[5]))
+	{
+		ft_perror_message();
+		return (1);
+	}
+	getcwd(curr, 4096);
+	node_PWD = fetch_envp_node(data->envp, "PWD");
+	if (!home)
+	{
+		if (ft_change_value("OLDPWD", NULL, data) == -1)
+			return (1);
+	}
+	else 
+	{
+		if (ft_change_value("OLDPWD", &node_PWD->value[4], data) == -1)
+			return (1);
+	}
+	if (ft_change_value("PWD", curr, data) == -1)
+		return (1);
 }

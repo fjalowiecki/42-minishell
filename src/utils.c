@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:54:38 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/17 21:21:50 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:32:51 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,25 @@ int ft_check_access(char *file, int type)
 			return(ft_perror_message());
 	}
 	return (0);
+}
+
+void ft_free_commands(t_cmd **commands)
+{
+	t_cmd *temp;
+	
+	int i = 0;
+	if(!commands)
+		return ;
+	while (*commands)
+	{
+		temp = *commands; 
+		if(temp->infile)
+			free(temp->infile);
+		if(temp->outfile)
+			free(temp->outfile);
+		if(temp->cmd)
+			free_ft_split(temp->cmd);
+		*commands = (*commands)->next;
+		free(temp);
+	}
 }

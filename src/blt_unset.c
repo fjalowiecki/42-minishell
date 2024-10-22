@@ -6,29 +6,29 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:51:43 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/19 18:26:15 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 09:55:13 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int unset_bltin(char **cmd, t_data *data)
+int	unset_bltin(char **cmd, t_data *data)
 {
-	int i;
-	int j;
-	char *name;
-	t_envp *node;
-	t_envp *previous_nod;
+	int		i;
+	int		j;
+	char	*name;
+	t_envp	*node;
+	t_envp	*previous_nod;
 	
 	i = 1;
 	j = 0;
-	while(cmd[i])
+	while (cmd[i])
 	{
-		while(cmd[i][j] && cmd[i][j] != '=')
+		while (cmd[i][j] && cmd[i][j] != '=')
 			j++;	
 		name = ft_substr(cmd[i], 0, j);
-		if(!name)
-			return(ft_perror_message());
+		if (!name)
+			return (ft_perror_message());
 		node = fetch_envp_node(data->envp, name);
 		if (!ft_strncmp(name, data->envp->value, j) && data->envp->value[j] == '=')
 			ft_remove_head_node(&(data->envp));
@@ -40,9 +40,9 @@ int unset_bltin(char **cmd, t_data *data)
 	}
 }
 
-void ft_remove_head_node(t_envp **head)
+void	ft_remove_head_node(t_envp **head)
 {
-	t_envp *new_head;
+	t_envp	*new_head;
 
 	new_head = (*head)->next;
 	free((*head)->value);
