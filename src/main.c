@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/22 09:15:38 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:00:08 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,11 @@ int	main(int argc, char **argv, char **envp)
 			free(data.line);
 			continue ;
 		}
-		san_line = sanitaze_line(data.line);
-		if (!san_line)
-		{
-			free(data.line);
+		sanitaze_line(&data);
+		if (!data.line)
 			continue ;
-		}
-		// printf("input: %s\n", san_line);
-		tokens = ft_tokenizer(san_line, &data);
+		// printf("input: %s\n", data.line);
+		tokens = ft_tokenizer(&data);
 		if (tokens == NULL)
 		{
 			data.cmd_exit_status = 1;
