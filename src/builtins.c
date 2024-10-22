@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/17 16:53:27 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 09:19:27 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,39 +43,10 @@ void env_bltin(t_data *data)
 	exit(0);
 }
 
-// void echo_bltin(char **cmd, t_data *data)
-// {
-// 	int add_nl;
-
-// 	add_nl = 1;
-// 	cmd++;
-// 	while (ft_strncmp(*cmd, "-n", 3) == 0)
-// 	{
-// 		add_nl = 0;
-// 		cmd++;
-// 	}
-// 	while (*cmd != NULL)
-// 	{
-// 		printf("%s", *cmd);
-// 		if (add_nl && (*(cmd+1) == NULL))
-// 			printf("\n");
-// 		if (*(cmd+1) != NULL)
-// 			printf(" ");
-// 		cmd++;
-// 	}
-// 	exit(0);
-// }
-
 int check_for_builtin_and_execute(char **cmd, t_data *data)
 {
-	// char **cmd2 = cmd;
-
-	// while (*cmd2 != NULL)
-	// {
-	// 	fprintf(stderr, "cmd: %s\n", *cmd2);
-	// 	cmd2++;
-	// }
-
+	if (!cmd[0])
+		return (-1);
 	if (ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)
 		exit(0);
 	else if (ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])) == 0)

@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 19:13:19 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/21 19:17:18 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/22 09:35:35 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ char	*process_str(char *str, char *str_final, int str_final_len)
 			i++;
 		else if ((ft_isalnum(str[i]) && is_operator(str[i + 1]))
 			|| (is_operator(str[i]) && ft_isalpha(str[i + 1]))
-			|| (str[i] == '|' && (str[i + 1] == '$' || str[i + 1] == '<')))
+			|| (str[i] == '|' && (str[i + 1] == '$' || str[i + 1] == '<'
+					|| str[i + 1] == '>')))
 			handle_operators(str, str_final, &i, &j);
 		else
 			str_final[j++] = str[i++];

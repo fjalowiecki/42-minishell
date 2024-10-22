@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/21 21:06:57 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 09:32:09 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int		check_for_unclosed_quotes(char *line);
 int		check_for_missing_command(char *line);
 
 /* sanitation00.c */
-char	*sanitaze_line(char *line);
+void	sanitaze_line(t_data *data);
 
 /* sanitation01.c */
 char	*process_str(char *str, char *str_final, int str_final_len);
@@ -131,7 +131,7 @@ void	file_error_msg(char *filename, char *msg);
 int ft_perror_free(char *first, char *second, char *third);
 
 /*tokenizer.c*/
-t_token *ft_tokenizer(char *input, t_data *data);
+t_token *ft_tokenizer(t_data *data);
 void	ft_free_tokens(t_token **tokens);
 int 	create_token(char *str, int type, t_token **tokens);
 
