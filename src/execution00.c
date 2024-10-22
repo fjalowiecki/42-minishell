@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution00.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/22 13:19:51 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:03:52 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	process_last_cmd_child(t_data *data, t_cmd *cmd_node, int input_fd)
 {
 	int	output_fd;
+	int status;
 
 	set_signals_to_default();
 	input_fd = update_input_fd(cmd_node, input_fd);
@@ -26,13 +27,13 @@ static void	process_last_cmd_child(t_data *data, t_cmd *cmd_node, int input_fd)
 		close(output_fd);
 	check_for_builtin_and_execute(cmd_node->cmd, data);
 	if (access(cmd_node->cmd[0], X_OK) != 0)
-		cmd_node->cmd[0] = find_cmd_path(data, cmd_node->cmd[0]);
+		cmd_node->cmd[0] = find_cmd_path(data, cmd_node->cmd[0], &status);
 	if (cmd_node->cmd[0] && output_fd > 0 && cmd_node->redir_error == false)
 	{
-		if (execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr) < 0)
-			perror("execve failed");
+		status = execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr);
+			// perror("execve failed");
 	}
-	exit(1);
+	exit(status);
 }
 
 static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
@@ -51,7 +52,7 @@ static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
 		if (input_fd > 0)
 			close(input_fd);
 		waitpid(pid, &status, 0);
-		data->cmd_exit_status = WEXITSTATUS(status);
+		set_exit_status(&(data->cmd_exit_status), status);
 	}
 }
 
@@ -59,6 +60,7 @@ static void	process_cmd(t_data *data, t_cmd *cmd_node,
 	int input_fd, int *fd_pipe)
 {
 	int	output_fd;
+	int status;
 
 	set_signals_to_default();
 	input_fd = update_input_fd(cmd_node, input_fd);
@@ -76,7 +78,7 @@ static void	process_cmd(t_data *data, t_cmd *cmd_node,
 		close(input_fd);
 	check_for_builtin_and_execute(cmd_node->cmd, data);
 	if (access(cmd_node->cmd[0], X_OK) != 0)
-		cmd_node->cmd[0] = find_cmd_path(data, cmd_node->cmd[0]);
+		cmd_node->cmd[0] = find_cmd_path(data, cmd_node->cmd[0], &status);
 	if (cmd_node->cmd[0] && input_fd >= 0 && cmd_node->redir_error == false)
 	{
 		if (execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr) < 0)

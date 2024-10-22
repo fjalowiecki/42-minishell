@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/22 13:11:11 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:32:58 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_data
 #define MANY_ARGS_ERR "Error: minishell does not accept arguments"
 #define NO_ENVP_ERR "Error: no environment found"
 #define NO_CMD_ERR "Error: command not found"
+#define NO_PERM_ERR "Error: permission denied"
 #define READLINE_ERR "Error: readline malfunction"
 #define MISS_QUOTE_ERR "Syntax error: missing quote"
 #define MISS_CMD_ERR "Syntax error: missing command"
@@ -163,7 +164,8 @@ void	execute_cmds(t_data *data);
 void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node);
 
 /* execution01.c */
-char	*find_cmd_path(t_data *data, char *cmd);
+char	*find_cmd_path(t_data *data, char *cmd, int *status);
+void	set_exit_status(int *cmd_exit_status, int status);
 
 /* fd_handlers.c */
 void	duplicate_fds(int input_fd, int output_fd);
