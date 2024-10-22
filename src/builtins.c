@@ -6,21 +6,21 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/22 09:19:27 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:40:41 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-void exit_bltin(t_data *data)
+void	exit_bltin(t_data *data)
 {
-	int exit_status;
+	int	exit_status;
 
 	if (data->cmd->cmd[1] != NULL)
 		exit_status = ft_atoi(data->cmd->cmd[1]);
 	else
-		exit_status = 0;
+		exit_status = data->cmd_exit_status;
 	free_resources(data);
 	exit(exit_status);
 }

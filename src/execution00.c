@@ -1,49 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   execution00.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/19 18:23:05 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:17:13 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*find_cmd_path(t_envp *envp, char *cmd)
+static void	process_last_cmd_child(t_data *data, t_cmd *cmd_node, int input_fd)
 {
-	char	**envp_paths;
-	char	*final_envp_path;
-	char	*envp_path_part;
-	int		i;
-
-	while (envp && ft_strncmp(envp->value, "PATH", 4) != 0)
-		envp = envp->next;
-	envp_path_part = ft_strjoin("/", cmd);
-	envp_paths = ft_split(envp->value + 5, ':');
-	i = 0;
-	while (envp_paths[i] != NULL)
-	{
-		final_envp_path = ft_strjoin(envp_paths[i], envp_path_part);
-		if (access(final_envp_path, X_OK) == 0)
-			break ;
-		free(final_envp_path);
-		final_envp_path = NULL;
-		i++;
-	}
-	free_ft_split(envp_paths);
-	free(envp_path_part);
-	if (final_envp_path == NULL)
-		ft_error_message(NO_CMD_ERR, -1);
-	free(cmd);//zwracasz char* wiec musisz zwolnic poprzedni pointer
-	return (final_envp_path);
-}
-
-static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
-{
-	int output_fd;
+	int	output_fd;
 
 	set_signals_to_default();
 	input_fd = update_input_fd(cmd_node, input_fd);
@@ -55,8 +26,8 @@ static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
 		close(output_fd);
 	check_for_builtin_and_execute(cmd_node->cmd, data);
 	if (access(cmd_node->cmd[0], X_OK) != 0)
-		cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0]);
-	if (cmd_node->cmd[0] != NULL && output_fd > 0 && cmd_node->redir_error == false)
+		cmd_node->cmd[0] = find_cmd_path(data, cmd_node->cmd[0]);
+	if (cmd_node->cmd[0] && output_fd > 0 && cmd_node->redir_error == false)
 	{
 		if (execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr) < 0)
 			perror("execve failed");
@@ -64,9 +35,30 @@ static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
 	exit(-1);
 }
 
-static void	process_cmd(t_data *data, t_cmd *cmd_node, int input_fd, int *fd_pipe)
+static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
 {
-	int output_fd;
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid < 0)
+		perror("fork failed");
+	else if (pid == 0)
+		process_last_cmd_child(data, cmd_node, input_fd);
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		if (input_fd > 0)
+			close(input_fd);
+		waitpid(pid, &status, 0);
+		data->cmd_exit_status = WTERMSIG(status);
+	}
+}
+
+static void	process_cmd(t_data *data, t_cmd *cmd_node,
+	int input_fd, int *fd_pipe)
+{
+	int	output_fd;
 
 	set_signals_to_default();
 	input_fd = update_input_fd(cmd_node, input_fd);
@@ -84,8 +76,8 @@ static void	process_cmd(t_data *data, t_cmd *cmd_node, int input_fd, int *fd_pip
 		close(input_fd);
 	check_for_builtin_and_execute(cmd_node->cmd, data);
 	if (access(cmd_node->cmd[0], X_OK) != 0)
-		cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0]);
-	if (cmd_node->cmd[0] != NULL && input_fd >= 0 && cmd_node->redir_error == false)
+		cmd_node->cmd[0] = find_cmd_path(data, cmd_node->cmd[0]);
+	if (cmd_node->cmd[0] && input_fd >= 0 && cmd_node->redir_error == false)
 	{
 		if (execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr) < 0)
 			perror("execve failed");
@@ -100,21 +92,7 @@ void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node)
 	pid_t	pid;
 
 	if (cmd_node->next == NULL)
-	{
-		pid = fork();
-		if (pid < 0)
-			perror("fork failed");
-		else if (pid == 0)
-			process_last_cmd(data, cmd_node, input_fd);
-		else
-		{
-			signal(SIGINT, SIG_IGN);
-			if (input_fd > 0)
-				close(input_fd);
-			waitpid(pid, &status, 0);
-			data->cmd_exit_status = WTERMSIG(status);
-		}
-	}
+		process_last_cmd(data, cmd_node, input_fd);
 	else
 	{
 		pipe(fd_pipe);

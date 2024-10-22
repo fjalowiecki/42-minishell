@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/22 09:32:09 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:17:59 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,41 +55,41 @@ typedef struct s_data
 	int			cmd_exit_status;
 }	t_data;
 
+#define BUFFER_SIZE 10
+
 /*tokens*/
-# define T_OUT_REDIR	1 
-# define T_IN_REDIR		2
-# define T_APPEND		3
-# define T_HEREDOC		4
-# define T_PIPE			5
-# define T_WORD			6 
-# define T_ARG			7
+#define T_OUT_REDIR	1 
+#define T_IN_REDIR		2
+#define T_APPEND		3
+#define T_HEREDOC		4
+#define T_PIPE			5
+#define T_WORD			6 
+#define T_ARG			7
 
 /*permissions to file*/
-# define READ			1
-# define WRITE			2
-# define EXECUTE		3
+#define READ			1
+#define WRITE			2
+#define EXECUTE		3
 // # define T_O_BRACKET		1 // usless
 // # define T_C_BRACKET		2 // usless
 // # define T_S_QUOTE		5 // useless
 // # define T_D_QUOTE		6 // useless
 // # define T_FILE			10 // useless
 
-# define NO_ENVP_ERR "Error: no environment found"
-# define NO_CMD_ERR "Error: command not found"
-# define READLINE_ERR "Error: readline malfunction"
-// # define EMPTY_LINE_ERR "Syntax error: empty or whitespace-only line"
-# define MISS_QUOTE_ERR "Syntax error: missing quote"
-# define MISS_CMD_ERR "Syntax error: missing command"
-# define HEREDOC_ERR "Error: heredoc malfunction"
-# define SANITATION_ERR "Error: line sanitation error"
-# define REDIR_TO_OPR "Syntax error: redirection followed by unexpected token"
-
-# define NULL_REDIR "Error: ambiguous redirect"
-
-# define BUFFER_SIZE 10
+/* errors */
+#define MANY_ARGS_ERR "Error: minishell does not accept arguments"
+#define NO_ENVP_ERR "Error: no environment found"
+#define NO_CMD_ERR "Error: command not found"
+#define READLINE_ERR "Error: readline malfunction"
+#define MISS_QUOTE_ERR "Syntax error: missing quote"
+#define MISS_CMD_ERR "Syntax error: missing command"
+#define HEREDOC_ERR "Error: heredoc malfunction"
+#define SANITATION_ERR "Error: line sanitation error"
+#define REDIR_TO_OPR "Syntax error: redirection followed by unexpected token"
+#define NULL_REDIR "Error: ambiguous redirect"
 
 /* main.c */
-void	init(t_data *data, char **envp);
+void	init(t_data *data, int argc, char **envp);
 void	free_resources(t_data *data);
 
 /* envp.c */
@@ -162,10 +162,12 @@ void ft_print_split(char **str);
 void ft_print_commands(t_cmd *cmds);
 void print_string_with_nulls(const char *str);
 
-
-/* execution.c */
-void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node);
+/* execution00.c */
 void	execute_cmds(t_data *data);
+void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node);
+
+/* execution01.c */
+char	*find_cmd_path(t_data *data, char *cmd);
 
 /* fd_handlers.c */
 void	duplicate_fds(int input_fd, int output_fd);
