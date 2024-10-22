@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:06:05 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 11:02:58 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:21:50 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@
 // if error here i am going to return *token with value NULL
 // every accessible resource should be freed on error
 // at succes returning *tokens and the input gets freed
-t_token *ft_tokenizer(t_data *data)
+t_token *ft_tokenizer(t_data *data, char *input)
 {
 	int i;
 	t_token *tokens;
-	char *input;
 
-	input = data->line;
 	tokens = NULL;
 	i = 0;
 	while(input && input[i])
@@ -41,6 +39,8 @@ t_token *ft_tokenizer(t_data *data)
 	}
 	if (input && input[i])
 		ft_free_tokens(&tokens);
+	free(data->line);
+	data->line = NULL;
 	return(tokens);
 }
 int	create_token(char *str, int type, t_token **tokens)

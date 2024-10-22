@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:13:47 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 10:51:20 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:38:36 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,32 @@
 //if error ocures everything is freed
 //if the calling of additional function ends with error all memory is going to be freed
 //if all called functions ends with succes all memory but *commands is going to be freed
+
+int ft_cmds_creation(t_data *data)
+{
+	t_token *tokens;
+	
+	tokens = ft_tokenizer(data, data->line);
+	if (tokens == NULL)
+	{
+		data->cmd_exit_status = 1;
+		return (-1);
+	}
+	if(ft_check_tokens(&tokens) == -1)
+	{
+		data->cmd_exit_status = 1;
+		return (-1);
+	}
+	if (tokens == NULL)
+		return (-1);
+	data->cmd = ft_commands(tokens);
+	if (data->cmd == NULL)
+	{
+		data->cmd_exit_status = 1;
+		return (-1);
+	}
+	return(0);
+}
 
 t_cmd	*ft_commands(t_token *tokens)
 {

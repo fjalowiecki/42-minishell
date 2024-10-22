@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/19 18:23:05 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:58:06 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	process_last_cmd(t_data *data, t_cmd *cmd_node, int input_fd)
 		if (execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr) < 0)
 			perror("execve failed");
 	}
-	exit(-1);
+	exit(1);
 }
 
 static void	process_cmd(t_data *data, t_cmd *cmd_node, int input_fd, int *fd_pipe)
@@ -112,7 +112,7 @@ void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node)
 			if (input_fd > 0)
 				close(input_fd);
 			waitpid(pid, &status, 0);
-			data->cmd_exit_status = WTERMSIG(status);
+			data->cmd_exit_status = WEXITSTATUS(status);
 		}
 	}
 	else
