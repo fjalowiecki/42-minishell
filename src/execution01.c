@@ -6,37 +6,43 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:39:17 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/22 15:21:08 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:43:11 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void set_exit_status(int *cmd_exit_status, int status)
+void	set_exit_status(int *cmd_exit_status, int status)
 {
-	if (WEXITSTATUS(status) == true)
+	if (WIFEXITED(status))
 		*cmd_exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status) == true)
+	else if (WIFSIGNALED(status))
 		*cmd_exit_status = 128 + WTERMSIG(status);
+	else if (WIFSTOPPED(status))
+		*cmd_exit_status = 128 + WSTOPSIG(status);
+	else if (WIFCONTINUED(status))
+		*cmd_exit_status = 128;
 	else
-		*cmd_exit_status = WTERMSIG(status);
+		*cmd_exit_status = -1;
 }
 
-static char *find_correct_path(t_data *data, char *cmd, int flag)
+static char	*find_correct_path(t_envp *envp, char *cmd)
 {
 	char	*final_envp_path;
 	char	**envp_paths;
 	char	*envp_path_part;
 	int		i;
 
+	if (!envp || cmd[0] == '.')
+		return (NULL);
 	envp_path_part = ft_strjoin("/", cmd);
-	envp_paths = ft_split(data->envp->value + 5, ':');
+	envp_paths = ft_split(envp->value + 5, ':');
 	i = 0;
 	final_envp_path = NULL;
 	while (envp_paths[i] != NULL)
 	{
 		final_envp_path = ft_strjoin(envp_paths[i], envp_path_part);
-		if (access(final_envp_path, flag) == 0)
+		if (access(final_envp_path, X_OK) == 0)
 			break ;
 		free(final_envp_path);
 		final_envp_path = NULL;
@@ -47,34 +53,30 @@ static char *find_correct_path(t_data *data, char *cmd, int flag)
 	return (final_envp_path);
 }
 
-static void set_status_and_mess_err(char *err, int code, int *status)
+static void	set_status_and_mess_err(char *err, int code, int *status)
 {
 	*status = code;
 	msg_error(err);
 }
 
-char	*find_cmd_path(t_data *data, char *cmd, int *status)
-{ //zmienicc data na envp, leak przy ech0
+char	*find_cmd_path(t_envp *envp, char *cmd, int *status)
+{
 	char	*final_envp_path;
 
-	while (data->envp && ft_strncmp(data->envp->value, "PATH", 4) != 0)
-		data->envp = data->envp->next;
-	if (data->envp == NULL)
+	if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
+		return (cmd);
+	else if (access(cmd, F_OK) == 0 && access(cmd, X_OK) != 0)
 	{
-		set_status_and_mess_err(NO_CMD_ERR, 127, status);
-		return (NULL);
-	}
-	final_envp_path = find_correct_path(data, cmd, F_OK);
-	if (final_envp_path == NULL)
-	{
-		set_status_and_mess_err(NO_CMD_ERR, 127, status);
+		set_status_and_mess_err(NO_PERM_ERR, 126, status);
 		free(cmd);
 		return (NULL);
 	}
-	final_envp_path = find_correct_path(data, cmd, X_OK);
+	while (envp && ft_strncmp(envp->value, "PATH", 4) != 0)
+		envp = envp->next;
+	final_envp_path = find_correct_path(envp, cmd);
 	if (final_envp_path == NULL)
 	{
-		set_status_and_mess_err(NO_PERM_ERR, 126, status);
+		set_status_and_mess_err(NO_CMD_ERR, 127, status);
 		free(cmd);
 		return (NULL);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 13:22:01 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:43:53 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void	execute_cmds(t_data *data);
 void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node);
 
 /* execution01.c */
-char	*find_cmd_path(t_data *data, char *cmd, int *status);
+char	*find_cmd_path(t_envp *envp, char *cmd, int *status);
 void	set_exit_status(int *cmd_exit_status, int status);
 
 /* fd_handlers.c */

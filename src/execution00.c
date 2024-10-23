@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/22 15:03:52 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:42:46 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	process_last_cmd_child(t_data *data, t_cmd *cmd_node, int input_fd)
 {
 	int	output_fd;
-	int status;
+	int	status;
 
 	set_signals_to_default();
 	input_fd = update_input_fd(cmd_node, input_fd);
@@ -26,13 +26,9 @@ static void	process_last_cmd_child(t_data *data, t_cmd *cmd_node, int input_fd)
 	if (output_fd > 2)
 		close(output_fd);
 	check_for_builtin_and_execute(cmd_node->cmd, data);
-	if (access(cmd_node->cmd[0], X_OK) != 0)
-		cmd_node->cmd[0] = find_cmd_path(data, cmd_node->cmd[0], &status);
+	cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0], &status);
 	if (cmd_node->cmd[0] && output_fd > 0 && cmd_node->redir_error == false)
-	{
 		status = execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr);
-			// perror("execve failed");
-	}
 	exit(status);
 }
 
@@ -60,7 +56,7 @@ static void	process_cmd(t_data *data, t_cmd *cmd_node,
 	int input_fd, int *fd_pipe)
 {
 	int	output_fd;
-	int status;
+	int	status;
 
 	set_signals_to_default();
 	input_fd = update_input_fd(cmd_node, input_fd);
@@ -77,14 +73,10 @@ static void	process_cmd(t_data *data, t_cmd *cmd_node,
 	if (input_fd > 0)
 		close(input_fd);
 	check_for_builtin_and_execute(cmd_node->cmd, data);
-	if (access(cmd_node->cmd[0], X_OK) != 0)
-		cmd_node->cmd[0] = find_cmd_path(data, cmd_node->cmd[0], &status);
+	cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0], &status);
 	if (cmd_node->cmd[0] && input_fd >= 0 && cmd_node->redir_error == false)
-	{
-		if (execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr) < 0)
-			perror("execve failed");
-	}
-	exit(-1);
+		status = execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr);
+	exit(status);
 }
 
 void	recursive_pipeline(int input_fd, t_data *data, t_cmd *cmd_node)
