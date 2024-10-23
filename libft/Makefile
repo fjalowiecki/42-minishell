@@ -6,7 +6,7 @@
 #    By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 14:20:27 by fjalowie          #+#    #+#              #
-#    Updated: 2024/10/23 14:04:06 by fjalowie         ###   ########.fr        #
+#    Updated: 2024/10/23 15:51:58 by fjalowie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,4 +77,5 @@ fclean: clean
 re: fclean all
 	@echo "Rebuild of ${NAME} completed."
 
+.PHONY: all clean fclean re
 .PHONY: all clean fclean re
