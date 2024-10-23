@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 15:49:18 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:54:55 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_data
 # define MISS_CMD_ERR "Syntax error: missing command"
 # define HEREDOC_ERR "Error: heredoc malfunction"
 # define SANITATION_ERR "Error: line sanitation error"
+# define NO_FNAME_ARG_ERR "Error: filename argument required"
 # define REDIR_TO_OPR "Syntax error: redirection followed by unexpected token"
 # define NULL_REDIR "Error: ambiguous redirect"
 
@@ -91,16 +92,18 @@ typedef struct s_data
 void	init(t_data *data, int argc, char **envp);
 void	free_resources(t_data *data);
 
-/* envp.c */
-t_envp	*fetch_envp(char **envp);
+/* envp00.c */
 void	free_envp(t_envp *head);
+t_envp	*fetch_node_before(t_envp **head, char *key);
 int		append_envp_node(t_envp **head, char *str);
 void	remove_envp_node(t_envp **head, t_envp *prev_node);
 t_envp	*fetch_envp_node(t_envp *head, char *key);
+
+/* envp01.c */
 void	increment_shlvl(t_envp *head);
 void	free_shlvl_value(t_envp *head);
 char	**convert_envp_llist_to_array(t_envp *head);
-t_envp	*fetch_node_before(t_envp **head, char *key);
+t_envp	*fetch_envp(char **envp);
 
 /* syntax_check00.c */
 int		check_syntax(char *line);

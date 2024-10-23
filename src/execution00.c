@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 15:26:27 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:35:53 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	process_last_cmd_child(t_data *data, t_cmd *cmd_node, int input_fd)
 	cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0], &status);
 	if (cmd_node->cmd[0] && output_fd > 0 && cmd_node->redir_error == false)
 		status = execve(cmd_node->cmd[0], cmd_node->cmd, data->envp_arr);
+	if (status < 0)
+		perror("execve failed");
 	exit(status);
 }
 

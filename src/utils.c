@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:54:38 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 13:08:46 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:56:11 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	go_to_next_quote(char *line, int *i, bool go_back)
 	int		j;
 
 	if (!line || !i)
-		return;
+		return ;
 
 	quote = line[*i];
 	j = *i;
@@ -34,7 +34,7 @@ void	go_to_next_quote(char *line, int *i, bool go_back)
 		while (j >= 0 && line[j] != quote)
 			j--;
 	}
-	*i = j; 
+	*i = j;
 }
 
 void	free_ft_split(char **split)

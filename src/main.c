@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 14:40:07 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:24:03 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void check_for_builtins(t_data *data)
 int read_line(t_data *data)
 {
 	errno = 0;
-	data->line = readline("\033[1;36mminishell> \033[0m");
+	data->line = readline("minishell> ");
 	if (!data->line)
 	{
 		if (errno == 0)

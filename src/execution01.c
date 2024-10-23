@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:39:17 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 13:43:11 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:01:43 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,40 @@ static char	*find_correct_path(t_envp *envp, char *cmd)
 	return (final_envp_path);
 }
 
-static void	set_status_and_mess_err(char *err, int code, int *status)
+static void	set_status_and_msg_err(char *err, int code, int *status)
 {
 	*status = code;
 	msg_error(err);
+}
+
+static int check_for_dot_builtin(char *cmd, int *status)
+{
+	if (ft_strncmp(cmd, ".", 2) == 0)
+	{
+		set_status_and_msg_err(NO_FNAME_ARG_ERR, 2, status);
+		free(cmd);
+		return (1);
+	}
+	else if (ft_strncmp(cmd, "..", 3) == 0)
+	{
+		set_status_and_msg_err(NO_CMD_ERR, 127, status);
+		free(cmd);
+		return (1);
+	}
+	return (0);
 }
 
 char	*find_cmd_path(t_envp *envp, char *cmd, int *status)
 {
 	char	*final_envp_path;
 
+	if (check_for_dot_builtin(cmd, status))
+		return (NULL);
 	if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
 		return (cmd);
 	else if (access(cmd, F_OK) == 0 && access(cmd, X_OK) != 0)
 	{
-		set_status_and_mess_err(NO_PERM_ERR, 126, status);
+		set_status_and_msg_err(NO_PERM_ERR, 126, status);
 		free(cmd);
 		return (NULL);
 	}
@@ -76,7 +95,7 @@ char	*find_cmd_path(t_envp *envp, char *cmd, int *status)
 	final_envp_path = find_correct_path(envp, cmd);
 	if (final_envp_path == NULL)
 	{
-		set_status_and_mess_err(NO_CMD_ERR, 127, status);
+		set_status_and_msg_err(NO_CMD_ERR, 127, status);
 		free(cmd);
 		return (NULL);
 	}
