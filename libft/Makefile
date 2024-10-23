@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+         #
+#    By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 14:20:27 by fjalowie          #+#    #+#              #
-#    Updated: 2024/09/25 08:00:36 by fjalowie         ###   ########.fr        #
+#    Updated: 2024/10/23 13:57:26 by fgrabows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,4 +77,4 @@ fclean: clean
 re: fclean all
 	@echo "Rebuild of ${NAME} completed."
 
-.PHONY: all, clean, fclean, re
+.PHONY: all clean fclean re
