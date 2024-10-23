@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:05:55 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 17:31:37 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:18:54 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static int	is_accepted_char(char ch)
 
 int	check_for_preceding_command(char *line, int i)
 {
-	char	quote;
 	char	init_char;
 
 	init_char = line[i];
@@ -84,10 +83,12 @@ int	check_for_missing_command(char *line)
 			if (check_for_preceding_command(line, i))
 				return (-1);
 		}
-		else if (line[i] == '>' && line[i + 1] != '>'
-			|| line[i] == '<' && line[i + 1] != '<')
+		else if ((line[i] == '>' && line[i + 1] != '>')
+			|| (line[i] == '<' && line[i + 1] != '<'))
+		{
 			if (check_for_following_command(line, i))
 				return (-1);
+		}
 		i++;
 	}
 	return (0);

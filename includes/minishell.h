@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 17:54:55 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:12:20 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	free_resources(t_data *data);
 void	free_envp(t_envp *head);
 t_envp	*fetch_node_before(t_envp **head, char *key);
 int		append_envp_node(t_envp **head, char *str);
-void	remove_envp_node(t_envp **head, t_envp *prev_node);
+void	remove_envp_node(t_envp *prev_node);
 t_envp	*fetch_envp_node(t_envp *head, char *key);
 
 /* envp01.c */

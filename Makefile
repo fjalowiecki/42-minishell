@@ -6,7 +6,7 @@
 #    By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/29 10:36:34 by fjalowie          #+#    #+#              #
-#    Updated: 2024/10/18 11:53:19 by fjalowie         ###   ########.fr        #
+#    Updated: 2024/10/23 18:08:29 by fjalowie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,7 @@ OBJDIR	= .obj
 OBJS	= $(SRCS:src/%.c=$(OBJDIR)/%.o)
 
 CC		= cc
-CFLAGS	= -I includes/ -g
-# -Wall -Wextra -Werror 
+CFLAGS	= -I includes/ -Wall -Wextra
 LDFLAGS = -lreadline
 
 all:	$(NAME)

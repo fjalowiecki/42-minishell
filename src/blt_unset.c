@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blt_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:51:43 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 13:01:53 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:12:50 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	unset_bltin(char **cmd, t_data *data)
 		if (!ft_strncmp(name, data->envp->value, j) && data->envp->value[j] == '=')
 			ft_remove_head_node(&(data->envp));
 		else if (node)
-			remove_envp_node(&data->envp,fetch_node_before(&data->envp, name));
+			remove_envp_node(fetch_node_before(&data->envp, name));
 		i++;
 		j = 0;
 		free(name);

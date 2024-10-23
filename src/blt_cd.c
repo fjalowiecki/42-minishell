@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blt_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:18:15 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 12:55:58 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 18:12:02 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	ft_cd_env_change(t_data *data, char *var, char *res)
 	if (data->envp == node)
 		ft_remove_head_node(&data->envp);
 	else
-		remove_envp_node(&data->envp, fetch_node_before(&data->envp, var));
+		remove_envp_node(fetch_node_before(&data->envp, var));
 	return (0);
 }
 
