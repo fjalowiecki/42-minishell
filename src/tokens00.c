@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:28:55 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 10:48:11 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:52:05 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,19 @@ int ft_create_word_tok(char *str, int *i, t_token **tokens, t_data *data)
 	while(str[*i + n] && str[*i + n] != ' ')
 	{
 		if (str[*i + n] == '\'')
-			ft_skip_sq(&n, &str[*i + n]);
-		if (str[*i + n] == '\"')
+			ft_skip_sq(&n, &str[*i]);
+		else if (str[*i + n] == '\"')
 		{
 			n++;
 			while(str[*i + n] && str[*i + n] != '\"')
 				n++;
 			n++;
 		}
-		while(str[*i + n] && !ft_strchr("\"\' ", str[*i + n]))
-			n++;
+		else 
+		{
+			while(str[*i + n] && !ft_strchr("\"\' ", str[*i + n]))
+				n++;
+		}
 	}
 	if (ft_extract_word(&str[*i], &n, tokens, data) == -1)
 		return (-1);
@@ -116,8 +119,7 @@ int ft_check_for_dollar(char **word, t_token **tokens, t_data *data)
 			ft_skip_sq(&i, *word);
 		else if ((*word)[i] == '$')
 		{
-			value = ft_dollar(&i, word, data);//extending variables
-
+			value = ft_dollar(&i, word, data);
 			if (value == -1)
 				return(-1);
 		}

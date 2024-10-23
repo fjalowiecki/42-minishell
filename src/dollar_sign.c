@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:29:34 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 10:41:21 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:15:20 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ static int	ft_expand_var(char *var, t_envp *env, char **word, int *i)
 	int		n;
 	int		value_len;
 	
-	env_var = fetch_envp_node(env, var);
-	if (!env_var)
-		return (0);
 	n = ft_strlen(var);
+	env_var = fetch_envp_node(env, var);
+	if (!env_var || !env_var->value[n + 1])
+		return (0);
 	free(var);
 	value_len = ft_strlen(&env_var->value[n + 1]);
 	str = malloc(sizeof(char) * (ft_strlen(*word) - n + value_len));
@@ -96,7 +96,7 @@ static int	ft_expand_var(char *var, t_envp *env, char **word, int *i)
 	ft_strlcpy(&str[*i + value_len], &(*word)[*i + n + 1], ft_strlen(*word) - *i - n + 1);	
 	free(*word);
 	*word = str;
-	*i = *i + value_len - 1;
+	*i = *i + value_len -1;
 	return (1);
 }
 
@@ -106,13 +106,14 @@ static int	ft_change_word(char* var, char **word, int *i, t_data *data)
 	int		word_len;
 	int		var_len;
 
+	//printf("var:%s| word %s| *i:%d\n", var, *word, *i);
 	if (var[0] == '?')
 	{
 		if (ft_exit_extension(var, word, i, data) == -1)
 			return (-1);
 		return (0);
 	}
-	var_len = ft_strlen(var);
+	var_len = ft_strlen(var);//5
 	word_len = ft_strlen(*word);
 	new_word = malloc(sizeof(char) * (word_len - var_len + 1));
 	if (!new_word)
@@ -121,11 +122,12 @@ static int	ft_change_word(char* var, char **word, int *i, t_data *data)
 		free(*word);
 		return (ft_perror_message());	
 	}
-	ft_strlcpy(new_word, *word, *i);
+	ft_strlcpy(new_word, *word, *i + 1);
 	ft_strlcpy(&new_word[*i], &(*word)[*i + var_len + 1], word_len - *i - var_len); 
 	free(var);
 	free(*word);
 	*word = new_word;
+	//printf(("word"))
 	return (0);
 }
 
@@ -136,20 +138,28 @@ static int	ft_exit_extension(char *var, char **word, int *i, t_data *data)
 	int		exit_len;
 	int		word_len;
 
+	//printf("%s\n", *word);
 	
 	free(var);
+	//printf("%d | *i:%d\n", data->cmd_exit_status, *i);
+
 	exit_code = ft_itoa(data->cmd_exit_status);
+	//printf("%s\n", exit_code);
+	
 	if (!exit_code)
 		return (ft_perror_free(NULL, *word, NULL));
-	exit_len = ft_strlen(exit_code);
-	word_len = ft_strlen(*word);
-	new_word = malloc(sizeof(char) * (word_len + exit_len - 1));
+	exit_len = ft_strlen(exit_code);//1
+	word_len = ft_strlen(*word);//6
+	new_word = malloc(sizeof(char) * (word_len + exit_len - 1));//6
 	if (!new_word)
 		return (ft_perror_free(NULL, *word, exit_code));
-	ft_strlcpy(new_word, *word, *i);
+	ft_strlcpy(new_word, *word, *i + 1);
 	ft_strlcpy(&new_word[*i], exit_code, exit_len + 1);
 	ft_strlcpy(&new_word[*i + exit_len], &(*word)[*i + 2], word_len - *i - 1);
 	free(*word);
+	free(exit_code);
 	*word = new_word;
+	//printf("%s\n", *word);
+	*i= *i + exit_len - 1;
 	return (0);
 }

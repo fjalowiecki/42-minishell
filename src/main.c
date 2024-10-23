@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/22 13:10:48 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:50:17 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		sanitaze_line(&data);
+		//printf("\n|%s|\n", data.line);
 		if (!data.line)
 			continue ;
 		if (ft_cmds_creation(&data) == -1)

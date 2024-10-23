@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:53:27 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 13:07:20 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:30:30 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	export_bltin(char **cmd, t_data *data)
 	while (cmd[i])
 	{
 		if (!ft_isalpha(cmd[i][j]) && cmd[i][j] != '_')
-			ft_error_message("Export: not a valid identifier\n", 1);
+			return(ft_error_message("Export: not a valid identifier", 1));
 		j++;
 		while (cmd[i][j] && cmd[i][j] != '=')
 		{
