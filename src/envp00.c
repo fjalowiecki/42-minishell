@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:37:12 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 18:11:35 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:06:44 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,3 @@ t_envp	*fetch_envp_node(t_envp *head, char *key)
 	}
 	return (NULL);
 }
-

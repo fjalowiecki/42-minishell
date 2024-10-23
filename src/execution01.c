@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:39:17 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 17:01:43 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:07:09 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	set_status_and_msg_err(char *err, int code, int *status)
 	msg_error(err);
 }
 
-static int check_for_dot_builtin(char *cmd, int *status)
+static int	check_for_dot_builtin(char *cmd, int *status)
 {
 	if (ft_strncmp(cmd, ".", 2) == 0)
 	{

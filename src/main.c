@@ -6,14 +6,15 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 17:24:03 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:10:49 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init(t_data *data, int argc, char **envp)
+void	init(t_data *data, int argc, char **argv, char **envp)
 {
+	(void)argv;
 	if (argc != 1)
 	{
 		perror(MANY_ARGS_ERR);
@@ -32,7 +33,7 @@ void	init(t_data *data, int argc, char **envp)
 	data->cmd_exit_status = 0;
 }
 
-void free_resources(t_data *data)
+void	free_resources(t_data *data)
 {
 	rl_clear_history();
 	if (data->cmd != NULL)
@@ -64,23 +65,14 @@ void check_for_builtins(t_data *data)
 		
 }
 
-int read_line(t_data *data)
+int	read_line(t_data *data)
 {
-	errno = 0;
 	data->line = readline("minishell> ");
 	if (!data->line)
 	{
-		if (errno == 0)
-		{
-			printf("exit\n");
-			free_resources(data);
-			exit(0);
-		}
-		else
-		{
-			perror(READLINE_ERR);
-			return (-1);
-		}
+		printf("exit\n");
+		free_resources(data);
+		exit(0);
 	}
 	return (0);
 }
@@ -89,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
-	init(&data, argc, envp);
+	init(&data, argc, argv, envp);
 	while (1)
 	{
 		handle_signals();

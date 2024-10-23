@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 18:12:20 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:11:19 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct s_data
 # define NULL_REDIR "Error: ambiguous redirect"
 
 /* main.c */
-void	init(t_data *data, int argc, char **envp);
+void	init(t_data *data, int argc, char **argv, char **envp);
 void	free_resources(t_data *data);
 
 /* envp00.c */

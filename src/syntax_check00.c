@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:33:58 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/21 14:11:39 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:07:34 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,3 @@ int	check_for_unclosed_quotes(char *line)
 		return (-1);
 	return (0);
 }
-

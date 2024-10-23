@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/23 15:45:30 by fjalowie         ###   ########.fr       */
+/*   Created: 2024/10/23 19:06:02 by fjalowie          #+#    #+#             */
+/*   Updated: 2024/10/23 19:06:09 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
