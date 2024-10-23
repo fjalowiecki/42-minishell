@@ -6,9 +6,12 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 12:55:30 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:22:01 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+# ifndef MINISHELL_H
+# define MINISHELL_H
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -212,3 +215,4 @@ void	handle_sigint(int sig);
 /* token_cleaner.c */
 int		ft_check_tokens(t_token **tokens);
 
+#endif
