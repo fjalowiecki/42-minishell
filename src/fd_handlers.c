@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:56:00 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/22 10:42:00 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:43:29 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,23 @@ int	get_heredoc(t_cmd *cmd)
 	char	*eof;
 
 	eof = cmd->infile;
-	if (!eof)
-		return (-1);
 	pipe(fd_pipe);
 	while (1)
 	{
 		write(1, "> ", 2);
 		input = get_next_line(STDIN_FILENO);
+		if (!input)
+		{
+			printf("\nWarning: here_doc delimited by EOF signal\n");
+			break ;
+		}
 		if (ft_strncmp(input, eof, ft_strlen(eof)) == 0
 			&& input[ft_strlen(eof)] == '\n')
 			break ;
 		write(fd_pipe[1], input, ft_strlen(input));
+		free(input);
 	}
+	free(input);
 	close(fd_pipe[1]);
 	return (fd_pipe[0]);
 }

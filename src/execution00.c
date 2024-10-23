@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:52 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 13:42:46 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:26:27 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	process_last_cmd_child(t_data *data, t_cmd *cmd_node, int input_fd)
 		close(input_fd);
 	if (output_fd > 2)
 		close(output_fd);
+	if (!cmd_node->cmd)
+		exit(0);
 	check_for_builtin_and_execute(cmd_node->cmd, data);
 	cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0], &status);
 	if (cmd_node->cmd[0] && output_fd > 0 && cmd_node->redir_error == false)
@@ -72,6 +74,8 @@ static void	process_cmd(t_data *data, t_cmd *cmd_node,
 	close(fd_pipe[1]);
 	if (input_fd > 0)
 		close(input_fd);
+	if (!cmd_node->cmd)
+		exit(0);
 	check_for_builtin_and_execute(cmd_node->cmd, data);
 	cmd_node->cmd[0] = find_cmd_path(data->envp, cmd_node->cmd[0], &status);
 	if (cmd_node->cmd[0] && input_fd >= 0 && cmd_node->redir_error == false)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/23 12:58:58 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:45:30 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	env_bltin(t_data *data)
 	exit(0);
 }
 
-int check_for_builtin_and_execute(char **cmd, t_data *data)
+int	check_for_builtin_and_execute(char **cmd, t_data *data)
 {
-	if (!cmd[0])
+	if (!cmd || !cmd[0])
 		return (-1);
 	if (ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)
 		exit_bltin(data);

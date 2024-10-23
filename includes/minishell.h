@@ -6,24 +6,24 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 13:43:53 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:49:18 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINISHELL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <sys/wait.h>
-#include <stdbool.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "../libft/libft.h"
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <signal.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <sys/wait.h>
+# include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "../libft/libft.h"
 
 typedef struct s_envp
 {
@@ -58,34 +58,34 @@ typedef struct s_data
 	int			cmd_exit_status;
 }	t_data;
 
-#define BUFFER_SIZE 10
+# define BUFFER_SIZE 10
 
 /*tokens*/
-#define T_OUT_REDIR		1 
-#define T_IN_REDIR		2
-#define T_APPEND		3
-#define T_HEREDOC		4
-#define T_PIPE			5
-#define T_WORD			6 
-#define T_ARG			7
+# define T_OUT_REDIR	1 
+# define T_IN_REDIR		2
+# define T_APPEND		3
+# define T_HEREDOC		4
+# define T_PIPE			5
+# define T_WORD			6 
+# define T_ARG			7
 
 /*permissions to file*/
-#define READ			1
-#define WRITE			2
-#define EXECUTE			3
+# define READ			1
+# define WRITE			2
+# define EXECUTE		3
 
 /* errors */
-#define MANY_ARGS_ERR "Error: minishell does not accept arguments"
-#define NO_ENVP_ERR "Error: no environment found"
-#define NO_CMD_ERR "Error: command not found"
-#define NO_PERM_ERR "Error: permission denied"
-#define READLINE_ERR "Error: readline malfunction"
-#define MISS_QUOTE_ERR "Syntax error: missing quote"
-#define MISS_CMD_ERR "Syntax error: missing command"
-#define HEREDOC_ERR "Error: heredoc malfunction"
-#define SANITATION_ERR "Error: line sanitation error"
-#define REDIR_TO_OPR "Syntax error: redirection followed by unexpected token"
-#define NULL_REDIR "Error: ambiguous redirect"
+# define MANY_ARGS_ERR "Error: minishell does not accept arguments"
+# define NO_ENVP_ERR "Error: no environment found"
+# define NO_CMD_ERR "Error: command not found"
+# define NO_PERM_ERR "Error: permission denied"
+# define READLINE_ERR "Error: readline malfunction"
+# define MISS_QUOTE_ERR "Syntax error: missing quote"
+# define MISS_CMD_ERR "Syntax error: missing command"
+# define HEREDOC_ERR "Error: heredoc malfunction"
+# define SANITATION_ERR "Error: line sanitation error"
+# define REDIR_TO_OPR "Syntax error: redirection followed by unexpected token"
+# define NULL_REDIR "Error: ambiguous redirect"
 
 /* main.c */
 void	init(t_data *data, int argc, char **envp);
@@ -126,14 +126,14 @@ void	ft_free_commands(t_cmd **commands);
 /*error.c*/
 void	msg_error(char *err);
 int		ft_error_message(char *str, int num);
-int		ft_perror_message();
+int		ft_perror_message(void);
 void	file_error_msg(char *filename, char *msg);
 int		ft_perror_free(char *first, char *second, char *third);
 
 /*tokenizer.c*/
-t_token *ft_tokenizer(t_data *data, char *input);
+t_token	*ft_tokenizer(t_data *data, char *input);
 void	ft_free_tokens(t_token **tokens);
-int 	create_token(char *str, int type, t_token **tokens);
+int		create_token(char *str, int type, t_token **tokens);
 
 
 /*tokens00/01.c*/
@@ -206,10 +206,10 @@ int		ft_print_env_var(t_data *data);
 /* blt_unset */
 int		unset_bltin(char **cmd, t_data *data);
 void	ft_remove_head_node(t_envp **head);
- 
+
 /* signals.c */
-void	handle_signals();
-void	set_signals_to_default();
+void	handle_signals(void);
+void	set_signals_to_default(void);
 void	handle_sigint(int sig);
 
 /* token_cleaner.c */
