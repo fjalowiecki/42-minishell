@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:44:21 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 13:06:20 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:19:22 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,21 @@ void ft_skip_sq(int *n, char *str)
 	while (str[*n] && str[*n] != '\'')
 		(*n)++;
 	(*n)++;
+}
+
+int ft_cross_dq(int *i, char **word, t_data *data)
+{
+	(*i)++;
+	while ((*word)[*i] != '\"')
+	{
+		if ((*word)[*i] == '$')
+		{
+			if (ft_dollar(i, word, data) == -1)
+				return (-1);
+			continue;
+		}
+		(*i)++;
+	}
+	(*i)++;
+	return (0);
 }

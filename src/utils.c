@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:54:38 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 17:56:11 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:45:21 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	ft_free_commands(t_cmd **commands)
 {
 	t_cmd	*temp;
 
-	int i = 0;
 	if (!commands)
 		return ;
 	while (*commands)

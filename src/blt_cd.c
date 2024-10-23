@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blt_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:18:15 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 18:12:02 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:34:32 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	cd_handler(char *str, t_data *data);
 static int	ft_change_value(char *var, char *res, t_data *data);
 static int	ft_cd_env_change(t_data *data, char *var, char *res);
-static int	ft_cd_home(char **cmd, t_data *data, t_envp *home);
+static int	ft_cd_home(t_data *data, t_envp *home);
 
 int	cd_bltin(char **cmd, t_data *data)
 {	
@@ -26,7 +26,7 @@ int	cd_bltin(char **cmd, t_data *data)
 	else if (!cmd[1])
 	{
 		node = fetch_envp_node(data->envp, "HOME");
-		return (ft_cd_home(cmd, data, node));
+		return (ft_cd_home(data, node));
 	}
 	else if (cd_handler(cmd[1], data) == -1)
 		return (1);
@@ -64,7 +64,6 @@ static int	ft_change_value(char *var, char *res, t_data *data)
 
 static int	cd_handler(char *str, t_data *data)
 {
-	int		value;
 	char	cur[4096];
 	t_envp	*node;
 
@@ -100,7 +99,7 @@ static int	ft_cd_env_change(t_data *data, char *var, char *res)
 	return (0);
 }
 
-static int	ft_cd_home(char **cmd, t_data *data, t_envp *home)
+static int	ft_cd_home(t_data *data, t_envp *home)
 {
 	t_envp	*node_PWD;
 	char	curr[4096];
@@ -126,4 +125,5 @@ static int	ft_cd_home(char **cmd, t_data *data, t_envp *home)
 	}
 	if (ft_change_value("PWD", curr, data) == -1)
 		return (1);
+	return (0);
 }

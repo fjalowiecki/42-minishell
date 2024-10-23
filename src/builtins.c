@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 19:06:02 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 19:06:09 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:37:36 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	check_for_builtin_and_execute(char **cmd, t_data *data)
 	else if (ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])) == 0)
 		env_bltin(data);
 	else if (ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
-		echo_bltin(cmd, data);
+		echo_bltin(cmd);
 	else if (ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
 		pwd_bltin(cmd, data);
 	else if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)

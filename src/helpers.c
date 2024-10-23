@@ -10,7 +10,7 @@ void ft_print_token_types(t_token *tokens)
     while (current)
     {
 		printf("TOKEN NR. %d \tType:%d \n", i++, current->type);
-        print_string_with_nulls(current->text);
+       // print_string_with_nulls(current->text);
         current = current->next;    
 	}
     printf("\n");
@@ -18,7 +18,7 @@ void ft_print_token_types(t_token *tokens)
 
 void ft_print_commands(t_cmd *cmds)
 {
-	while(cmds)
+	while (cmds)
 	{
 		if (cmds->cmd)
 			ft_print_split(cmds->cmd);
@@ -37,14 +37,14 @@ void ft_print_split(char **str)
 {
 	int i;
 
-	i = 0;
-	if(!str)
+	i = -1;
+	if (!str)
 		return;
-	while(str[i])
-		printf("split args[%d]%s\n", i,str[i++]);
+	while (str[++i])
+		printf("split args[%d]%s\n", i,str[i]);
 }
 
-void print_string_with_nulls(const char *str) 
+/*void print_string_with_nulls(const char *str) 
 {
 	int length = ft_strlen(str) + 1;
     for (int i = 0; i < length; i++) {
@@ -54,4 +54,4 @@ void print_string_with_nulls(const char *str)
             putchar(str[i]); // Print the character
         }
     }
-}
+}*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blt_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:51:43 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 18:12:50 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:37:04 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	unset_bltin(char **cmd, t_data *data)
 	int		j;
 	char	*name;
 	t_envp	*node;
-	t_envp	*previous_nod;
 
 	i = 1;
 	j = 0;
@@ -38,6 +37,7 @@ int	unset_bltin(char **cmd, t_data *data)
 		j = 0;
 		free(name);
 	}
+	return (0);
 }
 
 void	ft_remove_head_node(t_envp **head)

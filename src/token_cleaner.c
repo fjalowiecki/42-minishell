@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:29:02 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 13:05:59 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:42:58 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int ft_remove_empty_tokens(t_token **tokens)
 		{
 			if (prev && (prev->type != T_WORD && prev->type != T_PIPE && prev->type != T_HEREDOC))
 				return (ft_error_message(NULL_REDIR, -1));
-			if (prev && prev->type == T_WORD || !prev)
+			if ((prev && prev->type == T_WORD) || !prev)
 			{
 				ft_remove_token(tokens, &curr, &prev);
 				continue;

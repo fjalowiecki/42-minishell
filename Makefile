@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+         #
+#    By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/29 10:36:34 by fjalowie          #+#    #+#              #
-#    Updated: 2024/10/23 18:08:29 by fjalowie         ###   ########.fr        #
+#    Updated: 2024/10/23 20:28:12 by fgrabows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJDIR	= .obj
 OBJS	= $(SRCS:src/%.c=$(OBJDIR)/%.o)
 
 CC		= cc
-CFLAGS	= -I includes/ -Wall -Wextra
+CFLAGS	= -I includes/ -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 
 all:	$(NAME)

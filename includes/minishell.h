@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 19:11:19 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:08:17 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ int		ft_cross_word(char **word, t_token **tokens);
 int		ft_cut_token(int *i, char **word, t_token **tokens);
 int		ft_clear_quote (int *i, char **word, char del);
 void	ft_skip_sq(int *n, char *str);
-int		ft_check_for_dollar(char **word, t_token **tokens, t_data *data);
+int		ft_check_for_dollar(char **word, t_data *data);
+int		ft_cross_dq(int *i, char **word, t_data *data);
 
 /* dollar_sign.c */
 int		ft_dollar(int *i, char **word, t_data *data);
@@ -158,7 +159,7 @@ int		ft_dollar(int *i, char **word, t_data *data);
 void	ft_print_token_types(t_token *tokens);
 void	ft_print_split(char **str);
 void	ft_print_commands(t_cmd *cmds);
-void	print_string_with_nulls(const char *str);
+//void	print_string_with_nulls(const char *str);
 
 /* execution00.c */
 void	execute_cmds(t_data *data);
@@ -194,7 +195,7 @@ void	env_bltin(t_data *data);
 void	exit_bltin(t_data *data);
 
 /* blt_echo */
-void	echo_bltin(char **cmd, t_data *data);
+void	echo_bltin(char **cmd);
 
 /* blt_cd */
 int		cd_bltin(char **cmd, t_data *data);

@@ -6,15 +6,15 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 18:48:05 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 12:56:50 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:35:30 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	ft_echo_args(char **cmd, int fd);
+static void	ft_echo_args(char **cmd);
 
-void	echo_bltin(char **cmd, t_data *data)
+void	echo_bltin(char **cmd)
 {
 	int		i;
 	int		j;
@@ -36,13 +36,13 @@ void	echo_bltin(char **cmd, t_data *data)
 		flag = true;
 		i++;
 	}
-	ft_echo_args(&cmd[i], 1);
+	ft_echo_args(&cmd[i]);
 	if (flag == false)
 		printf("\n");
 	exit(0);
 }
 
-static void	ft_echo_args(char **cmd, int fd)
+static void	ft_echo_args(char **cmd)
 {
 	int	i;
 
