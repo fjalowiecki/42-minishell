@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:32:49 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 10:49:42 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:08:03 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_is_redir(char *input, int *i, t_token **tokens)
 static int	ft_append_redir(char *input, int *i, t_token **tokens, char *str)
 {
 	int	error;
-	
+
 	if (input [*i] == '<')
 		str = ft_strdup("<<");
 	else 
@@ -61,11 +61,11 @@ static int	ft_append_redir(char *input, int *i, t_token **tokens, char *str)
 	return (0);
 }
 
-static int ft_single_redirection(char x, t_token **tokens, char *str)
+static int	ft_single_redirection(char x, t_token **tokens, char *str)
 {
-	int type;
-	int error;
-	
+	int	type;
+	int	error;
+
 	if (x == '<')
 	{
 		type = T_IN_REDIR;

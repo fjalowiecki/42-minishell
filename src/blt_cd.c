@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:18:15 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 17:54:21 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:55:58 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	ft_cd_home(char **cmd, t_data *data, t_envp *home);
 int	cd_bltin(char **cmd, t_data *data)
 {	
 	t_envp	*node;
-	
+
 	if (cmd[1] && cmd[2])
 		return (ft_error_message("Too many arguments", 1));
 	else if (!cmd[1])
@@ -38,7 +38,7 @@ static int	ft_change_value(char *var, char *res, t_data *data)
 	t_envp	*node;
 	char	*str;
 	int		var_len;
-	
+
 	ft_cd_env_change(data, var, res);
 	var_len = ft_strlen(var);
 	node = fetch_envp_node(data->envp, var);
@@ -106,7 +106,7 @@ static int	ft_cd_home(char **cmd, t_data *data, t_envp *home)
 	char	curr[4096];
 	
 	if (!home)
-		return(ft_error_message("HOME not set", 1));
+		return (ft_error_message("HOME not set", 1));
 	if (chdir(&home->value[5]))
 	{
 		ft_perror_message();

@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/22 13:21:44 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:58:58 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ int check_for_builtin_and_execute(char **cmd, t_data *data)
 		exit(data->cmd_exit_status);
 	else if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
 		exit(ft_print_env_var(data));
-	return(0);
+	return (0);
 }

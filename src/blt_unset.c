@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:51:43 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 09:55:13 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:01:53 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	unset_bltin(char **cmd, t_data *data)
 	char	*name;
 	t_envp	*node;
 	t_envp	*previous_nod;
-	
+
 	i = 1;
 	j = 0;
 	while (cmd[i])

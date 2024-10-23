@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 12:29:34 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 09:15:20 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:04:42 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ft_exit_extension(char *var, char **word, int *i, t_data *data);
 int	ft_dollar(int *i, char **word, t_data *data)
 {
 	char	*var;
-	int	value;
+	int		value;
 	
 	value = ft_valid_dollar(i, *word, &var);
 	if (value == -1)
@@ -106,14 +106,13 @@ static int	ft_change_word(char* var, char **word, int *i, t_data *data)
 	int		word_len;
 	int		var_len;
 
-	//printf("var:%s| word %s| *i:%d\n", var, *word, *i);
 	if (var[0] == '?')
 	{
 		if (ft_exit_extension(var, word, i, data) == -1)
 			return (-1);
 		return (0);
 	}
-	var_len = ft_strlen(var);//5
+	var_len = ft_strlen(var);
 	word_len = ft_strlen(*word);
 	new_word = malloc(sizeof(char) * (word_len - var_len + 1));
 	if (!new_word)
@@ -127,7 +126,6 @@ static int	ft_change_word(char* var, char **word, int *i, t_data *data)
 	free(var);
 	free(*word);
 	*word = new_word;
-	//printf(("word"))
 	return (0);
 }
 
@@ -138,14 +136,8 @@ static int	ft_exit_extension(char *var, char **word, int *i, t_data *data)
 	int		exit_len;
 	int		word_len;
 
-	//printf("%s\n", *word);
-	
 	free(var);
-	//printf("%d | *i:%d\n", data->cmd_exit_status, *i);
-
 	exit_code = ft_itoa(data->cmd_exit_status);
-	//printf("%s\n", exit_code);
-	
 	if (!exit_code)
 		return (ft_perror_free(NULL, *word, NULL));
 	exit_len = ft_strlen(exit_code);//1
@@ -159,7 +151,6 @@ static int	ft_exit_extension(char *var, char **word, int *i, t_data *data)
 	free(*word);
 	free(exit_code);
 	*word = new_word;
-	//printf("%s\n", *word);
 	*i= *i + exit_len - 1;
 	return (0);
 }

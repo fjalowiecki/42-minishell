@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 18:09:57 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 10:38:27 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:03:34 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_redir_in_cmd(t_token *current_tok, t_cmd *current_cmd, char* str)
 int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd)
 {
 	char	*str;
-	
+
 	if (current_cmd->redir_error == true)
 		return (0);
 	str = ft_strdup((*current_tok)->next->text);
@@ -48,7 +48,7 @@ static void	ft_here_doc_cmd(t_token *current_tok, t_cmd *current_cmd, char* str)
 static void	ft_append_cmd(t_token *current_tok, t_cmd *current_cmd, char* str)
 {
 	int fd;
-	
+
 	fd = open(str, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd < 0)
 	{

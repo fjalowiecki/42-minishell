@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:06:05 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 11:21:50 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:06:40 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 // at succes returning *tokens and the input gets freed
 t_token *ft_tokenizer(t_data *data, char *input)
 {
-	int i;
-	t_token *tokens;
+	int		i;
+	t_token	*tokens;
 
 	tokens = NULL;
 	i = 0;
@@ -41,7 +41,7 @@ t_token *ft_tokenizer(t_data *data, char *input)
 		ft_free_tokens(&tokens);
 	free(data->line);
 	data->line = NULL;
-	return(tokens);
+	return (tokens);
 }
 int	create_token(char *str, int type, t_token **tokens)
 {

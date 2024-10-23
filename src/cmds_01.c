@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:30:10 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 10:51:27 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:03:24 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int ft_free_args(int i, char **cmds);
 int ft_command(t_token **cur_token, t_token *tokens, t_cmd **cur_command, t_cmd *cmds)
 {
 	int	i;
-	
+
 	if (!(*cur_token))
 		return (0);
 	if ((*cur_token)->type == T_WORD)
@@ -45,7 +45,7 @@ static int	ft_create_cmds(t_token *tokens, t_cmd *commands, int i)
 	char	**cmds;
 	char	*arg;
 	int		n;
-	
+
 	n = 0;
 	cmds = malloc(sizeof(char *) * (i + 1));
 	if (!cmds)
@@ -71,7 +71,7 @@ static int	ft_create_cmds(t_token *tokens, t_cmd *commands, int i)
 static int	ft_free_args(int i, char **cmds)
 {
 	int x;
-	
+
 	ft_perror_message();
 	x = 0;
 	while (x < i)
@@ -98,6 +98,7 @@ static int	ft_count_tok(t_token *tokens)
 	}
 	return (i);
 }
+
 int ft_set_command(t_cmd **commands)
 {
 	t_cmd	*new;

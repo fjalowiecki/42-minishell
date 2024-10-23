@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:44:21 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 16:07:48 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:06:20 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int ft_cross_word(char **word, t_token **tokens)
 {
 	int i;
 	int value;
-	
+
 	i = 0;
 	while((*word)[i])
 	{
@@ -71,7 +71,7 @@ int	ft_cut_token(int *i, char **word, t_token **tokens)
 	free(*word);
 	*word = new_word;
 	*i = 0;
-	return(1);
+	return (1);
 }
 
 //clear the word of unnecessary quotes 

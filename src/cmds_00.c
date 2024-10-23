@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:13:47 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 11:38:36 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:02:46 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 int ft_cmds_creation(t_data *data)
 {
 	t_token *tokens;
-	
+
 	tokens = ft_tokenizer(data, data->line);
 	if (tokens == NULL)
 	{
 		data->cmd_exit_status = 1;
 		return (-1);
 	}
-	if(ft_check_tokens(&tokens) == -1)
+	if (ft_check_tokens(&tokens) == -1)
 	{
 		data->cmd_exit_status = 1;
 		return (-1);
@@ -39,7 +39,7 @@ int ft_cmds_creation(t_data *data)
 		data->cmd_exit_status = 1;
 		return (-1);
 	}
-	return(0);
+	return (0);
 }
 
 t_cmd	*ft_commands(t_token *tokens)
@@ -47,7 +47,7 @@ t_cmd	*ft_commands(t_token *tokens)
 	t_cmd	*commands;
 	t_cmd	*current_cmd;
 	t_token	*current_tok;
-	
+
 	commands = NULL;
 	current_tok = tokens;
 	if (ft_set_command(&commands) == -1)
@@ -88,6 +88,7 @@ int ft_pipe(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd
 	}
 	return (0);
 }
+
 int ft_redir(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd)
 {
 	if (!*current_tok)

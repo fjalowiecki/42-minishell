@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:28:55 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 15:52:05 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:07:41 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int ft_is_pipe(char *input, int *i, t_token **tokens)
 		if (error == -1)
 		{	
 			free(str);
-			return(-1);
+			return (-1);
 		}
 		(*i)++;
 	}
@@ -36,7 +36,7 @@ int ft_is_pipe(char *input, int *i, t_token **tokens)
 
 int ft_is_word(char *input, int *i, t_token **tokens, t_data *data)
 {	
-	if(!(ft_strchr("| <>", input[*i])))
+	if (!(ft_strchr("| <>", input[*i])))
 	{
 		if (ft_create_word_tok(input, i,tokens, data) == -1)
 		{
@@ -52,14 +52,14 @@ int ft_create_word_tok(char *str, int *i, t_token **tokens, t_data *data)
 	char *dol;
 
 	n = 0;
-	while(str[*i + n] && str[*i + n] != ' ')
+	while (str[*i + n] && str[*i + n] != ' ')
 	{
 		if (str[*i + n] == '\'')
 			ft_skip_sq(&n, &str[*i]);
 		else if (str[*i + n] == '\"')
 		{
 			n++;
-			while(str[*i + n] && str[*i + n] != '\"')
+			while (str[*i + n] && str[*i + n] != '\"')
 				n++;
 			n++;
 		}
@@ -85,10 +85,10 @@ int ft_extract_word(char *str, int *n, t_token **tokens, t_data *data)
 
 	word = malloc(sizeof(char) * (*n + 1));
 	if (!word)
-		return(ft_perror_message());
+		return (ft_perror_message());
 	ft_strlcpy(word, str, (*n) + 1);
 	if(ft_check_for_dollar(&word, tokens, data) == -1)
-		return(-1);
+		return (-1);
 	value = ft_cross_word(&word, tokens);
 	if (value == -1)
 	{
@@ -96,11 +96,11 @@ int ft_extract_word(char *str, int *n, t_token **tokens, t_data *data)
 		return (-1);
 	}
 	else if (value == 0)
-		return(0);
+		return (0);
 	if(create_token(word, T_WORD, tokens) == -1)
 	{
 		free(word);	
-		return(-1);
+		return (-1);
 	}
 	return (0);
 }
@@ -121,12 +121,10 @@ int ft_check_for_dollar(char **word, t_token **tokens, t_data *data)
 		{
 			value = ft_dollar(&i, word, data);
 			if (value == -1)
-				return(-1);
+				return (-1);
 		}
 		else
 			i++;
 	}
-	return(0);
+	return (0);
 }
-
-

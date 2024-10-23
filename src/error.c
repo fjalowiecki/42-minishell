@@ -6,7 +6,7 @@
 /*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:45 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/22 10:41:50 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:05:13 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	ft_error_message(char *str, int num)
 	return (num);
 }
 
-int ft_perror_message()
+int	ft_perror_message()
 {
 	perror(NULL);
 	return (-1);
 }
 
-void file_error_msg(char *filename, char *msg)
+void	file_error_msg(char *filename, char *msg)
 {
 	write(2, filename, ft_strlen(filename));
 	write(2, ": ", 2);
@@ -39,7 +39,7 @@ void file_error_msg(char *filename, char *msg)
 	write(2, "\n", 1);
 }
 
-int ft_perror_free(char *first, char *second, char *third)
+int	ft_perror_free(char *first, char *second, char *third)
 {
 	ft_perror_message();
 	if (first)
