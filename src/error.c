@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:45 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 13:05:13 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:45:35 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_error_message(char *str, int num)
 	return (num);
 }
 
-int	ft_perror_message()
+int	ft_perror_message(void)
 {
 	perror(NULL);
 	return (-1);

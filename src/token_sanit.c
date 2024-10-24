@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_sanit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:44:21 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 21:19:22 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:44:01 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,28 @@ if white char occures outside of quotes it means that we have to cut the word
 cut the word, create token of the first half and check the second half
 return zero if there is no char after space which occured out of quotes	
 */
-int ft_cross_word(char **word, t_token **tokens)
+int	ft_cross_word(char **word, t_token **tokens)
 {
-	int i;
-	int value;
+	int	i;
+	int	value;
 
 	i = 0;
-	while((*word)[i])
+	while ((*word)[i])
 	{
 		if ((*word)[i] == '\'' || (*word)[i] == '\"')
 		{
-			if(ft_clear_quote(&i, word, (*word)[i]) == -1)
+			if (ft_clear_quote(&i, word, (*word)[i]) == -1)
 				return (-1);
 		}
 		else if (ft_strchr(" \t\r\n\v\f", (*word)[i]))
 		{
 			value = ft_cut_token(&i, word, tokens);
 			if (value == -1)
-				return(-1);
+				return (-1);
 			if (value == 0)
-				return(0);
+				return (0);
 		}
-		else 
+		else
 			i++;
 	}
 	return (1);
@@ -56,7 +56,7 @@ int	ft_cut_token(int *i, char **word, t_token **tokens)
 		return (ft_perror_message());
 	ft_strlcpy(tok_str, *word, *i + 1);
 	if (create_token(tok_str, T_WORD, tokens) == -1)
-		return (ft_perror_free(tok_str,NULL, NULL));
+		return (ft_perror_free(tok_str, NULL, NULL));
 	while ((*word)[*i] && ft_strchr(" \t\r\n\v\f", (*word)[*i]))
 		(*i)++;
 	if (!(*word)[*i])
@@ -75,12 +75,12 @@ int	ft_cut_token(int *i, char **word, t_token **tokens)
 }
 
 //clear the word of unnecessary quotes 
-int	ft_clear_quote (int *i, char **word, char del)
+int	ft_clear_quote(int *i, char **word, char del)
 {
-	int n;
-	char *new_word;
-	int len;
-	
+	int		n;
+	char	*new_word;
+	int		len;
+
 	n = 1;
 	len = ft_strlen(*word);
 	while ((*word)[*i + n] && (*word)[*i + n] != del)
@@ -97,7 +97,7 @@ int	ft_clear_quote (int *i, char **word, char del)
 	return (0);
 }
 
-void ft_skip_sq(int *n, char *str)
+void	ft_skip_sq(int *n, char *str)
 {
 	(*n)++;
 	while (str[*n] && str[*n] != '\'')
@@ -105,7 +105,7 @@ void ft_skip_sq(int *n, char *str)
 	(*n)++;
 }
 
-int ft_cross_dq(int *i, char **word, t_data *data)
+int	ft_cross_dq(int *i, char **word, t_data *data)
 {
 	(*i)++;
 	while ((*word)[*i] != '\"')
@@ -114,7 +114,7 @@ int ft_cross_dq(int *i, char **word, t_data *data)
 		{
 			if (ft_dollar(i, word, data) == -1)
 				return (-1);
-			continue;
+			continue ;
 		}
 		(*i)++;
 	}

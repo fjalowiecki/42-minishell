@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   blt_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 19:52:20 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 13:01:43 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:10:00 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void pwd_bltin()
+void	pwd_bltin(void)
 {
-	char path[4096];
+	char	path[4096];
 
 	if (!(getcwd(path, 4096)))
 	{

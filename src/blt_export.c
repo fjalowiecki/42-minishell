@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blt_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:53:27 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 13:01:35 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:03:34 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	export_bltin(char **cmd, t_data *data)
 	while (cmd[i])
 	{
 		if (!ft_isalpha(cmd[i][j]) && cmd[i][j] != '_')
-			return(ft_error_message("Export: not a valid identifier", 1));
+			return (ft_error_message("Export: not a valid identifier", 1));
 		j++;
 		while (cmd[i][j] && cmd[i][j] != '=')
 		{
@@ -34,7 +34,7 @@ int	export_bltin(char **cmd, t_data *data)
 				return (1);
 			j++;
 		}
-		if (ft_change_env(cmd[i], j , data ) == -1)
+		if (ft_change_env(cmd[i], j, data) == -1)
 			return (1);
 		i++;
 		j = 0;
@@ -69,7 +69,7 @@ static int	ft_change_env(char *var, int j, t_data *data)
 	return (0);
 }
 
-int ft_print_env_var(t_data *data)
+int	ft_print_env_var(t_data *data)
 {
 	t_envp	*envp;
 

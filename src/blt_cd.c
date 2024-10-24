@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blt_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:18:15 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 20:34:32 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 08:59:34 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_cd_env_change(t_data *data, char *var, char *res);
 static int	ft_cd_home(t_data *data, t_envp *home);
 
 int	cd_bltin(char **cmd, t_data *data)
-{	
+{
 	t_envp	*node;
 
 	if (cmd[1] && cmd[2])
@@ -51,10 +51,10 @@ static int	ft_change_value(char *var, char *res, t_data *data)
 	if (!node)
 	{
 		if (append_envp_node(&data->envp, str) == -1)
-			{
-				free(str);
-				return (-1);
-			}
+		{
+			free(str);
+			return (-1);
+		}
 		return (0);
 	}
 	free(node->value);
@@ -83,9 +83,10 @@ static int	cd_handler(char *str, t_data *data)
 		return (-1);
 	return (0);
 }
+
 static int	ft_cd_env_change(t_data *data, char *var, char *res)
 {
-	t_envp *node;
+	t_envp	*node;
 
 	if (res)
 		return (0);
@@ -101,9 +102,9 @@ static int	ft_cd_env_change(t_data *data, char *var, char *res)
 
 static int	ft_cd_home(t_data *data, t_envp *home)
 {
-	t_envp	*node_PWD;
+	t_envp	*node_pwd;
 	char	curr[4096];
-	
+
 	if (!home)
 		return (ft_error_message("HOME not set", 1));
 	if (chdir(&home->value[5]))
@@ -112,15 +113,15 @@ static int	ft_cd_home(t_data *data, t_envp *home)
 		return (1);
 	}
 	getcwd(curr, 4096);
-	node_PWD = fetch_envp_node(data->envp, "PWD");
+	node_pwd = fetch_envp_node(data->envp, "PWD");
 	if (!home)
 	{
 		if (ft_change_value("OLDPWD", NULL, data) == -1)
 			return (1);
 	}
-	else 
+	else
 	{
-		if (ft_change_value("OLDPWD", &node_PWD->value[4], data) == -1)
+		if (ft_change_value("OLDPWD", &node_pwd->value[4], data) == -1)
 			return (1);
 	}
 	if (ft_change_value("PWD", curr, data) == -1)

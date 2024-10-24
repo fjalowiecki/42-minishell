@@ -3,22 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   cmds_00.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:13:47 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 13:02:46 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:40:34 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//if error ocures everything is freed
-//if the calling of additional function ends with error all memory is going to be freed
-//if all called functions ends with succes all memory but *commands is going to be freed
-
-int ft_cmds_creation(t_data *data)
+/*
+if error ocures everything is freed
+if the calling of additional function ends 
+	with error all memory is going to be freed
+if all called functions ends with succes all
+	 memory but *commands is going to be freed
+*/
+int	ft_cmds_creation(t_data *data)
 {
-	t_token *tokens;
+	t_token	*tokens;
 
 	tokens = ft_tokenizer(data, data->line);
 	if (tokens == NULL)
@@ -59,11 +62,11 @@ t_cmd	*ft_commands(t_token *tokens)
 	while (current_tok)
 	{
 		if (ft_redir(&current_tok, tokens, &current_cmd, commands) == -1)
-			return NULL;
+			return (NULL);
 		if (ft_command(&current_tok, tokens, &current_cmd, commands) == -1)
-			return NULL;
+			return (NULL);
 		if (ft_pipe(&current_tok, tokens, &current_cmd, commands) == -1)
-			return NULL;
+			return (NULL);
 	}
 	if (!tokens)
 		return (NULL);
@@ -71,7 +74,8 @@ t_cmd	*ft_commands(t_token *tokens)
 	return (commands);
 }
 
-int ft_pipe(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd)
+int	ft_pipe(t_token **current_tok, t_token *head_tok,
+		t_cmd **current_cmd, t_cmd *head_cmd)
 {
 	if (!*current_tok)
 		return (0);
@@ -89,7 +93,8 @@ int ft_pipe(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd
 	return (0);
 }
 
-int ft_redir(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd)
+int	ft_redir(t_token **current_tok, t_token *head_tok,
+		t_cmd **current_cmd, t_cmd *head_cmd)
 {
 	if (!*current_tok)
 		return (0);
@@ -114,7 +119,3 @@ int ft_redir(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cm
 	}
 	return (0);
 }
-
-
-
-

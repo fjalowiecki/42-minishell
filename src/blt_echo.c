@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blt_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 18:48:05 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 20:35:30 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:04:10 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	echo_bltin(char **cmd)
 	while (cmd[i])
 	{
 		if (!cmd[i][j] || cmd[i][j] != '-')
-			break;
+			break ;
 		j++;
 		while (cmd[i][j] && cmd[i][j] == 'n')
 			j++;
 		if (cmd[i][j] || j == 1)
-			break;
+			break ;
 		j = 0;
 		flag = true;
 		i++;

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cmds_redirs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 18:09:57 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 20:40:26 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:06:32 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_here_doc_cmd(t_cmd *current_cmd, char* str);
-static void	ft_append_cmd(t_cmd *current_cmd, char* str);
-static void	ft_redir_out_cmd(t_cmd *current_cmd, char* str);
-static void	ft_redir_in_cmd(t_cmd *current_cmd, char* str);
+static void	ft_here_doc_cmd(t_cmd *current_cmd, char *str);
+static void	ft_append_cmd(t_cmd *current_cmd, char *str);
+static void	ft_redir_out_cmd(t_cmd *current_cmd, char *str);
+static void	ft_redir_in_cmd(t_cmd *current_cmd, char *str);
 
 int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd)
 {
@@ -30,14 +30,14 @@ int	ft_set_redir(t_token **current_tok, t_cmd *current_cmd)
 		ft_redir_in_cmd(current_cmd, str);
 	if ((*current_tok)->type == T_OUT_REDIR)
 		ft_redir_out_cmd(current_cmd, str);
-	if ((*current_tok)->type ==  T_APPEND)
+	if ((*current_tok)->type == T_APPEND)
 		ft_append_cmd(current_cmd, str);
 	if ((*current_tok)->type == T_HEREDOC)
 		ft_here_doc_cmd(current_cmd, str);
 	return (0);
 }
 
-static void	ft_here_doc_cmd(t_cmd *current_cmd, char* str)
+static void	ft_here_doc_cmd(t_cmd *current_cmd, char *str)
 {
 	if (current_cmd->infile)
 		free(current_cmd->infile);
@@ -45,9 +45,9 @@ static void	ft_here_doc_cmd(t_cmd *current_cmd, char* str)
 	current_cmd->here_doc = true;
 }
 
-static void	ft_append_cmd(t_cmd *current_cmd, char* str)
+static void	ft_append_cmd(t_cmd *current_cmd, char *str)
 {
-	int fd;
+	int	fd;
 
 	fd = open(str, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd < 0)
@@ -57,14 +57,14 @@ static void	ft_append_cmd(t_cmd *current_cmd, char* str)
 		free(str);
 		return ;
 	}
-	close(fd);	
+	close(fd);
 	if (current_cmd->outfile)
 		free(current_cmd->outfile);
 	current_cmd->outfile = str;
 	current_cmd->append = true;
 }
 
-static void	ft_redir_in_cmd(t_cmd *current_cmd, char* str)
+static void	ft_redir_in_cmd(t_cmd *current_cmd, char *str)
 {
 	if (ft_check_access(str, READ) < 0)
 	{
@@ -75,13 +75,13 @@ static void	ft_redir_in_cmd(t_cmd *current_cmd, char* str)
 	if (current_cmd->infile)
 		free(current_cmd->infile);
 	current_cmd->infile = str;
-	current_cmd->here_doc = false;	
+	current_cmd->here_doc = false;
 }
 
-static void	ft_redir_out_cmd(t_cmd *current_cmd, char* str)
+static void	ft_redir_out_cmd(t_cmd *current_cmd, char *str)
 {
 	int	fd;
-	
+
 	fd = open(str, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd < 0)
 	{
@@ -90,7 +90,7 @@ static void	ft_redir_out_cmd(t_cmd *current_cmd, char* str)
 		free(str);
 		return ;
 	}
-	close(fd);	
+	close(fd);
 	if (current_cmd->outfile)
 		free(current_cmd->outfile);
 	current_cmd->outfile = str;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:27:09 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 21:20:07 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:09:00 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,22 @@ void	free_resources(t_data *data)
 	data->envp = NULL;
 }
 
-void check_for_builtins(t_data *data)
+void	check_for_builtins(t_data *data)
 {
 	if (data->cmd->next != NULL || !data->cmd->cmd)
 		return ;
-	if (data->cmd->cmd && ft_strncmp(data->cmd->cmd[0], "exit", 5) == 0)
+	if (data->cmd->cmd && ft_strncmp(data->cmd->cmd[0],
+			"exit", 5) == 0)
 		exit_bltin(data);
-	else if (ft_strncmp(data->cmd->cmd[0], "export", ft_strlen(data->cmd->cmd[0])) == 0)
+	else if (ft_strncmp(data->cmd->cmd[0],
+			"export", ft_strlen(data->cmd->cmd[0])) == 0)
 		data->cmd_exit_status = export_bltin(data->cmd->cmd, data);
-	else if (ft_strncmp(data->cmd->cmd[0], "unset", ft_strlen(data->cmd->cmd[0])) == 0)
+	else if (ft_strncmp(data->cmd->cmd[0],
+			"unset", ft_strlen(data->cmd->cmd[0])) == 0)
 		data->cmd_exit_status = unset_bltin(data->cmd->cmd, data);
-	else if (ft_strncmp(data->cmd->cmd[0], "cd", ft_strlen(data->cmd->cmd[0])) == 0)
+	else if (ft_strncmp(data->cmd->cmd[0],
+			"cd", ft_strlen(data->cmd->cmd[0])) == 0)
 		data->cmd_exit_status = cd_bltin(data->cmd->cmd, data);
-		
 }
 
 int	read_line(t_data *data)
@@ -95,13 +98,10 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		sanitaze_line(&data);
-		//printf("\n|%s|\n", data.line);
 		if (!data.line)
 			continue ;
 		if (ft_cmds_creation(&data) == -1)
-			continue;
-		// ft_print_commands(data.cmd);
-		// printf("cmd: %s\n", data.cmd->cmd[0]);
+			continue ;
 		check_for_builtins(&data);
 		execute_cmds(&data);
 		ft_free_commands(&(data.cmd));

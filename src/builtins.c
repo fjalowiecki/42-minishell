@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 19:06:02 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 20:37:36 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:52:22 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	check_for_builtin_and_execute(char **cmd, t_data *data)
 	else if (ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
 		echo_bltin(cmd);
 	else if (ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
-		pwd_bltin(cmd, data);
+		pwd_bltin();
 	else if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
 		exit (data->cmd_exit_status);
 	else if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)

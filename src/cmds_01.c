@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   cmds_01.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:30:10 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 13:03:24 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:01:30 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int ft_count_tok(t_token *tokens);
-static int ft_create_cmds(t_token *tokens, t_cmd *commands, int i);
-static int ft_free_args(int i, char **cmds);
+static int	ft_count_tok(t_token *tokens);
+static int	ft_create_cmds(t_token *tokens, t_cmd *commands, int i);
+static int	ft_free_args(int i, char **cmds);
 
-int ft_command(t_token **cur_token, t_token *tokens, t_cmd **cur_command, t_cmd *cmds)
+int	ft_command(t_token **cur_token, t_token *tokens,
+	t_cmd **cur_command, t_cmd *cmds)
 {
 	int	i;
 
@@ -55,7 +56,7 @@ static int	ft_create_cmds(t_token *tokens, t_cmd *commands, int i)
 		if (tokens->type != T_ARG)
 		{
 			tokens = tokens->next;
-			continue;
+			continue ;
 		}
 		arg = ft_strdup(tokens->text);
 		if (!arg)
@@ -70,7 +71,7 @@ static int	ft_create_cmds(t_token *tokens, t_cmd *commands, int i)
 
 static int	ft_free_args(int i, char **cmds)
 {
-	int x;
+	int	x;
 
 	ft_perror_message();
 	x = 0;
@@ -83,7 +84,7 @@ static int	ft_free_args(int i, char **cmds)
 static int	ft_count_tok(t_token *tokens)
 {
 	int	i;
-	
+
 	i = 0;
 	while (tokens && tokens->type != T_PIPE)
 	{
@@ -99,11 +100,11 @@ static int	ft_count_tok(t_token *tokens)
 	return (i);
 }
 
-int ft_set_command(t_cmd **commands)
+int	ft_set_command(t_cmd **commands)
 {
 	t_cmd	*new;
 	t_cmd	*tmp;
-	
+
 	new = malloc(sizeof(t_cmd));
 	if (!new)
 		return (ft_perror_message());
@@ -125,4 +126,3 @@ int ft_set_command(t_cmd **commands)
 	}
 	return (0);
 }
-

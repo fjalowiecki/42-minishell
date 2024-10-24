@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:54:38 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 20:45:21 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:02:21 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	go_to_next_quote(char *line, int *i, bool go_back)
 
 	if (!line || !i)
 		return ;
-
 	quote = line[*i];
 	j = *i;
 	if (go_back == false)
@@ -50,17 +49,17 @@ void	free_ft_split(char **split)
 	free(orig_split);
 }
 
-int ft_check_access(char *file, int type)
+int	ft_check_access(char *file, int type)
 {
-	int value;
-	
+	int	value;
+
 	if (type == READ)
 	{
 		value = access(file, F_OK | R_OK);
 		if (value < 0)
 			return (ft_perror_message());
 	}
-	else if (type == WRITE)	
+	else if (type == WRITE)
 	{
 		value = access(file, F_OK | W_OK);
 		if (value < 0)
@@ -77,7 +76,7 @@ void	ft_free_commands(t_cmd **commands)
 		return ;
 	while (*commands)
 	{
-		temp = *commands; 
+		temp = *commands;
 		if (temp->infile)
 			free(temp->infile);
 		if (temp->outfile)

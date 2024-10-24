@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:06:05 by fgrabows          #+#    #+#             */
-/*   Updated: 2024/10/23 13:06:40 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:45:21 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,22 @@
 // if error here i am going to return *token with value NULL
 // every accessible resource should be freed on error
 // at succes returning *tokens and the input gets freed
-t_token *ft_tokenizer(t_data *data, char *input)
+
+t_token	*ft_tokenizer(t_data *data, char *input)
 {
 	int		i;
 	t_token	*tokens;
 
 	tokens = NULL;
 	i = 0;
-	while(input && input[i])
+	while (input && input[i])
 	{
 		if (ft_is_redir(input, &i, &tokens) == -1)
-			break;
+			break ;
 		if (ft_is_pipe(input, &i, &tokens) == -1)
-			break;
+			break ;
 		if (ft_is_word(input, &i, &tokens, data) == -1)
-			break;
+			break ;
 		if (input[i] == ' ')
 			i++;
 	}
@@ -43,6 +44,7 @@ t_token *ft_tokenizer(t_data *data, char *input)
 	data->line = NULL;
 	return (tokens);
 }
+
 int	create_token(char *str, int type, t_token **tokens)
 {
 	t_token	*new_token;
@@ -58,7 +60,7 @@ int	create_token(char *str, int type, t_token **tokens)
 	new_token->text = str;
 	if (!*tokens)
 		*tokens = new_token;
-	else 
+	else
 	{
 		current = *tokens;
 		while (current->next)
@@ -71,7 +73,7 @@ int	create_token(char *str, int type, t_token **tokens)
 void	ft_free_tokens(t_token **tokens)
 {
 	t_token	*temp;
-	
+
 	if (!tokens || !*tokens)
 		return ;
 	while (*tokens)
@@ -80,7 +82,7 @@ void	ft_free_tokens(t_token **tokens)
 		*tokens = (*tokens)->next;
 		if (temp->text)
 			free(temp->text);
-		free(temp); 
+		free(temp);
 	}
 	*tokens = NULL;
 }

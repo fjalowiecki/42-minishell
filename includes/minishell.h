@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 21:08:17 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:50:01 by fgrabows         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	free_ft_split(char **split);
 int		ft_check_access(char *file, int type);
 void	ft_free_commands(t_cmd **commands);
 
-
 /*error.c*/
 void	msg_error(char *err);
 int		ft_error_message(char *str, int num);
@@ -138,16 +137,15 @@ t_token	*ft_tokenizer(t_data *data, char *input);
 void	ft_free_tokens(t_token **tokens);
 int		create_token(char *str, int type, t_token **tokens);
 
-
 /*tokens00/01.c*/
 int		ft_is_redir(char *input, int *i, t_token **tokens);
 int		ft_is_pipe(char *input, int *i, t_token **tokens);
 int		ft_is_word(char *input, int *i, t_token **tokens, t_data *data);
 int		ft_create_word_tok(char *str, int *i, t_token **tokens, t_data *data);
-int 	ft_extract_word(char *str, int *n, t_token **tokens, t_data *data);
+int		ft_extract_word(char *str, int *n, t_token **tokens, t_data *data);
 int		ft_cross_word(char **word, t_token **tokens);
 int		ft_cut_token(int *i, char **word, t_token **tokens);
-int		ft_clear_quote (int *i, char **word, char del);
+int		ft_clear_quote(int *i, char **word, char del);
 void	ft_skip_sq(int *n, char *str);
 int		ft_check_for_dollar(char **word, t_data *data);
 int		ft_cross_dq(int *i, char **word, t_data *data);
@@ -156,9 +154,9 @@ int		ft_cross_dq(int *i, char **word, t_data *data);
 int		ft_dollar(int *i, char **word, t_data *data);
 
 /*helpers.c - TO DELETE*/
-void	ft_print_token_types(t_token *tokens);
-void	ft_print_split(char **str);
-void	ft_print_commands(t_cmd *cmds);
+//void	ft_print_token_types(t_token *tokens);
+//void	ft_print_split(char **str);
+//void	ft_print_commands(t_cmd *cmds);
 //void	print_string_with_nulls(const char *str);
 
 /* execution00.c */
@@ -181,9 +179,12 @@ char	*get_next_line(int fd);
 /* cmds.c */
 int		ft_cmds_creation(t_data *data);
 t_cmd	*ft_commands(t_token *tokens);
-int		ft_pipe(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd);
-int		ft_redir(t_token **current_tok, t_token *head_tok, t_cmd **current_cmd, t_cmd *head_cmd);
-int		ft_command(t_token **cur_token, t_token *tokens, t_cmd **cur_command, t_cmd *cmds);
+int		ft_pipe(t_token **current_tok, t_token *head_tok,
+			t_cmd **current_cmd, t_cmd *head_cmd);
+int		ft_redir(t_token **current_tok, t_token *head_tok,
+			t_cmd **current_cmd, t_cmd *head_cmd);
+int		ft_command(t_token **cur_token, t_token *tokens,
+			t_cmd **cur_command, t_cmd *cmds);
 int		ft_set_command(t_cmd **commands);
 
 /* cmds_redirs.c */
@@ -201,7 +202,7 @@ void	echo_bltin(char **cmd);
 int		cd_bltin(char **cmd, t_data *data);
 
 /* blt_pwd*/
-void	pwd_bltin();
+void	pwd_bltin(void);
 
 /* blt_export*/
 int		export_bltin(char **cmd, t_data *data);
