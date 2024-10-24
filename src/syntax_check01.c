@@ -6,7 +6,7 @@
 /*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:05:55 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/23 18:18:54 by fjalowie         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:18:59 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	check_for_following_command(char *line, int i)
 			|| (line[i] == '<' && org_char != '<')
 			|| (line[i] == '/' && (org_char == '<'
 					|| org_char == '>' || org_char == '|'))
-			|| (line[i] == '$'))
+			|| (line[i] == '$') || (line[i] == '.')
+			|| (line[i] == '"') || (line[i] == '\''))
 			return (0);
 		else
 			break ;

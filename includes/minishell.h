@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 12:45:31 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/24 09:50:01 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:32:24 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_data
 # define HEREDOC_ERR "Error: heredoc malfunction"
 # define SANITATION_ERR "Error: line sanitation error"
 # define NO_FNAME_ARG_ERR "Error: filename argument required"
+# define NUM_REQ_ERR "Exit error: numeric argument required"
 # define REDIR_TO_OPR "Syntax error: redirection followed by unexpected token"
 # define NULL_REDIR "Error: ambiguous redirect"
 

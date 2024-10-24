@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrabows <fgrabows@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fjalowie <fjalowie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 19:06:02 by fjalowie          #+#    #+#             */
-/*   Updated: 2024/10/24 09:52:22 by fgrabows         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:02:57 by fjalowie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,24 @@
 void	exit_bltin(t_data *data)
 {
 	int	exit_status;
+	int	i;
 
 	if (data->cmd->cmd[1] != NULL)
+	{
+		i = 0;
+		while (data->cmd->cmd[1][i] != '\0')
+		{
+			if (!ft_isdigit(data->cmd->cmd[1][i])
+				&& !(i == 0 && data->cmd->cmd[1][i] == '-'))
+			{
+				msg_error(NUM_REQ_ERR);
+				free_resources(data);
+				exit(2);
+			}
+			i++;
+		}
 		exit_status = ft_atoi(data->cmd->cmd[1]);
+	}
 	else
 		exit_status = data->cmd_exit_status;
 	free_resources(data);
